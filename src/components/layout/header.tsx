@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Container from "../elements/container";
 import ToolTipElement from "../elements/tooltip-element";
@@ -36,7 +36,7 @@ const headerItems: HeaderItem[] = [
     {
         icon: Chat,
         title: "Chat",
-        href: "/chat",
+        href: "/chat/character-id",
     },
     {
         icon: Models,
@@ -82,6 +82,25 @@ const headerItems: HeaderItem[] = [
 // ----------------- Component -----------------
 const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: any) {
+            if (dropdownRef.current) {
+                setOpenDropdown(null); // Close when clicking outside
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [dropdownRef]);
+
+    const handleSelect = () => {
+        setOpenDropdown(null); // Close dropdown after selecting
+    };
+
 
     const toggleDropdown = (idx: number) => {
         setOpenDropdown(openDropdown === idx ? null : idx);
@@ -110,22 +129,22 @@ const Header: React.FC = () => {
                                         <AnimatePresence>
                                             {openDropdown === idx && (
                                                 <motion.div
-                                                    className="absolute left-1/2 top-30 transform -translate-x-1/2 p-2 "
+                                                    ref={dropdownRef}
+                                                    className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2"
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
                                                     exit={{ opacity: 0 }}
                                                 >
-                                                    <ul className="flex  gap-6 items-center">
+                                                    <ul className="flex flex-col gap-6 items-center">
                                                         {item.dropdown?.map((drop, dIdx) => {
                                                             const DropIcon = drop.icon;
                                                             return (
                                                                 <motion.li
                                                                     key={dIdx}
-                                                                    initial={{ opacity: 0, y: -50, x: 0 }}
+                                                                    initial={{ opacity: 0, y: -50 }}
                                                                     animate={{
                                                                         opacity: 1,
                                                                         y: 0,
-                                                                        x: (dIdx - ((item.dropdown?.length || 1) - 1) / 2) * 80,
                                                                         transition: {
                                                                             duration: 0.8,
                                                                             delay: dIdx * 0.1,
@@ -133,11 +152,10 @@ const Header: React.FC = () => {
                                                                             stiffness: 120,
                                                                         },
                                                                     }}
-                                                                    exit={{ opacity: 0, y: -30, x: 0, transition: { duration: 0.2 } }}
-                                                                    className="absolute"
+                                                                    exit={{ opacity: 0, y: -30, transition: { duration: 0.2 } }}
                                                                 >
                                                                     <ToolTipElement discription={drop.title}>
-                                                                        <Link href={drop.href} className="">
+                                                                        <Link href={drop.href} onClick={handleSelect}>
                                                                             <DropIcon className="w-16 h-16" />
                                                                         </Link>
                                                                     </ToolTipElement>
@@ -148,6 +166,7 @@ const Header: React.FC = () => {
                                                 </motion.div>
                                             )}
                                         </AnimatePresence>
+
                                     </div>
                                 ) : (
                                     <ToolTipElement discription={item.title}>

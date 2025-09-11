@@ -18,13 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
+import Link from 'next/link'
 const filters = () => {
     const [isSFW, setSFW] = useState(false)
     return (
         <div className=' space-y-4'>
             <div className='flex items-center gap-6 w-full '>
                 <div className='w-full'>
-                    <div className='flex  items-center bg-primary/20 backdrop-blur-md   border rounded-full pl-4 py-2 border-primary'>
+                    <div className='flex  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                         <Search className='text-muted' />
                         <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder='Search for Character name or description' />
                     </div>
@@ -33,7 +34,7 @@ const filters = () => {
 
             </div>
             <div className='flex items-center justify-center gap-6 w-full '>
-                <div className='flex w-full  items-center bg-primary/20 backdrop-blur-md   border rounded-full   pl-4 py-2 border-primary'>
+                <div className='flex w-full  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full   pl-4 py-2 border-primary/70'>
                     <Search className='text-muted' />
                     <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder='Search for Character bt Tags' />
                 </div>
@@ -79,7 +80,7 @@ const filters = () => {
 
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                                <DropdownMenuItem>Create Character</DropdownMenuItem>
+                                <DropdownMenuItem> <Link href={"/charactereditor"}>Create Character</Link></DropdownMenuItem>
                                 <DropdownMenuSub>
                                     <DropdownMenuSubTrigger>Import Character</DropdownMenuSubTrigger>
                                     <DropdownMenuPortal>

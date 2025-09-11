@@ -44,7 +44,7 @@ export function PaginationComponent({ currentPage, totalPages, onPageChange }: P
         ))}
 
         {/* Ellipsis if too many pages */}
-        {totalPages > 5 && <PaginationEllipsis />}
+        {/* {totalPages > 5 && <PaginationEllipsis />} */}
 
         {/* Next Button */}
         <PaginationItem>
