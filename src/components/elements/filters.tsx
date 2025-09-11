@@ -10,7 +10,6 @@ import {
     DropdownMenuLabel,
     DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
@@ -19,8 +18,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
-const filters = () => {
-    const [isSFW, setSFW] = useState(false)
+const Filters = () => {
+    const [sfw, setSfw] = useState(false)
     return (
         <div className=' space-y-4'>
             <div className='flex items-center gap-6 w-full '>
@@ -41,11 +40,11 @@ const filters = () => {
                 {/* Public/Private Toggle */}
                 <div className="flex  items-center gap-2">
                     <Switch
-                        checked={isSFW}
-                        onCheckedChange={(checked) => setSFW(checked)}
+                        checked={sfw}
+                        onCheckedChange={(checked) => setSfw(checked)}
                     />
                     <span className="text-sm text-muted-foreground">
-                        {isSFW ? "SFW" : "NSFW"}
+                        {sfw ? "SFW" : "NSFW"}
                     </span>
                 </div>
                 <div>
@@ -115,4 +114,4 @@ const filters = () => {
     )
 }
 
-export default filters
+export default Filters

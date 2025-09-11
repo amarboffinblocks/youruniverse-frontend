@@ -1,8 +1,6 @@
 "use client"
-import { Avatar } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import { CloudUpload, ImageUp, UserRound } from "lucide-react";
+import { UserRound } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 

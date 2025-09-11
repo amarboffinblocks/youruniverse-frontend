@@ -85,7 +85,7 @@ const Header: React.FC = () => {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        function handleClickOutside(event: any) {
+        function handleClickOutside() {
             if (dropdownRef.current) {
                 setOpenDropdown(null); // Close when clicking outside
             }

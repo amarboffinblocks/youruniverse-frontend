@@ -113,7 +113,6 @@ Raised in harsh conditions, Kevin’s exposure to alien tech led him down a trou
 ];
 
 const ChatMessages = () => {
-    const [input, setInput] = useState('');
     const [messages, setMessages] = useState(dummyMessages)
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -126,8 +125,8 @@ const ChatMessages = () => {
                             {message?.parts.map((part: any, i: number) => {
                                 switch (part.type) {
                                     case 'text':
-                                        const isLastMessage =
-                                            messageIndex === messages.length - 1;
+                                        // const isLastMessage =
+                                        //     messageIndex === messages.length - 1;
 
                                         return (
                                             <div key={`${message.id}-${i}`}>

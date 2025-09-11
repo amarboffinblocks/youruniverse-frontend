@@ -7,23 +7,16 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import Link from "next/link";
 import { Button } from "../ui/button";
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 interface Props {
     characterId?: string;
 }
 
-const CharacterForm: React.FC<Props> = ({ characterId }) => {
+const CharacterForm: React.FC<Props> = () => {
 
     return (
         <div className="py-10">

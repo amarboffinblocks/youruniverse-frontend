@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
-import { ChevronsDown, Plus, Send, Trash, Upload, UploadCloud } from "lucide-react";
+import { ChevronsDown, Plus, Send, Trash, Upload } from "lucide-react";
 import BreadcrumbElements from "./breadcrumb-elements";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
