@@ -18,7 +18,11 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
-const Filters = () => {
+
+interface Props {
+    label?: string;
+}
+const Filters: React.FC<Props> = ({ label = "Character" }) => {
     const [sfw, setSfw] = useState(false)
     return (
         <div className=' space-y-4'>
@@ -26,7 +30,7 @@ const Filters = () => {
                 <div className='w-full'>
                     <div className='flex  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                         <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder='Search for Character name or description' />
+                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for ${label} name or description`} />
                     </div>
                 </div>
 
@@ -35,7 +39,7 @@ const Filters = () => {
             <div className='flex items-center justify-center gap-6 w-full '>
                 <div className='flex w-full  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full   pl-4 py-2 border-primary/70'>
                     <Search className='text-muted' />
-                    <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder='Search for Character bt Tags' />
+                    <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for ${label} bt Tags`} />
                 </div>
                 {/* Public/Private Toggle */}
                 <div className="flex  items-center gap-2">
@@ -51,7 +55,7 @@ const Filters = () => {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button >
-                                Character Menu <Menu />
+                                {label} Menu <Menu />
                             </Button>
                         </DropdownMenuTrigger>
 

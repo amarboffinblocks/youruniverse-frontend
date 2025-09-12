@@ -11,11 +11,11 @@ interface Props {
 }
 const ToolTipElement: React.FC<Props> = ({ discription, children }) => {
     return (
-        <Tooltip>
+        <Tooltip >
             <TooltipTrigger asChild>
                 {children}
             </TooltipTrigger>
-            <TooltipContent side='bottom' >
+            <TooltipContent side='bottom' className='max-w-sm' >
                 <p>{discription}</p>
             </TooltipContent>
         </Tooltip>

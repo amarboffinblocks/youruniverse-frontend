@@ -19,12 +19,14 @@ interface Props {
 }
 
 const CharacterForm: React.FC<Props> = () => {
-    const [messages, setMessages] = useState<string[]>(["How can I help you?", "Hello!"])
+
 
     const handleChange = () => {
 
     }
-    
+
+
+
     return (
         <div className="py-10">
             <form className=" flex gap-x-4">
@@ -155,9 +157,9 @@ const CharacterForm: React.FC<Props> = () => {
                     <div className="space-y-2">
                         <Label>Alternative First Message</Label>
                         <MessageListManager
-                            initialMessages={messages}
+                            initialMessages={["How can I help you?", "Hello!"]}
                             placeholder="Enter Alternative first message"
-                            onChange={handleChange}
+                            onChange={(value) => console.log(value)}
 
                         />
                     </div>

@@ -53,7 +53,7 @@ const headerItems: HeaderItem[] = [
         href: "/universe",
         dropdown: [
             { icon: CharacterV1, title: "Characters", href: "/characters" },
-            { icon: PersonaV1, title: "Personas", href: "/personas" },
+            { icon: PersonaV1, title: "Personas", href: "/persona" },
             { icon: Lorebook, title: "Lorebook", href: "/lorebook" },
         ],
     },
