@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import Field from "../elements/form-elements/field";
 import { Label } from "../ui/label";
 import ImageUpload from "../elements/form-elements/image-upload"
@@ -12,12 +13,18 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button";
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
+import MessageListManager from "../elements/form-elements/message-list-manager";
 interface Props {
     characterId?: string;
 }
 
 const CharacterForm: React.FC<Props> = () => {
+    const [messages, setMessages] = useState<string[]>(["How can I help you?", "Hello!"])
 
+    const handleChange = () => {
+
+    }
+    
     return (
         <div className="py-10">
             <form className=" flex gap-x-4">
@@ -143,6 +150,15 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Add any additional details about the character"
                             name="characterNotes"
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label>Alternative First Message</Label>
+                        <MessageListManager
+                            initialMessages={messages}
+                            placeholder="Enter Alternative first message"
+                            onChange={handleChange}
+
                         />
                     </div>
                 </div>
