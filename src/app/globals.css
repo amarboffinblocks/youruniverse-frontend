@@ -14,7 +14,7 @@
   --popover: #ffffff;
   --popover-foreground: #111827;
 
-  --primary: #552EFB;
+  --primary: #552efb;
   --primary-foreground: #ffffff;
 
   --secondary: #f3f4f6;
@@ -223,4 +223,8 @@
 * {
   scrollbar-width: thin;
   scrollbar-color: #552EFB transparent;
+}
+
+.glass-effect {
+  background-color: rgba(85, 46, 251, 0.5);
 }
