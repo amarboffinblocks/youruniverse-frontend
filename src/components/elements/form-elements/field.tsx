@@ -22,7 +22,7 @@ type FieldProps = BaseProps & (InputProps | TextareaProps);
 
 const Field: React.FC<FieldProps> = ({
     as = "input",
-    tokens = 0,
+    tokens,
     errorMessage,
     className,
     ...props
@@ -51,9 +51,9 @@ const Field: React.FC<FieldProps> = ({
                         {errorMessage}
                     </p>
                 )}
-                <span className={cn("ml-auto text-xs", errorMessage && "text-destructive")}>
+                {tokens && <span className={cn("ml-auto text-xs", errorMessage && "text-destructive")}>
                     {tokens} tokens
-                </span>
+                </span>}
             </div>
         </div>
     );

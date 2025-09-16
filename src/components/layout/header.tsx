@@ -71,8 +71,8 @@ const headerItems: HeaderItem[] = [
         title: "Settings",
         href: "/settings",
         dropdown: [
-            { icon: Profile, title: "Profile", href: "/settings/profile" },
-            { icon: Background, title: "Background", href: "/settings/background" },
+            { icon: Profile, title: "Profile", href: "/profile" },
+            { icon: Background, title: "Background", href: "/background" },
             { icon: Download, title: "Download", href: "/settings/download" },
             { icon: Subscriptions, title: "Subscriptions", href: "/settings/subscriptions" },
         ],
@@ -122,7 +122,7 @@ const Header: React.FC = () => {
                                                 onClick={() => toggleDropdown(idx)}
                                                 className="focus:outline-none"
                                             >
-                                                <Icon className="h-16 w-16 text-foreground hover:text-primary transition-colors cursor-pointer " />
+                                                <Icon className="h-16 w-16 text-primary  hover:text-primary transition-colors cursor-pointer " />
                                             </button>
                                         </ToolTipElement>
 
@@ -156,7 +156,7 @@ const Header: React.FC = () => {
                                                                 >
                                                                     <ToolTipElement discription={drop.title}>
                                                                         <Link href={drop.href} onClick={handleSelect}>
-                                                                            <DropIcon className="w-16 h-16" />
+                                                                            <DropIcon className="w-16 h-16 text-primary" />
                                                                         </Link>
                                                                     </ToolTipElement>
                                                                 </motion.li>
@@ -170,8 +170,8 @@ const Header: React.FC = () => {
                                     </div>
                                 ) : (
                                     <ToolTipElement discription={item.title}>
-                                        <Link href={item.href}>
-                                            <Icon className="h-16 w-16 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                                        <Link href={item.href} >
+                                            <Icon className="h-16 w-16  transition-colors cursor-pointer" />
                                         </Link>
                                     </ToolTipElement>
                                 )}

@@ -32,7 +32,7 @@ const ChatPanel = () => {
         <div className="w-full shrink-0 sticky bottom-0 space-y-2 backdrop-blur-xl rounded-xl">
             <form
                 action=""
-                className="flex  flex-col w-full h-auto] items-end gap-3 rounded-4xl glass-effect px-3 py-4 border border-primary/50"
+                className="flex  flex-col w-full h-auto] items-end gap-3 rounded-4xl shadow-xl backdrop-filter backdrop-blur-lg text-white bg-primary/16 px-3 py-4 border border-primary/50"
             >
                 <div className="w-full  max-h-[300px] overflow-y-auto  ">
                     <textarea
