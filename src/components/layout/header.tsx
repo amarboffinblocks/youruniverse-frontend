@@ -73,8 +73,8 @@ const headerItems: HeaderItem[] = [
         dropdown: [
             { icon: Profile, title: "Profile", href: "/profile" },
             { icon: Background, title: "Background", href: "/background" },
-            { icon: Download, title: "Download", href: "/settings/download" },
-            { icon: Subscriptions, title: "Subscriptions", href: "/settings/subscriptions" },
+            { icon: Download, title: "Download", href: "/download" },
+            { icon: Subscriptions, title: "Subscriptions", href: "/subscriptions" },
         ],
     },
 ];
