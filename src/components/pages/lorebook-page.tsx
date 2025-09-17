@@ -6,15 +6,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react";
 import { PaginationComponent } from "@/components/elements/pagination-element";
 import LorebookCard from "@/components/cards/lorebook-card";
+import DataNotFound from '../elements/data-not-found';
 const LorebookPage = () => {
     const [page, setPage] = useState(1)
 
     return (
-        <Container className="mt-10"  >
+        <Container className=" flex flex-col h-full "  >
             <div className=" max-w-xl mx-auto">
                 <FilterBar label="Lorebook" />
             </div>
-            <Tabs defaultValue="all" className="mt-4 space-y-2" >
+            <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >
                 <TabsList className="w-full">
                     <TabsTrigger value="all">All Characters</TabsTrigger>
                     <TabsTrigger value="public">Public Characters</TabsTrigger>
@@ -33,15 +34,11 @@ const LorebookPage = () => {
 
                 </TabsContent>
                 <TabsContent value="public">
-                    <div className="text-white">
-                        <h2>no data found</h2>
-
-                    </div>
+                    <DataNotFound />
                 </TabsContent>
-                <TabsContent value="private"> <div className="text-white">
-                    <h2>no data found</h2>
-
-                </div>.</TabsContent>
+                <TabsContent value="private">
+                    <DataNotFound />
+                </TabsContent>
 
             </Tabs>
             <div className="mt-6">

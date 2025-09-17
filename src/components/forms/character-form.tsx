@@ -49,7 +49,7 @@ const CharacterForm: React.FC<Props> = () => {
                     <div className="flex gap-x-2 items-center ">
                         <div className="space-y-2 flex-1">
                             <Label>Character Name</Label>
-                            <Field placeholder="Enter the character's name" name="characterName" />
+                            <Field placeholder="Enter the character's name" name="characterName" tokens={1000} />
                         </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -107,6 +107,7 @@ const CharacterForm: React.FC<Props> = () => {
                             placeholder="Describe the scenario or background story"
                             errorMessage="invalid field"
                             name="scenario"
+                            tokens={1000}
                         />
                     </div>
 
@@ -116,6 +117,7 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Write a short summary of the character's personality"
                             name="personalitySummary"
+                            tokens={1000}
                         />
                     </div>
 
@@ -125,6 +127,7 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Write the character's first message"
                             name="firstMessage"
+                            tokens={1000}
                         />
                     </div>
 
@@ -134,6 +137,7 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Provide example dialogues for better context"
                             name="exampleDialogue"
+                            tokens={1000}
                         />
                     </div>
 
@@ -143,6 +147,7 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Add notes or instructions for the character"
                             name="authorNotes"
+                            tokens={1000}
                         />
                     </div>
 
@@ -152,6 +157,7 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Add any additional details about the character"
                             name="characterNotes"
+                            tokens={1000}
                         />
                     </div>
                     <div className="space-y-2">

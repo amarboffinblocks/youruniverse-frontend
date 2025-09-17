@@ -4,6 +4,12 @@ import { useState } from 'react';
 import { Actions, Action } from '@/components/ai-elements/actions';
 import { Message, MessageContent } from '@/components/ai-elements/message';
 import {
+    ZoomableImageModal,
+    ZoomableImageModalTrigger,
+    ZoomableImageModalContent,
+} from "./zoomable-image-modal";
+
+import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
@@ -114,7 +120,6 @@ Raised in harsh conditions, Kevin’s exposure to alien tech led him down a trou
 
 const ChatMessages = () => {
     const [messages, setMessages] = useState(dummyMessages)
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     return (
         <div className="flex flex-1 p-6 flex-col h-full">
@@ -133,10 +138,16 @@ const ChatMessages = () => {
                                                 {
                                                     message.role === "assistant" && (
                                                         <div className='flex items-center gap-2 '>
-                                                            <Avatar onClick={() => setSelectedImage("https://github.com/shadcn.png")} className="cursor-pointer">
-                                                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                                                                <AvatarFallback>CN</AvatarFallback>
-                                                            </Avatar>
+                                                            <ZoomableImageModal>
+                                                                <ZoomableImageModalTrigger >
+                                                                    <Avatar className="cursor-pointer">
+                                                                        <AvatarImage src="https://github.com/shadcn.png" alt="User" />
+                                                                        <AvatarFallback>CN</AvatarFallback>
+                                                                    </Avatar>
+                                                                </ZoomableImageModalTrigger>
+
+                                                                <ZoomableImageModalContent imageUrl="https://github.com/shadcn.png" draggable className="rounded-full" />
+                                                            </ZoomableImageModal>
                                                             <Label className='text-xs'>Tony Stark</Label>
                                                         </div>
                                                     )
@@ -153,7 +164,7 @@ const ChatMessages = () => {
                                                                 onClick={() =>
                                                                     navigator.clipboard.writeText(part.text)
                                                                 }
-                                                                label="Copyfdsf"
+                                                                label="copy"
                                                             >
                                                                 <CopyIcon className="size-3" />
                                                             </Action>
@@ -161,7 +172,7 @@ const ChatMessages = () => {
                                                                 onClick={() =>
                                                                     navigator.clipboard.writeText(part.text)
                                                                 }
-                                                                label="Copyff"
+                                                                label="squarepen"
                                                             >
                                                                 <SquarePen className="size-3" />
                                                             </Action>
@@ -169,7 +180,7 @@ const ChatMessages = () => {
                                                                 onClick={() =>
                                                                     navigator.clipboard.writeText(part.text)
                                                                 }
-                                                                label="Copyddsf"
+                                                                label="delete"
                                                             >
                                                                 <Trash className="size-3" />
                                                             </Action>
@@ -196,7 +207,7 @@ const ChatMessages = () => {
                                                             onClick={() =>
                                                                 navigator.clipboard.writeText(part.text)
                                                             }
-                                                            label="Copyf"
+                                                            label="delete"
                                                         >
                                                             <Trash className="size-3" />
                                                         </Action>
@@ -204,13 +215,14 @@ const ChatMessages = () => {
                                                             onClick={() =>
                                                                 navigator.clipboard.writeText(part.text)
                                                             }
-                                                            label="Copys"
+                                                            label="info"
                                                         >
                                                             <Info className="size-3" />
                                                         </Action>
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger asChild>
                                                                 <Button
+                                                                    type='button'
                                                                     onClick={() =>
                                                                         navigator.clipboard.writeText(part.text)
                                                                     }
@@ -243,27 +255,7 @@ const ChatMessages = () => {
                 </ConversationContent>
                 <ConversationScrollButton />
             </Conversation>
-            <AnimatePresence>
-                {selectedImage && (
-                    <motion.div
-                        className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={() => setSelectedImage(null)}
-                    >
-                        <motion.img
-                            src={selectedImage}
-                            alt="Full Avatar"
-                            className="max-w-[90%] max-h-[80%] rounded-full shadow-lg"
-                            initial={{ scale: 0.7, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.7, opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
 
         </div>
     );

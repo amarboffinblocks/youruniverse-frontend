@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 
-const STAR_COUNT = 250;
+const STAR_COUNT = 200;
+const RADIUS = 150; // Cursor ke pass ka area jisme stars move karenge
 
 type Star = {
     id: number;
@@ -11,20 +12,21 @@ type Star = {
     y: number;
     size: number;
     color: string;
+    depth: number;
 };
 
-export default function StarAnimation() {
+export default function StarField() {
     const [stars, setStars] = useState<Star[]>([]);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
-        // Generate stars with random positions and colors
         const generatedStars = Array.from({ length: STAR_COUNT }, (_, i) => ({
             id: i,
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
-            size: Math.random() * 2 + 1, // size between 1 and 3
-            color: Math.random() < 0.15 ? "#552efb" : "#ffffff", // 15% purple stars
+            size: Math.random() * 2 + 1,
+            color: Math.random() < 0.15 ? "#38bdf8" : "#ffffff",
+            depth: Math.random() * 2 + 1,
         }));
         setStars(generatedStars);
     }, []);
@@ -38,7 +40,7 @@ export default function StarAnimation() {
     }, []);
 
     return (
-        <div className="night-sky fixed inset-0 w-full h-full bg-gradient-to-b from-black via-[#000011] to-black overflow-hidden">
+        <div className="fixed inset-0 bg-black overflow-hidden">
             {stars.map((star) => (
                 <StarComponent key={star.id} star={star} mousePos={mousePos} />
             ))}
@@ -56,28 +58,23 @@ function StarComponent({
     const controls = useAnimation();
 
     useEffect(() => {
-        // Calculate distance to mouse
         const dx = mousePos.x - star.x;
         const dy = mousePos.y - star.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Influence radius
-        const maxDistance = 150;
-
-        if (distance < maxDistance) {
-            // Move star slightly towards the mouse
-            const factor = (maxDistance - distance) / maxDistance / 5; // scaled movement
+        if (distance < RADIUS) {
+            // Sirf pass ke stars ko move karo
             controls.start({
-                x: star.x + dx * factor,
-                y: star.y + dy * factor,
-                opacity: 1,
+                x: star.x + dx * 0.2,
+                y: star.y + dy * 0.2,
+                transition: { type: "spring", stiffness: 80, damping: 12 },
             });
         } else {
-            // Return to original position
+            // Baaki stars wapas apni jagah aa jayein
             controls.start({
                 x: star.x,
                 y: star.y,
-                opacity: 0.8,
+                transition: { type: "spring", stiffness: 80, damping: 12 },
             });
         }
     }, [mousePos, star.x, star.y, controls]);
@@ -85,14 +82,14 @@ function StarComponent({
     return (
         <motion.div
             animate={controls}
-            initial={{ x: star.x, y: star.y, opacity: 0.8 }}
+            initial={{ x: star.x, y: star.y }}
             className="absolute rounded-full"
             style={{
                 width: `${star.size}px`,
                 height: `${star.size}px`,
                 backgroundColor: star.color,
+                boxShadow: `0 0 ${star.size * 4}px ${star.color}`,
             }}
         />
     );
 }
-

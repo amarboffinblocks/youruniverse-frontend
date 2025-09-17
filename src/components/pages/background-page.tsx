@@ -23,8 +23,8 @@ const BackgroundPage = () => {
     const [page, setPage] = useState(1)
 
     return (
-        <div>
-            <div className='w-full flex items-center gap-x-4'>
+        <div className='flex flex-col h-full ' >
+            <div className='w-full flex items-center gap-x-4 mt-10'>
                 <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                     <Search className='text-muted' />
                     <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Background Search by title`} />
@@ -84,7 +84,7 @@ const BackgroundPage = () => {
 
 
             <div className='flex-1 mt-10'>
-                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4'>
+                <div className='grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4  gap-4'>
                     {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
                         <BackgroundCard key={item} />
                     ))}

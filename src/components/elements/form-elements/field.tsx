@@ -51,7 +51,7 @@ const Field: React.FC<FieldProps> = ({
                         {errorMessage}
                     </p>
                 )}
-                {tokens && <span className={cn("ml-auto text-xs", errorMessage && "text-destructive")}>
+                {tokens && <span className={cn("ml-auto  text-xs", errorMessage && "text-destructive")}>
                     {tokens} tokens
                 </span>}
             </div>
