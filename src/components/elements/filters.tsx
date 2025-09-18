@@ -18,6 +18,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
+import ToggleButton from './toggle-button'
 
 interface Props {
     label?: string;
@@ -42,15 +43,12 @@ const Filters: React.FC<Props> = ({ label = "Character" }) => {
                     <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for ${label} bt Tags`} />
                 </div>
                 {/* Public/Private Toggle */}
-                <div className="flex  items-center gap-2">
-                    <Switch
-                        checked={sfw}
-                        onCheckedChange={(checked) => setSfw(checked)}
-                    />
-                    <span className="text-sm text-muted-foreground">
-                        {sfw ? "SFW" : "NSFW"}
-                    </span>
-                </div>
+                <ToggleButton
+                    defaultChecked={true}
+                    labelOn="SFW"
+                    labelOff="NSFW"
+                    onToggle={(state) => console.log("Current state:", state)}
+                />
                 <div>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>

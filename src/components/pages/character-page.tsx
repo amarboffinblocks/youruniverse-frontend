@@ -13,7 +13,7 @@ const CharacterPage = () => {
 
   return (
     <Container className=" h-full flex flex-col"  >
-      <div className=" max-w-xl mx-auto">
+      <div className=" max-w-xl w-full mx-auto">
         <FilterBar />
       </div>
       <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >

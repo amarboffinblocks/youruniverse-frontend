@@ -14,6 +14,8 @@ import {
 import { Button } from "../ui/button";
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 import MessageListManager from "../elements/form-elements/message-list-manager";
+import ToggleButton from "../elements/toggle-button";
+import SelectElement from "../elements/select-element";
 interface Props {
     characterId?: string;
 }
@@ -99,7 +101,37 @@ const CharacterForm: React.FC<Props> = () => {
                         </DropdownMenu>
 
                     </div>
+                    <div className=" grid grid-cols-3 gap-x-4 py-2">
+                        <div className="flex gap-x-4">
+                            <ToggleButton
+                                defaultChecked={true}
+                                labelOn="Public"
+                                labelOff="Private"
+                                onToggle={(state) => console.log("Current state:", state)}
+                            />
+                            <ToggleButton
+                                defaultChecked={true}
+                                labelOn="SFW"
+                                labelOff="NSFW"
+                                onToggle={(state) => console.log("Current state:", state)}
+                            />
 
+                        </div>
+                        <SelectElement className="w-full" placeholder="select a persona" options={[
+                            { value: "purple", label: "Dark Purple" },
+                            { value: "white", label: "White" },
+                            { value: "yellow", label: "Yellow" },
+                            { value: "grapes", label: "Grapes" },
+                            { value: "pineapple", label: "Pineapple" },
+                        ]} />
+                        <SelectElement placeholder="select a lorebook" className="w-full" options={[
+                            { value: "purple", label: "Dark Purple" },
+                            { value: "white", label: "White" },
+                            { value: "yellow", label: "Yellow" },
+                            { value: "grapes", label: "Grapes" },
+                            { value: "pineapple", label: "Pineapple" },
+                        ]} />
+                    </div>
                     <div className="space-y-2">
                         <Label>Scenario</Label>
                         <Field

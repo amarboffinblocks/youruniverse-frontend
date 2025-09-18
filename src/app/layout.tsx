@@ -29,11 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative antialiased bg-background w-screen h-screen flex flex-col `}
       >
-        <StarAnimation />
-        <Header />
-        <main className=" relative z-10 flex-1 overflow-auto flex flex-col " >
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );
