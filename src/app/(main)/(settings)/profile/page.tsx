@@ -25,7 +25,7 @@ export default function page() {
                                     </h1>
 
                                     <p className="text-gray-300 text-lg md:text-2xl max-w-2xl mb-6">
-                                        We're working hard to bring you something amazing. Stay tuned!
+                                        {`We're working hard to bring you something amazing. Stay tuned!`}
                                     </p>
                                 </div>
 

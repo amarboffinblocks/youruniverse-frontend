@@ -1,23 +1,20 @@
 "use client"
-import React, { useState } from "react";
+import React from "react";
 import Field from "../elements/form-elements/field";
 import { Label } from "../ui/label";
-import ImageUpload from "../elements/form-elements/image-upload"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuPortal,
-    DropdownMenuShortcut,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button";
-import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
-import MessageListManager from "../elements/form-elements/message-list-manager";
+import { Menu } from "lucide-react";
 import { Card, CardDescription } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";

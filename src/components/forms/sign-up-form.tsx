@@ -44,7 +44,7 @@ const SignUpForm = () => {
                 </div>
                 <div className='flex flex-col items-center'>
                     <div className='text-muted  font-semibold flex items-center gap-x-1 ' > Already have an account?<Link className='text-primary italic underline text-sm  font-normal' href={"/sign-in"}>Sign in</Link> </div>
-                    <Link href={""} className='underline text-primary text-sm italic'>Issue's signing in contact us here</Link>
+                    <Link href={""} className='underline text-primary text-sm italic'>{`Issue's signing in contact us here`}</Link>
                 </div>
 
             </Card>

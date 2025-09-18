@@ -17,7 +17,7 @@ const SliderElement: React.FC<Props> = ({
     label = "",
     value = 0.4,
     step = 0.01,
-    onValueChange,
+    // onValueChange,
     ...props
 }) => {
     return (

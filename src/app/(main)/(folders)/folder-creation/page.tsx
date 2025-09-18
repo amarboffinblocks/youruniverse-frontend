@@ -2,7 +2,6 @@
 
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import Container from "@/components/elements/container";
-import CharacterForm from "@/components/forms/character-form";
 import FolderForm from "@/components/forms/folder-form";
 export default function page() {
     return (

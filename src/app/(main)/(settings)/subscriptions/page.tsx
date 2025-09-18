@@ -1,7 +1,6 @@
 
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import ComingSoon from "@/components/elements/coming-soon";
-import CharacterPage from "@/components/pages/character-page";
 
 
 export default function page() {

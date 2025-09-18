@@ -1,8 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-import { Download, FolderSymlink, Image, Menu, MoreVertical, Search, User, Users } from 'lucide-react'
+import {  Menu,  Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
     DropdownMenu,
@@ -16,7 +15,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from '../ui/button'
-import { Checkbox } from '../ui/checkbox';
 import BackgroundCard from '../cards/background-card';
 import { PaginationComponent } from '../elements/pagination-element';
 const BackgroundPage = () => {

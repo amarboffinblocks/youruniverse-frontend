@@ -1,7 +1,6 @@
 "use client"
-import React, { useState } from 'react'
+import React from 'react'
 import { Input } from '@/components/ui/input'
-import { Switch } from '@/components/ui/switch'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -24,7 +23,7 @@ interface Props {
     label?: string;
 }
 const Filters: React.FC<Props> = ({ label = "Character" }) => {
-    const [sfw, setSfw] = useState(false)
+    // const [sfw, setSfw] = useState(false)
     return (
         <div className=' space-y-4'>
             <div className='flex items-center gap-6 w-full '>
@@ -74,14 +73,15 @@ const Filters: React.FC<Props> = ({ label = "Character" }) => {
                                 <DropdownMenuLabel>Set Default View</DropdownMenuLabel>
                                 <DropdownMenuItem>Saved Characters</DropdownMenuItem>
                                 <DropdownMenuItem>Public Characters</DropdownMenuItem>
-                                <DropdownMenuItem>Folders</DropdownMenuItem>
+                                <Link href={"/folders"}><DropdownMenuItem>Folders</DropdownMenuItem></Link>
                             </DropdownMenuGroup>
 
                             <DropdownMenuSeparator />
 
                             <DropdownMenuGroup>
-                                <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                                <DropdownMenuItem> <Link href={"/charactereditor"}>Create Character</Link></DropdownMenuItem>
+                                <Link href={"/folder-creation"}>   <DropdownMenuItem>  Create Folder</DropdownMenuItem></Link>
+
+                                <Link href={"/charactereditor"}>   <DropdownMenuItem> Create Character</DropdownMenuItem></Link>
                                 <DropdownMenuSub>
                                     <DropdownMenuSubTrigger>Import Character</DropdownMenuSubTrigger>
                                     <DropdownMenuPortal>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import Header from "@/components/layout/header";
 import StarAnimation from "@/components/elements/star-animation";
+
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative antialiased bg-background w-screen h-screen flex flex-col `}
       >
+        <StarAnimation />
         {children}
       </body>
     </html>

@@ -39,7 +39,7 @@ const LoginForm = () => {
                     <Button className='w-full'>Sign in</Button>
                 </div>
                 <div className='text-center'>
-                    <p className='text-muted font-semibold ' > Don't have Your Own Universe?</p>
+                    <p className='text-muted font-semibold ' > {`Don't have Your Own Universe?`}</p>
                     <Link href={"/sign-up"} className='underline text-primary text-sm italic'>Create Your Universe Here</Link>
 
                 </div>

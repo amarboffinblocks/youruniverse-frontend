@@ -20,8 +20,7 @@ import {
   restrictToVerticalAxis,
   restrictToWindowEdges,
 } from '@dnd-kit/modifiers';
-import { Input } from '@/components/ui/input';
-import { Plus, GripVertical, Trash2, X } from 'lucide-react';
+import { Plus, GripVertical, Trash2 } from 'lucide-react';
 import Field from './field';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -78,6 +77,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
     onChange(updatedMessages);
   };
 
+  console.log("d", isDialogOpen)
   return (
     <div className='relative'>
       <Dialog>
@@ -175,11 +175,11 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
 interface SortableMessageProps {
   id: string;
   message: string;
-  index: number;
+  index?: number;
   onDelete: () => void;
 }
 
-const SortableMessage: React.FC<SortableMessageProps> = ({ id, message, index, onDelete }) => {
+const SortableMessage: React.FC<SortableMessageProps> = ({ id, message, onDelete }) => {
   const {
     attributes,
     listeners,

@@ -10,9 +10,22 @@ import {
 import { Badge } from "../ui/badge";
 
 
+interface Character {
+    id: number;
+    name: string;
+    avatar?: string;
+    description: string;
+}
 
+interface Folder {
+    id: number;
+    name: string;
+    tags: string[];
+    description: string;
+    characters: Character[];
+}
 interface FolderCardProps {
-    folder: any;
+    folder: Folder;
 }
 
 const FolderCard: React.FC<FolderCardProps> = ({
@@ -30,7 +43,7 @@ const FolderCard: React.FC<FolderCardProps> = ({
                 <div className="space-y-1">
                     <h2 className="text-lg text-white/80">{folder.name}</h2>
                     <div className="flex gap-2 flex-wrap">
-                        {folder.tags.map((tag: any, idx: number) => (
+                        {folder.tags.map((tag: string, idx: number) => (
                             <Badge key={idx}>{tag}</Badge>
                         ))}
                     </div>
@@ -45,7 +58,7 @@ const FolderCard: React.FC<FolderCardProps> = ({
                 {folder.characters.length > 0 && (
                     <div className="space-y-2">
                         <Accordion type="single" collapsible className="w-full">
-                            {folder.characters.map((char: any) => (
+                            {folder.characters.map((char: Character) => (
                                 <AccordionItem
                                     key={char.id}
                                     value={`item-${char.id}`}

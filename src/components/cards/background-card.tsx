@@ -1,6 +1,6 @@
 import React from 'react'
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Download, FolderSymlink, Image, MoreVertical, User, Users } from 'lucide-react'
+import { Download, FolderSymlink, Image as ImageIcon, MoreVertical, User, Users } from 'lucide-react'
 
 import {
     DropdownMenu,
@@ -10,10 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from '../ui/button'
 import { Checkbox } from '../ui/checkbox';
-interface Props {
 
-}
-const BackgroundCard: React.FC<Props> = ({ ...props }) => {
+const BackgroundCard: React.FC = ({ ...props }) => {
     return (
         <div {...props} className=' relative rounded-[2rem] border border-primary bg-primary/30 backdrop-blur-2xl  overflow-hidden group  aspect-video   '>
             <Avatar className="  w-full h-full rounded-none  brightness-75   ">
@@ -59,7 +57,7 @@ const BackgroundCard: React.FC<Props> = ({ ...props }) => {
                             <Users className="w-4 h-4 mr-2" /> Link to Persona
                         </DropdownMenuItem>
                         <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                            <Image className="w-4 h-4 mr-2" /> Set as Default Global Background
+                            <ImageIcon className="w-4 h-4 mr-2" /> Set as Default Global Background
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

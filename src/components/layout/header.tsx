@@ -106,7 +106,7 @@ const Header: React.FC = () => {
         setOpenDropdown(openDropdown === idx ? null : idx);
     };
     return (
-        <header className="sticky top-0 z-50  ">
+        <header className="sticky top-0 z-50 relative  ">
             <Container className="flex justify-center items-center py-6">
                 <div className="flex items-center gap-8">
                     {headerItems.map((item, idx) => {
@@ -130,7 +130,7 @@ const Header: React.FC = () => {
                                             {openDropdown === idx && (
                                                 <motion.div
                                                     ref={dropdownRef}
-                                                    className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2"
+                                                    className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2 z-50"
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
                                                     exit={{ opacity: 0 }}

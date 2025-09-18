@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React from "react";
 import Field from "../elements/form-elements/field";
 import { Label } from "../ui/label";
 import ImageUpload from "../elements/form-elements/image-upload"
@@ -21,12 +21,6 @@ interface Props {
 }
 
 const CharacterForm: React.FC<Props> = () => {
-
-
-    const handleChange = () => {
-
-    }
-
 
 
     return (

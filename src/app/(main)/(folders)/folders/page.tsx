@@ -1,7 +1,6 @@
 
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import Container from "@/components/elements/container";
-import CharacterPage from "@/components/pages/character-page";
 import FolderPage from "@/components/pages/folder-page";
 
 

@@ -20,7 +20,7 @@ export function MasonryGrid<T>({
         const grid = gridRef.current;
         if (!grid) return;
 
-        let resizeTimer: any;
+        let resizeTimer: ReturnType<typeof setTimeout> | undefined; // ✅ typed timer
 
         const getRowGap = () => {
             const style = window.getComputedStyle(grid);
@@ -57,7 +57,7 @@ export function MasonryGrid<T>({
         if (imagesLoaded === images.length) resizeAll();
 
         const debouncedResize = () => {
-            clearTimeout(resizeTimer);
+            if (resizeTimer) clearTimeout(resizeTimer);
             resizeTimer = setTimeout(resizeAll, 50);
         };
 
@@ -66,13 +66,13 @@ export function MasonryGrid<T>({
 
         resizeAll();
         window.addEventListener("resize", debouncedResize);
-        window.addEventListener("load", resizeAll); 
+        window.addEventListener("load", resizeAll);
 
         return () => {
             observer.disconnect();
             window.removeEventListener("resize", debouncedResize);
             window.removeEventListener("load", resizeAll);
-            clearTimeout(resizeTimer);
+            if (resizeTimer) clearTimeout(resizeTimer);
         };
     }, [items, baseRowHeight]);
 

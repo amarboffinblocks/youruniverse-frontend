@@ -144,7 +144,7 @@ export const folderItems: Folder[] = [
 const FolderPage = () => {
     const [page, setPage] = useState(1)
 
-    const items = Array.from({ length: 8 }, (_, i) => i + 1);
+    // const items = Array.from({ length: 8 }, (_, i) => i + 1);
     return (
         <div className='flex flex-col h-full pt-10' >
             <div className='space-y-4'>
@@ -184,7 +184,7 @@ const FolderPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <DropdownMenuItem> <Link href={"/folder-creation"}> Create Folder</Link></DropdownMenuItem>
+                                    <Link href={"/folder-creation"}>   <DropdownMenuItem>  Create Folder</DropdownMenuItem></Link>
 
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>

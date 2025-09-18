@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import { Actions, Action } from '@/components/ai-elements/actions';
 import { Message, MessageContent } from '@/components/ai-elements/message';
 import {
@@ -31,9 +29,27 @@ import { Response } from '@/components/ai-elements/response';
 import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, SquarePen, GitBranch } from 'lucide-react';
 import { Fragment } from 'react';
 import { Label } from '../ui/label';
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from '../ui/button';
-const dummyMessages = [
+
+export type MessagePart = {
+    type: "text";   // In the future, you can add "image" | "audio" etc.
+    text: string;
+};
+
+// Message role types
+export type MessageRole = "user" | "assistant" | "system";
+
+// Single message structure
+export interface ChatMessage {
+    id: string;
+    role: MessageRole;
+    parts: MessagePart[];
+}
+
+// Full dummy message array type
+export type ChatMessages = ChatMessage[];
+
+const dummyMessages: ChatMessages = [
     {
         id: '1',
         role: 'user',
@@ -119,15 +135,15 @@ Raised in harsh conditions, Kevin’s exposure to alien tech led him down a trou
 ];
 
 const ChatMessages = () => {
-    const [messages, setMessages] = useState(dummyMessages)
+    // const [messages, setMessages] = useState(dummyMessages)
 
     return (
         <div className="flex flex-1 p-6 flex-col h-full">
             <Conversation>
                 <ConversationContent>
-                    {messages.map((message: any, messageIndex: number) => (
+                    {dummyMessages.map((message) => (
                         <Fragment key={message.id}>
-                            {message?.parts.map((part: any, i: number) => {
+                            {message?.parts.map((part, i: number) => {
                                 switch (part.type) {
                                     case 'text':
                                         // const isLastMessage =
@@ -222,6 +238,7 @@ const ChatMessages = () => {
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger asChild>
                                                                 <Button
+                                                                    suppressHydrationWarning
                                                                     type='button'
                                                                     onClick={() =>
                                                                         navigator.clipboard.writeText(part.text)

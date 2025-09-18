@@ -1,7 +1,7 @@
 import React from 'react'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { EllipsisVertical, FilePlus2, FolderPlus, Heart, Link2, MessageCircleMore, MoreVertical, Share2, ShieldCheck, SquarePen, ThumbsDown, ThumbsUp, Upload, UsersRound } from "lucide-react";
+import { EllipsisVertical,  FolderPlus,  Link2, MessageCircleMore,  Share2,  SquarePen, ThumbsDown, ThumbsUp, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
