@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 const SignUpForm = () => {
     return (
-        <div className='w-full max-w-sm '>
+        <div className='w-full max-w-md '>
             <div className="relative w-full h-50 ">
                 <Image
                     src="/logo/logo.png"
@@ -36,8 +36,11 @@ const SignUpForm = () => {
                     <Input placeholder='Enter your password' />
                 </div>
                 <div className='space-y-2'>
-                    <Label htmlFor='confirm-password'>Password</Label>
+                    <Label htmlFor='confirm-password'>Confirm Password</Label>
                     <Input placeholder='Enter your confirm password' />
+                </div>
+                <div className='py-8 border border-primary rounded-2xl text-center'>
+                    <h2 className='text-white'>Subscription Plans</h2>
                 </div>
                 <div className='py-2'>
                     <Button className='w-full'>Ragister</Button>
