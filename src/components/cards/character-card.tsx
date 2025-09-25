@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
+import Chat from "../icons/chat";
 
 interface CharacterCardProps {
     item?: number
@@ -66,23 +67,23 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 align="end"
                             // className=" bg-gray-900 text-white border border-gray-800"
                             >
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Link2 className="w-4 h-4 mr-2" /> Link
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer ">
+                                    <Link2 className="w-4 h-4 mr-2 text-white" /> Link
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <FolderPlus className="w-4 h-4 mr-2" /> Add to Folder
+                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Folder
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Share2 className="w-4 h-4 mr-2" /> Share
+                                    <Share2 className="w-4 h-4 mr-2 text-white" /> Share
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Upload className="w-4 h-4 mr-2" /> Export
+                                    <Upload className="w-4 h-4 mr-2 text-white" /> Export
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <SquarePen className="w-4 h-4 mr-2" /> Edit
+                                    <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <MessageCircleMore className="w-4 h-4 mr-2" /> Chat With Me
+                                    <Chat className=" mr-2 w-4  h-4 text-white " /> Chat With Me
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

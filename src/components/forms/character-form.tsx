@@ -14,8 +14,8 @@ import {
 import { Button } from "../ui/button";
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 import MessageListManager from "../elements/form-elements/message-list-manager";
-import ToggleButton from "../elements/toggle-button";
 import SelectElement from "../elements/select-element";
+import { ToggleSwitch } from "../elements/toggle-switch";
 interface Props {
     characterId?: string;
 }
@@ -42,90 +42,100 @@ const CharacterForm: React.FC<Props> = () => {
                 </div>
 
                 <div className=" flex-1 space-y-2">
-                    <div className="flex gap-x-2 items-center ">
+                    <div className="flex gap-x-2  ">
                         <div className="space-y-2 flex-1">
                             <Label>Character Name</Label>
-                            <Field placeholder="Enter the character's name" name="characterName" tokens={1000} />
+                            <Field placeholder="Enter the character's name" name="characterName" />
                         </div>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button className="rounded-xl" >
-                                    Character Menu <Menu />
-                                </Button>
-                            </DropdownMenuTrigger>
+                        <div className="pt-5">
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button className="rounded-full" >
+                                        Character Menu <Menu />
+                                    </Button>
+                                </DropdownMenuTrigger>
 
-                            <DropdownMenuContent className="w-64" align="end">
-                                <DropdownMenuGroup>
-                                    <DropdownMenuItem>
-                                        Duplicate
-                                        <DropdownMenuShortcut><Copy className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                <DropdownMenuContent className="w-64" align="end">
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem>
+                                            Duplicate
+                                            <DropdownMenuShortcut><Copy className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem>
-                                        Link to Account
-                                        <DropdownMenuShortcut><LinkIcon className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Link to Account
+                                            <DropdownMenuShortcut><LinkIcon className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem>
-                                        Clear All Fields
-                                        <DropdownMenuShortcut><RotateCcw className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Clear All Fields
+                                            <DropdownMenuShortcut><RotateCcw className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem>
-                                        Import
-                                        <DropdownMenuShortcut><Upload className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Import
+                                            <DropdownMenuShortcut><Upload className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem>
-                                        Export
-                                        <DropdownMenuShortcut><Download className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Export
+                                            <DropdownMenuShortcut><Download className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem>
-                                        Link to Folder
-                                        <DropdownMenuShortcut><Folder className="size-4" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
+                                        <DropdownMenuItem>
+                                            Link to Folder
+                                            <DropdownMenuShortcut><Folder className="size-4" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
 
-                                    <DropdownMenuItem variant="destructive" >
-                                        Delete
-                                        <DropdownMenuShortcut><Trash2 className="size-4 text-destructive" /></DropdownMenuShortcut>
-                                    </DropdownMenuItem>
-                                </DropdownMenuGroup>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                                        <DropdownMenuItem variant="destructive" >
+                                            Delete
+                                            <DropdownMenuShortcut><Trash2 className="size-4 text-destructive" /></DropdownMenuShortcut>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </div>
 
                     </div>
-                    <div className=" grid grid-cols-3 gap-x-4 py-2">
+                    <div className=" grid grid-cols-2 gap-x-4 py-2">
                         <div className="flex gap-x-4">
-                            <ToggleButton
-                                defaultChecked={true}
-                                labelOn="Public"
-                                labelOff="Private"
-                                onToggle={(state) => console.log("Current state:", state)}
-                            />
-                            <ToggleButton
-                                defaultChecked={true}
-                                labelOn="SFW"
-                                labelOff="NSFW"
-                                onToggle={(state) => console.log("Current state:", state)}
-                            />
+                            <ToggleSwitch options={[
+                                { label: "Private", value: "private" },
+                                { label: "Public", value: "public" },
+                            ]} />
+                            <ToggleSwitch options={[
+                                { label: "NSFW", value: "NSFW" },
+                                { label: "SFW", value: "SFW" },
+                            ]} />
 
                         </div>
-                        <SelectElement className="w-full" placeholder="select a persona" options={[
-                            { value: "purple", label: "Dark Purple" },
-                            { value: "white", label: "White" },
-                            { value: "yellow", label: "Yellow" },
-                            { value: "grapes", label: "Grapes" },
-                            { value: "pineapple", label: "Pineapple" },
-                        ]} />
-                        <SelectElement placeholder="select a lorebook" className="w-full" options={[
-                            { value: "purple", label: "Dark Purple" },
-                            { value: "white", label: "White" },
-                            { value: "yellow", label: "Yellow" },
-                            { value: "grapes", label: "Grapes" },
-                            { value: "pineapple", label: "Pineapple" },
-                        ]} />
+                        <div className="grid grid-cols-2 gap-x-4">
+                            <SelectElement className="w-full" placeholder="select a persona" options={[
+                                { value: "purple", label: "Dark Purple" },
+                                { value: "white", label: "White" },
+                                { value: "yellow", label: "Yellow" },
+                                { value: "grapes", label: "Grapes" },
+                                { value: "pineapple", label: "Pineapple" },
+                            ]} />
+                            <SelectElement placeholder="select a lorebook" className="w-full" options={[
+                                { value: "purple", label: "Dark Purple" },
+                                { value: "white", label: "White" },
+                                { value: "yellow", label: "Yellow" },
+                                { value: "grapes", label: "Grapes" },
+                                { value: "pineapple", label: "Pineapple" },
+                            ]} />
+                        </div>
                     </div>
+                    <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Field
+                            as="textarea"
+                            placeholder="Describe your character's background, story, or key traits"
+                            name="Description"
+                            tokens={1000}
+                        />
+                    </div>
+
                     <div className="space-y-2">
                         <Label>Scenario</Label>
                         <Field
@@ -156,6 +166,15 @@ const CharacterForm: React.FC<Props> = () => {
                             tokens={1000}
                         />
                     </div>
+                    <div className="space-y-2">
+                        <Label>Alternative First Message</Label>
+                        <MessageListManager
+                            initialMessages={["How can I help you?", "Hello!"]}
+                            placeholder="Enter Alternative first message"
+                            onChange={(value) => console.log(value)}
+
+                        />
+                    </div>
 
                     <div className="space-y-2">
                         <Label>Example Dialogue</Label>
@@ -183,18 +202,9 @@ const CharacterForm: React.FC<Props> = () => {
                             as="textarea"
                             placeholder="Add any additional details about the character"
                             name="characterNotes"
-                            tokens={1000}
                         />
                     </div>
-                    <div className="space-y-2">
-                        <Label>Alternative First Message</Label>
-                        <MessageListManager
-                            initialMessages={["How can I help you?", "Hello!"]}
-                            placeholder="Enter Alternative first message"
-                            onChange={(value) => console.log(value)}
 
-                        />
-                    </div>
                 </div>
 
             </form>

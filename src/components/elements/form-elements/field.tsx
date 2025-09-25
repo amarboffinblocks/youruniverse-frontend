@@ -46,11 +46,12 @@ const Field: React.FC<FieldProps> = ({
                 {...props}
             />
             <div className="flex justify-between items-center text-sm text-muted-foreground px-1">
-                {errorMessage && (
-                    <p id="error-message" className="text-destructive text-sm">
-                        {errorMessage}
-                    </p>
-                )}
+                <p
+                    id="error-message"
+                    className={`text-destructive text-sm ${errorMessage ? "visible" : "invisible"}`}
+                >
+                    {errorMessage || "placeholder"}
+                </p>
                 {tokens && <span className={cn("ml-auto  text-xs", errorMessage && "text-destructive")}>
                     {tokens} tokens
                 </span>}

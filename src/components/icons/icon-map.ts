@@ -13,6 +13,7 @@ import Models from "@/components/icons/models";
 import PersonaV1 from "@/components/icons/persona-v1";
 import Profile from "@/components/icons/profile";
 import Settings from "@/components/icons/settings";
+import YourUniverse from "./your-universe";
 
 
 
@@ -32,4 +33,5 @@ export const iconMap = [
     PersonaV1,
     Profile,
     Settings,
+    YourUniverse
 ]

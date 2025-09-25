@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils'
 import React from 'react'
 interface IconProps {
     className?: string
@@ -5,7 +6,7 @@ interface IconProps {
 
 const Chat: React.FC<IconProps> = ({ className }) => {
     return (
-        <svg className={className} width="2000" height="2000" viewBox="0 0 2000 2000" fill="#552EFB" xmlns="http://www.w3.org/2000/svg">
+        <svg className={cn("text-[#552EFB]", className)} width="2000" height="2000" viewBox="0 0 2000 2000" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path d="M1758.88 895.836V2000H299.062V895.836H313.053V1986.01H1744.89V895.836H1758.88Z" />
             <path d="M313.053 895.836V1986.01H1744.89V895.836H1758.88V2000H299.062V895.836H313.053Z" />
             <path d="M1706.69 895.836V1938.52H351.281V895.836H365.271V1924.53H1692.7V895.836H1706.69Z" />

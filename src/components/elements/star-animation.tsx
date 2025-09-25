@@ -56,7 +56,36 @@ function StarComponent({
     mousePos: { x: number; y: number };
 }) {
     const controls = useAnimation();
+    const twinkleControls = useAnimation();
 
+    // Twinkling effect
+    useEffect(() => {
+        const startTwinkling = async () => {
+            while (true) {
+                // Random duration between 2-4 seconds for smooth twinkling
+                const duration = 2 + Math.random() * 2;
+                // Random delay between twinkles
+                const delay = Math.random() * 3;
+
+                await twinkleControls.start({
+                    opacity: [1, 0.3, 1],
+                    scale: [1, 0.8, 1],
+                    transition: {
+                        duration: duration,
+                        ease: "easeInOut",
+                        times: [0, 0.5, 1],
+                    }
+                });
+
+                // Random pause before next twinkle
+                await new Promise(resolve => setTimeout(resolve, delay * 1000));
+            }
+        };
+
+        startTwinkling();
+    }, [twinkleControls]);
+
+    // Mouse movement effect
     useEffect(() => {
         const dx = mousePos.x - star.x;
         const dy = mousePos.y - star.y;
@@ -90,6 +119,17 @@ function StarComponent({
                 backgroundColor: star.color,
                 boxShadow: `0 0 ${star.size * 4}px ${star.color}`,
             }}
-        />
+        >
+            {/* Twinkling overlay */}
+            <motion.div
+                animate={twinkleControls}
+                initial={{ opacity: 1, scale: 1 }}
+                className="w-full h-full rounded-full"
+                style={{
+                    backgroundColor: star.color,
+                    boxShadow: `0 0 ${star.size * 6}px ${star.color}`,
+                }}
+            />
+        </motion.div>
     );
 }

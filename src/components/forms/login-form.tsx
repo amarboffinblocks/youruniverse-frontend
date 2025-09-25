@@ -6,10 +6,11 @@ import { Input } from '../ui/input'
 import Field from '../elements/form-elements/field'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import PasswordField from '../elements/form-elements/password-field'
 
 const LoginForm = () => {
     return (
-        <div className='w-full max-w-sm '>
+        <div className='w-full max-w-md '>
             <div className="relative w-full h-50 ">
                 <Image
                     src="/logo/logo.png"
@@ -30,7 +31,7 @@ const LoginForm = () => {
                 </div>
                 <div className='space-y-2'>
                     <Label htmlFor='password'>Password</Label>
-                    <Input placeholder='Enter your password' />
+                    <PasswordField placeholder="Enter Your Password" />
                 </div>
                 <div>
                     <Link href={""} className='underline text-primary italic float-end text-sm'>Forgot Password?</Link>
@@ -38,11 +39,11 @@ const LoginForm = () => {
                 <div className=''>
                     <Button className='w-full'>Sign in</Button>
                 </div>
-                <div className='text-center'>
+                <div className='text-center flex flex-col '>
                     <p className='text-muted font-semibold ' > {`Don't have Your Own Universe?`}</p>
                     <Link href={"/sign-up"} className='underline text-primary text-sm italic'>Create Your Universe Here</Link>
-
                 </div>
+                <Link href={""} className='underline text-primary text-sm italic'>{`Issue's signing in contact us here`}</Link>
 
             </Card>
         </div>

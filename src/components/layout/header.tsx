@@ -19,6 +19,7 @@ import Background from "@/components/icons/background";
 import Download from "@/components/icons/download";
 import Subscriptions from "@/components/icons/subscriptions";
 import { motion, AnimatePresence } from "framer-motion";
+import YourUniverse from "../icons/your-universe";
 // ----------------- Types -----------------
 interface HeaderItem {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -48,7 +49,7 @@ const headerItems: HeaderItem[] = [
         ],
     },
     {
-        icon: Settings,
+        icon: YourUniverse,
         title: "Your Universe",
         href: "/universe",
         dropdown: [

@@ -10,7 +10,7 @@ const filetuningData = [
         value: 512,
         header: "Max Tokens",
         description:
-            "Max Tokens sets the length of the response The higher the value the longer the response. The lower the value the quicker the reply. Please keep in mind each word is approximately 1.3 Tokens.",
+            "Max Tokens sets the length of the response. The higher the value the longer the response. The lower the value the quicker the reply. Please keep in mind each word is approximately 1.3 Tokens.",
     },
     {
         label: "Temperature",
