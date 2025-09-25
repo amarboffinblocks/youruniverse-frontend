@@ -32,8 +32,8 @@ const SelectElement: React.FC<SelectElementProps> = ({
     className = "w-[180px]",
 }) => {
     return (
-        <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className={className}>
+        <Select value={value} onValueChange={onChange} >
+            <SelectTrigger className={className} >
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>

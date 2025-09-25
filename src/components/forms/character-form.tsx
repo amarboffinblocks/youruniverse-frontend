@@ -16,10 +16,27 @@ import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateC
 import MessageListManager from "../elements/form-elements/message-list-manager";
 import SelectElement from "../elements/select-element";
 import { ToggleSwitch } from "../elements/toggle-switch";
+import { MultiSelect } from "../ui/multi-select";
 interface Props {
     characterId?: string;
 }
-
+const options = [
+    { label: "Creative", value: "creative" },
+    { label: "Funny", value: "funny" },
+    { label: "Serious", value: "serious" },
+    { label: "Fantasy", value: "fantasy" },
+    { label: "Sci-Fi", value: "sci-fi" },
+    { label: "Friendly", value: "friendly" },
+    { label: "Professional", value: "professional" },
+    { label: "Adventurous", value: "adventurous" },
+    { label: "Mysterious", value: "mysterious" },
+    { label: "Brave", value: "brave" },
+    { label: "Intelligent", value: "intelligent" },
+    { label: "Curious", value: "curious" },
+    { label: "Kind", value: "kind" },
+    { label: "Charming", value: "charming" },
+    { label: "Heroic", value: "heroic" }
+];
 const CharacterForm: React.FC<Props> = () => {
 
 
@@ -109,23 +126,38 @@ const CharacterForm: React.FC<Props> = () => {
                             ]} />
 
                         </div>
-                        <div className="grid grid-cols-2 gap-x-4">
-                            <SelectElement className="w-full" placeholder="select a persona" options={[
-                                { value: "purple", label: "Dark Purple" },
-                                { value: "white", label: "White" },
-                                { value: "yellow", label: "Yellow" },
-                                { value: "grapes", label: "Grapes" },
-                                { value: "pineapple", label: "Pineapple" },
-                            ]} />
+                        <div className="">
                             <SelectElement placeholder="select a lorebook" className="w-full" options={[
-                                { value: "purple", label: "Dark Purple" },
-                                { value: "white", label: "White" },
-                                { value: "yellow", label: "Yellow" },
-                                { value: "grapes", label: "Grapes" },
-                                { value: "pineapple", label: "Pineapple" },
+                                {
+                                    value: "luna-ai",
+                                    label: "Luna AI",
+                                },
+                                {
+                                    value: "astro-bot",
+                                    label: "Astro Bot",
+                                },
+                                {
+                                    value: "neo-guide",
+                                    label: "Neo Guide",
+                                },
+                                {
+                                    value: "zara-mentor",
+                                    label: "Zara Mentor",
+                                }
                             ]} />
                         </div>
                     </div>
+                    <div className=" space-y-2 py-2  ">
+                        <Label>Choose Character Tags</Label>
+                        <MultiSelect
+                            maxCount={5}
+                            options={options}
+                            onValueChange={(value) => console.log(value)}
+                            placeholder="Select tags that best describe your character"
+                            singleLine={false}
+                        />
+                    </div>
+
                     <div className="space-y-2">
                         <Label>Description</Label>
                         <Field
