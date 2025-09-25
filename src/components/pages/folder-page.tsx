@@ -197,14 +197,14 @@ const FolderPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <DropdownMenuSub>
+                                    {/* <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Link Character to Folder</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
                                                 <DropdownMenuItem>Bulk Link Characters from Saved Characters</DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
-                                    </DropdownMenuSub>
+                                    </DropdownMenuSub> */}
                                     <DropdownMenuItem variant='destructive'>Delete Folder</DropdownMenuItem>
 
                                 </DropdownMenuGroup>

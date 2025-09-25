@@ -44,7 +44,7 @@ const FolderForm: React.FC<Props> = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         {/* Show Favorites */}
-                                        <DropdownMenuItem>Show Favorite Folders Only</DropdownMenuItem>
+                                        <DropdownMenuItem>Show Favorite Characters Only</DropdownMenuItem>
 
                                         {/* Sorting Options */}
                                         <DropdownMenuSub>
