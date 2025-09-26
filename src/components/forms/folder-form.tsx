@@ -67,12 +67,15 @@ const FolderForm: React.FC<Props> = () => {
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
 
-                                        {/* Link Character */}
+                                        {/* Link to Folder Dropdown */}
                                         <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>Link Character to Folder</DropdownMenuSubTrigger>
+                                            <DropdownMenuSubTrigger>Link to Folder</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
+                                                    {/* Link Character */}
                                                     <DropdownMenuItem>Bulk Link Characters from Saved Characters</DropdownMenuItem>
+                                                    <DropdownMenuItem>Link Persona to Folder</DropdownMenuItem>
+                                                    <DropdownMenuItem>Link Lorebook to Folder</DropdownMenuItem>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>

@@ -151,7 +151,7 @@ const FolderPage = () => {
                 <div className='flex flex-1 items-center gap-x-4 '>
                     <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                         <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Folder Search by title`} />
+                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for folder name, character name, or description`} />
                     </div>
                     <div>
                         <DropdownMenu>
@@ -184,7 +184,7 @@ const FolderPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <Link href={"/folder-creation"}>   <DropdownMenuItem>  Create Folder</DropdownMenuItem></Link>
+                                    <Link href={"/folder-creation"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
 
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
@@ -215,11 +215,11 @@ const FolderPage = () => {
                 <div className='grid grid-cols-2 gap-4'>
                     <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                         <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Folder Search by title`} />
+                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search by folder or character tag`} />
                     </div>
                     <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
                         <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Folder Search by title`} />
+                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Tag’s to exclude in search`} />
                     </div>
                 </div>
             </div>
