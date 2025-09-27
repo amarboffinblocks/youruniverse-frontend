@@ -142,8 +142,6 @@ const LorebookPage = () => {
                                 <LorebookCard key={item} />
                             ))
                         }
-
-
                     </div>
 
                 </TabsContent>

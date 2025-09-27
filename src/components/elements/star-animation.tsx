@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 
 const STAR_COUNT = 200;
-const RADIUS = 150; // Cursor ke pass ka area jisme stars move karenge
+const RADIUS = 150;
 
 type Star = {
     id: number;
@@ -12,7 +12,7 @@ type Star = {
     y: number;
     size: number;
     color: string;
-    depth: number;
+    glow: string;
 };
 
 export default function StarField() {
@@ -25,8 +25,8 @@ export default function StarField() {
             x: Math.random() * window.innerWidth,
             y: Math.random() * window.innerHeight,
             size: Math.random() * 2 + 1,
-            color: Math.random() < 0.15 ? "#38bdf8" : "#ffffff",
-            depth: Math.random() * 2 + 1,
+            color: "#ffffff",
+            glow: "rgba(255,255,255,0.6)"
         }));
         setStars(generatedStars);
     }, []);
@@ -48,63 +48,41 @@ export default function StarField() {
     );
 }
 
-function StarComponent({
-    star,
-    mousePos,
-}: {
-    star: Star;
-    mousePos: { x: number; y: number };
-}) {
+function StarComponent({ star, mousePos }: { star: Star; mousePos: { x: number; y: number } }) {
     const controls = useAnimation();
     const twinkleControls = useAnimation();
 
-    // Twinkling effect
+    // Random Twinkle Effect
     useEffect(() => {
-        const startTwinkling = async () => {
+        const twinkle = async () => {
             while (true) {
-                // Random duration between 2-4 seconds for smooth twinkling
-                const duration = 2 + Math.random() * 2;
-                // Random delay between twinkles
-                const delay = Math.random() * 3;
-
+                const duration = 0.5 + Math.random() * 1.5;
+                const delay = Math.random() * 2; // random delay for each star
                 await twinkleControls.start({
-                    opacity: [1, 0.3, 1],
-                    scale: [1, 0.8, 1],
-                    transition: {
-                        duration: duration,
-                        ease: "easeInOut",
-                        times: [0, 0.5, 1],
-                    }
+                    opacity: [1, 0.3 + Math.random() * 0.5, 1],
+                    scale: [1, 0.7 + Math.random() * 0.3, 1],
+                    transition: { duration, ease: "easeInOut" }
                 });
-
-                // Random pause before next twinkle
-                await new Promise(resolve => setTimeout(resolve, delay * 1000));
+                await new Promise((res) => setTimeout(res, delay * 1000));
             }
         };
-
-        startTwinkling();
+        twinkle();
     }, [twinkleControls]);
 
-    // Mouse movement effect
+    // Mouse hover movement
     useEffect(() => {
         const dx = mousePos.x - star.x;
         const dy = mousePos.y - star.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         if (distance < RADIUS) {
-            // Sirf pass ke stars ko move karo
             controls.start({
-                x: star.x + dx * 0.2,
-                y: star.y + dy * 0.2,
+                x: star.x + dx * 0.1,
+                y: star.y + dy * 0.1,
                 transition: { type: "spring", stiffness: 80, damping: 12 },
             });
         } else {
-            // Baaki stars wapas apni jagah aa jayein
-            controls.start({
-                x: star.x,
-                y: star.y,
-                transition: { type: "spring", stiffness: 80, damping: 12 },
-            });
+            controls.start({ x: star.x, y: star.y });
         }
     }, [mousePos, star.x, star.y, controls]);
 
@@ -117,17 +95,17 @@ function StarComponent({
                 width: `${star.size}px`,
                 height: `${star.size}px`,
                 backgroundColor: star.color,
-                boxShadow: `0 0 ${star.size * 4}px ${star.color}`,
+                boxShadow: `0 0 ${star.size * 8}px ${star.glow}`,
+                borderRadius: "50%",
             }}
         >
-            {/* Twinkling overlay */}
             <motion.div
                 animate={twinkleControls}
                 initial={{ opacity: 1, scale: 1 }}
                 className="w-full h-full rounded-full"
                 style={{
                     backgroundColor: star.color,
-                    boxShadow: `0 0 ${star.size * 6}px ${star.color}`,
+                    boxShadow: `0 0 ${star.size * 12}px ${star.glow}`,
                 }}
             />
         </motion.div>

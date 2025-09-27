@@ -18,6 +18,7 @@ import { PaginationComponent } from '../elements/pagination-element';
 import FolderCard from '../cards/folder-card';
 import { MasonryGrid } from '../elements/masonry-grid'
 import Link from 'next/link'
+import SearchField from '../elements/search-field'
 interface Character {
     id: number;
     name: string;
@@ -149,10 +150,7 @@ const FolderPage = () => {
         <div className='flex flex-col h-full pt-10' >
             <div className='space-y-4'>
                 <div className='flex flex-1 items-center gap-x-4 '>
-                    <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
-                        <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for folder name, character name, or description`} />
-                    </div>
+                    <SearchField placeholder='Search by folder name and character name' />
                     <div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -212,15 +210,10 @@ const FolderPage = () => {
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-4'>
-                    <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
-                        <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search by folder or character tag`} />
-                    </div>
-                    <div className='flex flex-1 items-center bg-primary/20 backdrop-blur-2xl   border rounded-full pl-4 py-2 border-primary/70'>
-                        <Search className='text-muted' />
-                        <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Tag’s to exclude in search`} />
-                    </div>
+                <div className='grid grid-cols-2 gap-x-4'>
+                    <SearchField placeholder='Search by tags' />
+                    <SearchField placeholder='Tags to exclude' />
+
                 </div>
             </div>
             <div className='flex-1   mt-10'>

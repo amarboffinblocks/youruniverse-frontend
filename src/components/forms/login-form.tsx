@@ -27,10 +27,10 @@ const LoginForm = () => {
                 </div>
                 <div className=' space-y-2'>
                     <Label htmlFor='username'>Email or Username *</Label>
-                    <Field placeholder='Enter your email or username' />
+                    <Input placeholder='Enter your username & email' />
                 </div>
                 <div className='space-y-2'>
-                    <Label htmlFor='password'>Password</Label>
+                    <Label htmlFor='password'>Password *</Label>
                     <PasswordField placeholder="Enter Your Password" />
                 </div>
                 <div>

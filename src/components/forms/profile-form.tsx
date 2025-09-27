@@ -13,9 +13,10 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button";
-import { Menu, Trash2} from "lucide-react";
+import { Menu, Trash2 } from "lucide-react";
 import { Switch } from "../ui/switch";
 import SelectElement from "../elements/select-element";
+import { ToggleSwitch } from "../elements/toggle-switch";
 interface Props {
     characterId?: string;
 }
@@ -39,12 +40,12 @@ const ProfileForm: React.FC<Props> = () => {
                 </div>
 
                 <div className=" flex-1 space-y-2">
-                    <div className="flex gap-x-2 items-end ">
+                    <div className="flex gap-x-2 ">
                         <div className="space-y-2 flex-1">
-                            <Label>User Name</Label>
-                            <Field placeholder="username" name="characterName" />
+                            <Label>Username</Label>
+                            <Field placeholder="Enter your username" name="characterName" showCopyButton={true} />
                         </div>
-                        <div className="mb-1">
+                        <div className="mt-5.5">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button >
@@ -69,7 +70,7 @@ const ProfileForm: React.FC<Props> = () => {
 
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>
-                                            Bulk Export YourUniverse
+                                            Bulk Export Your Universe
                                         </DropdownMenuItem>
                                         <DropdownMenuItem variant="destructive" >
                                             Delete
@@ -81,36 +82,33 @@ const ProfileForm: React.FC<Props> = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
-
                     </div>
 
                     <div className="space-y-2">
                         <Label>Email</Label>
                         <Field
                             type="email"
-                            placeholder="Enter you email"
+                            placeholder="Enter your email"
                             name="scenario"
+                            showCopyButton={true}
                         />
                     </div>
-                    <div className="flex  items-center gap-x-4">
-                        <Switch />
-                        <Switch />
-                        <SelectElement options={[
+                    <div className="grid grid-cols-3 pb-4">
+                        <ToggleSwitch options={[
+                            { label: "Private", value: "private" },
+                            { label: "Public", value: "public" },
+                        ]} />
+                        <ToggleSwitch options={[
+                            { label: "NSFW", value: "NSFW" },
+                            { label: "SFW", value: "SFW" },
+                        ]} />
+                        <SelectElement placeholder="Choose your theme" options={[
                             { value: "purple", label: "Dark Purple" },
                             { value: "white", label: "White" },
                             { value: "yellow", label: "Yellow" },
                             { value: "grapes", label: "Grapes" },
                             { value: "pineapple", label: "Pineapple" },
                         ]} />
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label>Email</Label>
-                        <Field
-                            type="email"
-                            placeholder="Enter you email"
-                            name="scenario"
-                        />
                     </div>
 
                     <div className="space-y-2">

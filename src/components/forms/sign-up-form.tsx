@@ -27,11 +27,11 @@ const SignUpForm = () => {
                 </div>
                 <div className=' space-y-2'>
                     <Label htmlFor='username'>Username</Label>
-                    <Field placeholder='Enter your  username' />
+                    <Input placeholder='Enter your  username' />
                 </div>
                 <div className=' space-y-2'>
                     <Label htmlFor='email'>Email</Label>
-                    <Field placeholder='Enter your  email' />
+                    <Input placeholder='Enter your  email' />
                 </div>
                 <div className='space-y-2'>
                     <Label htmlFor='password'>Password</Label>

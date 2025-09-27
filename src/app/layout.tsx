@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import StarAnimation from "@/components/elements/star-animation";
 
 import "./globals.css";
+import { ShootingStars } from "@/components/elements/shooting-stars";
+import { StarsBackground } from "@/components/elements/stars-background";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +31,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} relative antialiased bg-background w-screen h-screen flex flex-col `}
       >
-        <StarAnimation />
+        <ShootingStars />
+        <StarsBackground />
+
         {children}
       </body>
     </html>

@@ -8,6 +8,7 @@ interface BaseProps {
     tokens?: number;
     errorMessage?: string;
     className?: string;
+    showCopyButton?: boolean;
 }
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -25,6 +26,8 @@ const Field: React.FC<FieldProps> = ({
     tokens,
     errorMessage,
     className,
+    showCopyButton = false,
+
     ...props
 }) => {
     const Component = (as === "textarea" ? Textarea : Input) as React.ElementType;
@@ -43,6 +46,7 @@ const Field: React.FC<FieldProps> = ({
                 className={cn(className, errorClasses)}
                 aria-invalid={!!errorMessage}
                 aria-describedby={errorMessage ? "error-message" : undefined}
+                showCopyButton={showCopyButton}
                 {...props}
             />
             <div className="flex justify-between items-center text-sm text-muted-foreground px-1">
