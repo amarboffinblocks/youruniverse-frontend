@@ -1,11 +1,9 @@
 "use client"
 import React from 'react'
 import Container from "@/components/elements/container";
-import FilterBar from "@/components/elements/filters";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react";
 import { PaginationComponent } from "@/components/elements/pagination-element";
-import PersonaCard from "@/components/cards/persona-card";
 import DataNotFound from '../elements/data-not-found';
 import { Input } from '@/components/ui/input'
 import {
@@ -24,13 +22,14 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
+import CharacterCard from '../cards/character-card';
 
 const PersonaPage = () => {
     const [page, setPage] = useState(1)
 
     return (
         <Container className="flex flex-col h-full "  >
-            <div className="max-w-2xl mx-auto w-full">
+            <div className="max-w-3xl mx-auto w-full">
                 <div className='space-y-4'>
                     <div className='flex items-center gap-6 w-full '>
                         <div className='w-full'>
@@ -78,7 +77,9 @@ const PersonaPage = () => {
                                                 <DropdownMenuSubContent>
                                                     <DropdownMenuItem>Saved Personas</DropdownMenuItem>
                                                     <DropdownMenuItem>Public Personas</DropdownMenuItem>
-                                                    <DropdownMenuItem>Folders</DropdownMenuItem>
+                                                    <Link href={"/folders"}>
+                                                        <DropdownMenuItem>Folders</DropdownMenuItem>
+                                                    </Link>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
@@ -87,10 +88,10 @@ const PersonaPage = () => {
                                             <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <Link href="/folder-creation" passHref>
+                                                    <Link href="/folders/create" passHref>
                                                         <DropdownMenuItem>Create Folder</DropdownMenuItem>
                                                     </Link>
-                                                    <Link href="/createLink" passHref>
+                                                    <Link href="/personas/create" passHref>
                                                         <DropdownMenuItem>Create Persona</DropdownMenuItem>
                                                     </Link>
                                                     <DropdownMenuItem>Import Single Persona</DropdownMenuItem>
@@ -135,10 +136,10 @@ const PersonaPage = () => {
                     <TabsTrigger value="private">Private Persona</TabsTrigger>
                 </TabsList>
                 <TabsContent value="all" >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {
                             [1, 2, 3, 4].map((item) => (
-                                <PersonaCard key={item} />
+                                <CharacterCard key={item} />
                             ))
                         }
 

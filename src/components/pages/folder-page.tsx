@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react'
 import { Menu, Search, } from 'lucide-react'
-import { Input } from '@/components/ui/input'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -145,7 +144,6 @@ export const folderItems: Folder[] = [
 const FolderPage = () => {
     const [page, setPage] = useState(1)
 
-    // const items = Array.from({ length: 8 }, (_, i) => i + 1);
     return (
         <div className='flex flex-col h-full pt-10' >
             <div className='space-y-4'>
@@ -182,7 +180,7 @@ const FolderPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <Link href={"/folder-creation"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
+                                    <Link href={"/folders/create"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
 
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
@@ -194,17 +192,7 @@ const FolderPage = () => {
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
-
-                                    {/* <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger>Link Character to Folder</DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuItem>Bulk Link Characters from Saved Characters</DropdownMenuItem>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub> */}
                                     <DropdownMenuItem variant='destructive'>Delete Folder</DropdownMenuItem>
-
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

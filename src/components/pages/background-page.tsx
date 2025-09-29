@@ -23,7 +23,7 @@ const BackgroundPage = () => {
 
     return (
         <div className='flex flex-col h-full ' >
-            <div className='space-y-4'>
+            <div className=' max-w-3xl mx-auto w-full space-y-4'>
 
                 <div className='w-full flex items-center gap-x-4 mt-10'>
                     <SearchField placeholder='Search by background name ' />

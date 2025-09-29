@@ -1,27 +1,23 @@
 "use client"
 import React from 'react'
 import Container from "@/components/elements/container";
-import { Input } from '@/components/ui/input'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Button } from '@/components/ui/button'
-import { Menu, Search } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react";
 import { PaginationComponent } from "@/components/elements/pagination-element";
-import PersonaCard from "@/components/cards/persona-card";
 import CharacterCard from "@/components/cards/character-card";
 import DataNotFound from '../elements/data-not-found';
 import SearchField from '../elements/search-field';
@@ -79,10 +75,10 @@ const CharacterPage = () => {
                       <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          <Link href={"/folder-creation"} passHref>
+                          <Link href={"/folders/create"} passHref>
                             <DropdownMenuItem>Create Folder</DropdownMenuItem>
                           </Link>
-                          <Link href={"/charactereditor"} passHref>
+                          <Link href={"/characters/create"} passHref>
                             <DropdownMenuItem>Create Character</DropdownMenuItem>
                           </Link>
                           <DropdownMenuItem>Import Single Character</DropdownMenuItem>
@@ -104,7 +100,6 @@ const CharacterPage = () => {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
-
             </div>
           </div>
           <div className='flex items-center justify-center gap-4 w-full '>

@@ -1,11 +1,9 @@
 "use client"
 import React from 'react'
 import Container from "@/components/elements/container";
-import FilterBar from "@/components/elements/filters";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useState } from "react";
 import { PaginationComponent } from "@/components/elements/pagination-element";
-import LorebookCard from "@/components/cards/lorebook-card";
 import DataNotFound from '../elements/data-not-found';
 import { Input } from '@/components/ui/input'
 import {
@@ -13,9 +11,7 @@ import {
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuPortal,
-    DropdownMenuSeparator,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
@@ -24,13 +20,14 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
+import CharacterCard from '../cards/character-card';
 
 const LorebookPage = () => {
     const [page, setPage] = useState(1)
 
     return (
         <Container className=" flex flex-col h-full "  >
-            <div className="max-w-2xl mx-auto w-full">
+            <div className="max-w-3xl mx-auto w-full">
                 <div className='space-y-4'>
                     <div className='flex items-center gap-6 w-full '>
                         <div className='w-full'>
@@ -86,10 +83,10 @@ const LorebookPage = () => {
                                             <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <Link href="/folder-creation" passHref>
+                                                    <Link href="/folders/create" passHref>
                                                         <DropdownMenuItem>Create Folder</DropdownMenuItem>
                                                     </Link>
-                                                    <Link href="/createLink" passHref>
+                                                    <Link href="/lorebooks/create" passHref>
                                                         <DropdownMenuItem>Create Lorebook</DropdownMenuItem>
                                                     </Link>
                                                     <DropdownMenuItem>Import Single Lorebook</DropdownMenuItem>
@@ -136,10 +133,10 @@ const LorebookPage = () => {
                     <TabsTrigger value="private">Private Lorebook</TabsTrigger>
                 </TabsList>
                 <TabsContent value="all" >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {
                             [1, 2, 3, 4].map((item) => (
-                                <LorebookCard key={item} />
+                                <CharacterCard key={item} />
                             ))
                         }
                     </div>
