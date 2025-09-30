@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
+import Rating from "../elements/rating";
 
 interface CharacterCardProps {
     item?: number
@@ -22,9 +23,8 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     return (
         <Card
             {...props}
-            className={cn(" rounded-4xl  border border-gray-800 overflow-hidden  hover:border-primary hover:bg-primary/20 hover:shadow-2xl duration-300 relative", item === 3 && "border-primary bg-primary/20")}
+            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative")}
         >
-            {/* Header with Avatar + Action Menu */}
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
                     <div className="bg-gray-900 backdrop-blur-2xl rounded-full">
@@ -99,7 +99,9 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-
+                <div className=" absolute  bottom-4 left-4">
+                    <Rating value={3.5} size={18} readOnly={true} />
+                </div>
 
             </CardHeader>
 
@@ -121,6 +123,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                 <CardDescription className="text-gray-400 text-sm line-clamp-3">
                     Lyriana is a tall, ethereal sorceress with long silver hair that glimmers like moonlight. Her piercing violet eyes seem to hold the mysteries of forgotten worlds, and she carries herself with regal grace. Draped in flowing robes embroidered with celestial patterns, she wields a staff crowned by a radiant crystal that hums softly with arcane energy.
                 </CardDescription>
+                <span className="float-end text-xs text-gray-300">-- Author Name </span>
             </CardContent>
 
             <CardFooter className="flex mt-3 justify-between px-4 py-2  border-t border-gray-800 text-[10px] text-gray-500">

@@ -15,7 +15,11 @@ import Profile from "@/components/icons/profile";
 import Settings from "@/components/icons/settings";
 import YourUniverse from "./your-universe";
 
-
+import Ios from "./ios";
+import Apple from "./apple";
+import Window from "./window";
+import Linux from "./linux";
+import Android from "./android";
 
 export const iconMap = [
     Background,
@@ -33,5 +37,10 @@ export const iconMap = [
     PersonaV1,
     Profile,
     Settings,
-    YourUniverse
+    YourUniverse,
+    Ios,
+    Apple,
+    Window,
+    Linux,
+    Android
 ]
