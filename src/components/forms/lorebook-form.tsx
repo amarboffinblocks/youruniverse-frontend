@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button";
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
-import MessageListManager from "../elements/form-elements/message-list-manager";
 import SelectElement from "../elements/select-element";
 import { ToggleSwitch } from "../elements/toggle-switch";
 import { MultiSelect } from "../ui/multi-select";

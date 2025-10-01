@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "../ui/button";
 import { Menu, Trash2 } from "lucide-react";
-import { Switch } from "../ui/switch";
 import SelectElement from "../elements/select-element";
 import { ToggleSwitch } from "../elements/toggle-switch";
 interface Props {

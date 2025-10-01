@@ -1,16 +1,18 @@
 
+import React, { SVGProps } from "react";
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import Container from "@/components/elements/container";
 import Android from "@/components/icons/android";
 import Apple from "@/components/icons/apple";
-import { iconMap } from "@/components/icons/icon-map";
 import Ios from "@/components/icons/ios";
 import Linux from "@/components/icons/linux";
 import Window from "@/components/icons/window";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
-const downloads = [
+interface DownloadItem {
+  name: string;
+  icon: React.FC<SVGProps<SVGSVGElement>>; 
+  link: string;
+};
+const downloads :DownloadItem[]  = [
     {
         name: "Android",
         icon: Android,
@@ -46,10 +48,10 @@ export default function page() {
                     <div className=" mt-40 text-center px-4">
                         <h1 className="text-3xl text-white font-bold mb-10">Download Your App</h1>
                         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                            {downloads.map((item: any) => {
+                            {downloads.map((item, index:number) => {
                                 const Icon = item.icon || null
                                 return (
-                                    <div className="flex flex-col relative items-center justify-center space-y-3 aspect-square  p-4">
+                                    <div key={index} className="flex flex-col relative items-center justify-center space-y-3 aspect-square  p-4">
 
                                         {Icon && <Icon className=" size-40 text-white  " />}
 

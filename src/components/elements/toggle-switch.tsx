@@ -14,7 +14,6 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
     options,
     defaultValue,
     onChange,
-    className = "",
 }) => {
     const [active, setActive] = React.useState(defaultValue || options[0]?.value);
 

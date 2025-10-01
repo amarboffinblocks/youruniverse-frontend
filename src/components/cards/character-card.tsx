@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Heart, Link2, MessageCircleMore, MoreVertical, Share2, SquarePen, ThumbsDown, ThumbsUp, Upload } from "lucide-react";
+import { FolderPlus, Heart, Link2,  MoreVertical, Share2, SquarePen, ThumbsDown, ThumbsUp, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,7 +16,6 @@ interface CharacterCardProps {
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
-    item,
     ...props
 }) => {
 

@@ -3,11 +3,9 @@ import { Card } from '../ui/card'
 import Image from 'next/image'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import Field from '../elements/form-elements/field'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import PasswordField from '../elements/form-elements/password-field'
-import YourUniverse from '../icons/your-universe'
 
 const SignUpForm = () => {
     return (
