@@ -3,7 +3,6 @@ import { Card } from '../ui/card'
 import Image from 'next/image'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
-import Field from '../elements/form-elements/field'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import PasswordField from '../elements/form-elements/password-field'
@@ -11,7 +10,7 @@ import PasswordField from '../elements/form-elements/password-field'
 const LoginForm = () => {
     return (
         <div className='w-full max-w-md '>
-            <div className="relative w-full h-50 ">
+            {/* <div className="relative w-full h-50 ">
                 <Image
                     src="/logo/logo.png"
                     alt="universe-logo"
@@ -45,7 +44,7 @@ const LoginForm = () => {
                 </div>
                 <Link href={""} className='underline text-primary text-sm italic'>{`Issue's signing in contact us here`}</Link>
 
-            </Card>
+            </Card> */}
         </div>
     )
 }
