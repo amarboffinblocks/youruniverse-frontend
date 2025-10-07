@@ -1,5 +1,5 @@
 
-import React, { SVGProps } from "react";
+import React from "react";
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import Container from "@/components/elements/container";
 import Android from "@/components/icons/android";
