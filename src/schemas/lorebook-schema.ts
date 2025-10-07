@@ -8,7 +8,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "lorebookName",
@@ -23,7 +23,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "visiable",
@@ -68,7 +68,7 @@ export const lorebookSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "connectToPersona",
@@ -86,7 +86,7 @@ export const lorebookSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "tags",
@@ -100,7 +100,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "keyword",
@@ -110,7 +110,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -121,7 +121,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
 ]

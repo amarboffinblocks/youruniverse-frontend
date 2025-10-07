@@ -8,7 +8,7 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "name",
@@ -23,7 +23,7 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "details",
@@ -33,7 +33,7 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -44,7 +44,7 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
 
@@ -64,7 +64,7 @@ export const personaSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
+        
     },
 
 

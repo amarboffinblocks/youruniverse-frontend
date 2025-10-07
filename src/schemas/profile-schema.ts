@@ -8,7 +8,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "username",
@@ -19,7 +19,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "email",
@@ -30,7 +30,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "visiable",
@@ -74,7 +74,7 @@ export const profileSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "connectToPersona",
@@ -92,7 +92,7 @@ export const profileSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "tag-to-avoid",
@@ -106,7 +106,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "tags",
@@ -120,7 +120,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "following",
@@ -130,7 +130,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: false,
     },
     {
@@ -141,7 +141,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
 ]

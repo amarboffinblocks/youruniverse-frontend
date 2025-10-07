@@ -26,6 +26,7 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
             return <FormMultiSelect {...props} />
         case "file":
             return <FormImageUpload {...props} />
+            
         default:
             return null;
     }

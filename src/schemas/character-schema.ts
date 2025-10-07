@@ -8,7 +8,6 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
     },
     {
         name: "backgroundImage",
@@ -17,7 +16,6 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
     },
     {
         name: "characterName",
@@ -32,7 +30,6 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
     },
     {
         name: "visiable",
@@ -76,7 +73,6 @@ export const characterSchema: FormData[] = [
             ],
         },
         rows: "3",
-        defaultValue: "",
     },
     {
         name: "tags",
@@ -90,7 +86,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
     },
     {
         name: "description",
@@ -101,7 +97,6 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
         tokens: true,
     },
     {
@@ -113,7 +108,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -125,7 +120,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -137,7 +132,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -149,7 +144,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -161,7 +156,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
     {
@@ -173,7 +168,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue: "",
+        
         tokens: true,
     },
 ];

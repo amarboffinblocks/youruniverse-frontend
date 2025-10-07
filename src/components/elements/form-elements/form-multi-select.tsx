@@ -32,7 +32,7 @@ interface FormMultiSelectProps {
     label?: string;
     options?: MultiSelectOption[];
     placeholder?: string;
-    defaultValue?: string[];
+    defaultValue?: string |string[]|undefined;
     className?: string;
     maxCount?: number;
     singleLine?: boolean;

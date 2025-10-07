@@ -1,6 +1,5 @@
 "use client"
 import React from "react";
-import Field from "../elements/form-elements/field";
 import { Label } from "../ui/label";
 import {
     DropdownMenu,
@@ -18,6 +17,7 @@ import { Menu } from "lucide-react";
 import { Card, CardDescription } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
+import { Input } from "../ui/input";
 interface Props {
     characterId?: string;
 }
@@ -31,7 +31,7 @@ const FolderForm: React.FC<Props> = () => {
                     <div className="flex gap-x-2 ">
                         <div className="space-y-2 flex-1">
                             <Label>Folder Name</Label>
-                            <Field placeholder="Enter Folder Name" name="characterName" />
+                            <Input placeholder="Enter Folder Name" name="characterName" />
                         </div>
                         <div className="mt-5">
                             <DropdownMenu >
@@ -98,7 +98,7 @@ const FolderForm: React.FC<Props> = () => {
 
                     <div className="space-y-2">
                         <Label>Tag Name</Label>
-                        <Field
+                        <Input
                             placeholder="Enter Tag Name"
                             name="personalitySummary"
                         />
@@ -106,8 +106,7 @@ const FolderForm: React.FC<Props> = () => {
 
                     <div className="space-y-2">
                         <Label>Description</Label>
-                        <Field
-                            as="textarea"
+                        <Input
                             placeholder="Brief Description of Folder"
                             name="firstMessage"
                         />

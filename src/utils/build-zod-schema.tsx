@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormData } from "@/types/form-types";
 import { z } from "zod";
 
 export function buildZodSchema(fields: FormData[]) {
-    const shape: Record<string, string> = {};
+    const shape: Record<string, any> = {}; 
 
     fields.forEach((field) => {
         let schema: any;
@@ -34,8 +35,14 @@ export function buildZodSchema(fields: FormData[]) {
             case "multi-select":
                 schema = field.multiple ? z.array(z.string()) : z.string();
                 if (!field.required) schema = schema.optional();
-                if (field.required)
-                    schema = schema.refine((val: any) => !!val, `${field.label} is required`);
+                if (field.required) schema = schema.refine((val: any) => !!val, `${field.label} is required`);
+                break;
+
+            case "toggle":
+            case "switch":
+                schema = z.boolean();
+                if (!field.required) schema = schema.optional();
+                if (field.required) schema = schema.refine((val: any) => val !== undefined, `${field.label} is required`);
                 break;
 
             default:

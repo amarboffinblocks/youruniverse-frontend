@@ -21,11 +21,11 @@ import {
   restrictToWindowEdges,
 } from '@dnd-kit/modifiers';
 import { Plus, GripVertical, Trash2 } from 'lucide-react';
-import Field from './field';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import ToolTipElement from '../tooltip-element';
+import { Textarea } from '@/components/ui/textarea';
 
 interface MessageListManagerProps {
   initialMessages?: string[];
@@ -101,8 +101,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
           <div className="flex flex-col gap-y-2 w-full">
             <div className="overflow-y-auto flex-grow space-y-2">
               <div className='flex-1'>
-                <Field
-                  as='textarea'
+                <Textarea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Enter new message"
@@ -152,8 +151,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
         </DialogContent>
       </Dialog>
 
-      <Field
-        as="textarea"
+      <Textarea
         value={messages[0] || ''}
         placeholder={placeholder}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
