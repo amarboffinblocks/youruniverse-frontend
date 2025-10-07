@@ -16,7 +16,6 @@ interface CharacterCardProps {
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
-    item,
     ...props
 }) => {
     console.log(item,'character card')
