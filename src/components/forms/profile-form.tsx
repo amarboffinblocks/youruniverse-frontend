@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
+import { Menu, Trash2} from "lucide-react";
 
 import {
     DropdownMenu,

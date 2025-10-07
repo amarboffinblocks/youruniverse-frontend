@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import StarAnimation from "@/components/elements/star-animation";
 
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";

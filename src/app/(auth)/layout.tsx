@@ -1,4 +1,3 @@
-import StarAnimation from "@/components/elements/star-animation";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
     return (

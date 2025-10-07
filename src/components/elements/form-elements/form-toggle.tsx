@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useField } from "formik";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { FieldRules, FormToggleOptions } from "@/types/form-types";
+import { FieldRules } from "@/types/form-types";
 
 
 

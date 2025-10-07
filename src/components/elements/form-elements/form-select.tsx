@@ -8,17 +8,11 @@ import {
     SelectValue,
     SelectContent,
     SelectGroup,
-    SelectLabel,
     SelectItem,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { FieldRules } from "@/types/form-types";
-
-interface SelectOption {
-    value: string;
-    label: string;
-}
 
 interface FormSelectProps {
     name: string;

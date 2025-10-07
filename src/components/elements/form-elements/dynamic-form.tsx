@@ -8,7 +8,7 @@ import FormFields from "./fields";
 
 interface DynamicFormProps {
     schema: FormData[];
-    initialValues?: Record<string, any>;
+    initialValues?: Record<string,any>;
     onSubmit: (values: any) => void;
     children?: React.ReactNode;
 }

@@ -97,7 +97,6 @@ interface MultiSelectProps
     animationConfig?: AnimationConfig;
     maxCount?: number;
     modalPopover?: boolean;
-    asChild?: boolean;
     className?: string;
     hideSelectAll?: boolean;
     searchable?: boolean;
@@ -155,7 +154,6 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             animationConfig,
             maxCount = 3,
             modalPopover = false,
-            asChild = false,
             className,
             hideSelectAll = false,
             searchable = true,

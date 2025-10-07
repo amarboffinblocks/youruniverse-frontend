@@ -3,7 +3,6 @@ import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
 import Container from "@/components/elements/container";
 import Android from "@/components/icons/android";
 import Apple from "@/components/icons/apple";
-import { iconMap } from "@/components/icons/icon-map";
 import Ios from "@/components/icons/ios";
 import Linux from "@/components/icons/linux";
 import Window from "@/components/icons/window";

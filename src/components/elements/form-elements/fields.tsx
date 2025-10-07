@@ -8,7 +8,9 @@ import FormSelect from "./form-select";
 import FormMultiSelect from "./form-multi-select";
 import FormImageUpload from "./image-upload";
 
-interface FormFieldsProps extends FormData { }
+interface FormFieldsProps extends FormData {
+  cols?: FormData["cols"];
+}
 
 const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
     switch (type) {

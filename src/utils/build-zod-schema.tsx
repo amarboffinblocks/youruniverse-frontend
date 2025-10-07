@@ -2,7 +2,7 @@ import { FormData } from "@/types/form-types";
 import { z } from "zod";
 
 export function buildZodSchema(fields: FormData[]) {
-    const shape: Record<string, any> = {};
+    const shape: Record<string, string> = {};
 
     fields.forEach((field) => {
         let schema: any;
