@@ -1,10 +1,12 @@
-import ComingSoon from '@/components/elements/coming-soon'
+// import ComingSoon from '@/components/elements/coming-soon'
+import LoginForm from '@/components/forms/login-form'
 import React from 'react'
 
 const page = () => {
   return (
     <div className='flex justify-center items-center h-full'>
-      <ComingSoon />
+      {/* <ComingSoon /> */}
+      <LoginForm></LoginForm>
     </div>
   )
 }
