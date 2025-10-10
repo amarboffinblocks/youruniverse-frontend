@@ -32,7 +32,6 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
         }
         setTouched(true);
     };
-    console.log(field)
 
     return (
         <div className="text-center space-y-2">

@@ -7,12 +7,17 @@ import FormToggle from "./form-toggle";
 import FormSelect from "./form-select";
 import FormMultiSelect from "./form-multi-select";
 import FormImageUpload from "./image-upload";
+import MessageListManager from "./message-list-manager";
+import { useField } from "formik";
 
 interface FormFieldsProps extends FormData {
   cols?: FormData["cols"];
 }
 
 const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
+      const [field, meta, helpers] = useField<string[]>(props.name);
+  const { value } = field;
+  const { setValue } = helpers;
     switch (type) {
         case "textarea":
             return <FormTextarea {...props} />;
@@ -26,7 +31,13 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
             return <FormMultiSelect {...props} />
         case "file":
             return <FormImageUpload {...props} />
-            
+        case "multi-entries":
+      return (
+        <MessageListManager
+          onChange={(messages: string[]) => setValue(messages)}
+          {...props}
+        />
+      );
         default:
             return null;
     }

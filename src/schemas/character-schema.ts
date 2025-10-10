@@ -136,6 +136,17 @@ export const characterSchema: FormData[] = [
         tokens: true,
     },
     {
+        name: "alternateMessages",
+        type: "multi-entries",
+        label: "Alternate Messages",
+        required: true,
+        placeholder: "Write the character's first message",
+        cols: 12,
+        row: 4,
+        rows: "3",
+        tokens: true,
+    },
+    {
         name: "exampleDialogue",
         type: "textarea",
         label: "Example Dialogue",

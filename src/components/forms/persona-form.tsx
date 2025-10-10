@@ -26,7 +26,11 @@ const PersonaForm: React.FC<Props> = () => {
         onSubmit={(values) => {
           console.log("Form Submitted:", values);
         }}
-
+        initialValues={{
+          name: 'xyz',
+          tagline: "xyz",
+          lorebook: 'astro-bot'
+        }}
       >
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

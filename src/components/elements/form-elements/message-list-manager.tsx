@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -26,15 +26,24 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import ToolTipElement from '../tooltip-element';
 import { Textarea } from '@/components/ui/textarea';
+import { Label } from "@/components/ui/label";
+import { useField } from 'formik';
+import { cn } from '@/lib/utils';
 
 interface MessageListManagerProps {
   initialMessages?: string[];
   placeholder?: string;
+  label?: string;
+  tokens?: boolean;
+  name?: string;
   onChange: (messages: string[]) => void;
 }
 
 const MessageListManager: React.FC<MessageListManagerProps> = ({
   initialMessages = [],
+  label = "",
+  name = "",
+  tokens = true,
   placeholder = "",
   onChange,
 }) => {
@@ -76,15 +85,31 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
     setMessages(updatedMessages);
     onChange(updatedMessages);
   };
-
-  console.log("d", isDialogOpen)
+  const [field, meta] = useField(name);
+  const errorMessage = meta.touched && meta.error ? meta.error : "";
+  const errorClasses = useMemo(
+    () =>
+      errorMessage
+        ? "border-destructive focus-visible:border-destructive bg-destructive/20"
+        : "",
+    [errorMessage]
+  );
+  const tokenCount = typeof field.value === "string" ? field.value.length : 0;
   return (
-    <div className='relative'>
+    <div className='relative space-y-2 '>
       <Dialog>
+        {label && (
+          <Label
+            htmlFor={name}
+            className={cn(errorMessage && "text-destructive")}
+          >
+            {label}
+          </Label>
+        )}
         <DialogTrigger asChild>
           <button
             type='button'
-            className='text-primary absolute top-[34%] -translate-y-[34%] -left-16 cursor-pointer'
+            className='text-primary absolute top-[44%] -translate-y-[34%] -left-16 cursor-pointer'
             onClick={() => setIsDialogOpen(true)}
           >
             <Plus className='size-14' />
@@ -126,7 +151,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                     <div className="space-y-3">
                       {messages.map((message, index) => (
                         <SortableMessage
-                          key={message}
+                          key={index}
                           id={message}
                           message={message}
                           index={index}
@@ -165,6 +190,27 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
           onChange(updatedMessages);
         }}
       />
+      <div className="flex justify-between items-center text-xs px-1 text-white">
+        <span
+          id={`${name}-error`}
+          className={cn(
+            "text-destructive",
+            errorMessage ? "visible" : "invisible"
+          )}
+        >
+          {errorMessage || "placeholder"}
+        </span>
+
+        {tokens === true && (
+          <span
+            className={cn(
+              errorMessage && "text-destructive",
+            )}
+          >
+            {tokenCount} Tokens
+          </span>
+        )}
+      </div>
     </div>
   );
 };

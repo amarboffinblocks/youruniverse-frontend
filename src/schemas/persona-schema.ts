@@ -25,35 +25,25 @@ export const personaSchema: FormData[] = [
         rows: "3",
         
     },
+    
     {
-        name: "details",
-        type: "textarea",
-        label: "Persona Details",
+        name: "tagline",
+        type: "text",
+        label: " Tagline",
         required: true,
+        placeholder: "Enter the tagline",
         cols: 12,
         row: 4,
         rows: "3",
         
-        tokens: true,
     },
-    {
-        name: "catchphrases",
-        type: "textarea",
-        label: "Catchphrases ",
-        required: true,
-        cols: 12,
-        row: 4,
-        rows: "3",
-        
-        tokens: true,
-    },
-
-    {
+     {
         name: "lorebook",
         type: "select",
         required: true,
+        label:"Select Lorebook",
         placeholder: "Connect to Lorebook",
-        cols: 6,
+        cols: 12,
         row: 4,
         rules: {
             options: [
@@ -66,6 +56,32 @@ export const personaSchema: FormData[] = [
         rows: "3",
         
     },
+    {
+        name: "details",
+        type: "textarea",
+        label: "Persona Details",
+        placeholder: "Enter the some details about persona",
+
+        required: true,
+        cols: 12,
+        row: 4,
+        rows: "3",
+        
+        tokens: true,
+    },
+    {
+        name: "catchphrases",
+        type: "multi-entries",
+        label: "Catchphrases ",
+        required: true,
+        placeholder: "Write the relative catchphrases",
+        cols: 12,
+        row: 4,
+        rows: "3",
+        tokens: true,
+    },
+   
+   
 
 
 ]

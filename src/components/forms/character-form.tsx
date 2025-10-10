@@ -26,12 +26,6 @@ const CharacterForm: React.FC<Props> = () => {
                 onSubmit={(values) => {
                     console.log("Form Submitted:", values);
                 }}
-            // initialValues={{
-            //     characterName: "Amarjeet Singh boffinblocks",
-            //     rating: "SFW",
-            //     visiable: "public",
-            //     lorebook: "lorebook-2"
-            // }}
             >
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

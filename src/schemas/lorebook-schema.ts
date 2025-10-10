@@ -102,21 +102,22 @@ export const lorebookSchema: FormData[] = [
         rows: "3",
         
     },
-    {
+     {
         name: "keyword",
-        type: "textarea",
-        label: "Keyword or Term",
+        type: "multi-entries",
+        label: "Keyword or Term ",
         required: true,
+        placeholder: "Write the Keywords",
         cols: 12,
         row: 4,
         rows: "3",
-        
         tokens: true,
     },
     {
         name: "context",
         type: "textarea",
         label: "Context",
+        placeholder: "Write the content related to keywords",
         required: true,
         cols: 12,
         row: 4,

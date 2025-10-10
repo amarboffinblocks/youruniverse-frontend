@@ -4,6 +4,7 @@ export type FieldType =
     | "textarea"
     | "file"
     | "select"
+    | "multi-entries"
     | "radio"
     | "checkbox"
     | "multi-select"
