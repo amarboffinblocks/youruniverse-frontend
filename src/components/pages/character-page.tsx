@@ -42,6 +42,7 @@ const CharacterPage = () => {
                 <DropdownMenuContent className="w-72" align="end">
                   <DropdownMenuGroup>
                     <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
+                    <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
@@ -104,7 +105,7 @@ const CharacterPage = () => {
           </div>
           <div className='flex items-center justify-center gap-4 w-full '>
             <SearchField placeholder='Search by character tags' />
-            <SearchField placeholder='Search tags you want to exclude' />
+            <SearchField placeholder='Tags to exclude from search' />
             <ToggleSwitch
               options={[
                 { label: "NSFW", value: "NSFW" },

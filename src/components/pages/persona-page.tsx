@@ -48,7 +48,7 @@ const PersonaPage = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-
+<DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
@@ -120,7 +120,7 @@ const PersonaPage = () => {
                         </div>
                         <div className='flex w-full  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full   pl-4 py-2 border-primary/70'>
                             <Search className='text-muted' />
-                            <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for for Tags to ignore`} />
+                            <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Tags to exclude from search`} />
                         </div>
 
                     </div>

@@ -11,13 +11,14 @@ import MessageListManager from "./message-list-manager";
 import { useField } from "formik";
 
 interface FormFieldsProps extends FormData {
-  cols?: FormData["cols"];
+    cols?: FormData["cols"];
 }
 
 const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
-      const [field, meta, helpers] = useField<string[]>(props.name);
-  const { value } = field;
-  const { setValue } = helpers;
+    const [field, meta, helpers] = useField<string[]>(props.name);
+    const { value } = field;
+    console.log(meta,value)
+    const { setValue } = helpers;
     switch (type) {
         case "textarea":
             return <FormTextarea {...props} />;
@@ -32,12 +33,12 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
         case "file":
             return <FormImageUpload {...props} />
         case "multi-entries":
-      return (
-        <MessageListManager
-          onChange={(messages: string[]) => setValue(messages)}
-          {...props}
-        />
-      );
+            return (
+                <MessageListManager
+                    onChange={(messages: string[]) => setValue(messages)}
+                    {...props}
+                />
+            );
         default:
             return null;
     }
