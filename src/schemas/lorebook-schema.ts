@@ -15,7 +15,7 @@ export const lorebookSchema: FormData[] = [
         type: "text",
         label: "Lorebook Name",
         required: true,
-        placeholder: "Enter the lorebook name",
+        placeholder: "Enter  lorebook name",
         rules: {
             min: 4,
             max: 20
@@ -56,7 +56,7 @@ export const lorebookSchema: FormData[] = [
         name: "connectToCharater",
         type: "select",
         required: true,
-        placeholder: "Connect to charater",
+        placeholder: "Link to Character",
         cols: 6,
         row: 4,
         rules: {
@@ -74,7 +74,7 @@ export const lorebookSchema: FormData[] = [
         name: "connectToPersona",
         type: "select",
         required: true,
-        placeholder: "Connect to Persona",
+        placeholder: "Link to Persona",
         cols: 12,
         row: 4,
         rules: {
@@ -91,9 +91,9 @@ export const lorebookSchema: FormData[] = [
     {
         name: "tags",
         type: "multi-select",
-        label: "Choose Tags",
+        label: "Tags",
         required: true,
-        placeholder: "Select tags that best describe your lorebook",
+        placeholder: "Single words describing your Character or Scenario",
         rules: {
             model: "tags"
         },
@@ -104,7 +104,7 @@ export const lorebookSchema: FormData[] = [
     },
      {
         name: "keyword",
-        type: "multi-entries",
+        type: "entries",
         label: "Keyword or Term ",
         required: true,
         placeholder: "Write the Keywords",
@@ -113,16 +113,16 @@ export const lorebookSchema: FormData[] = [
         rows: "3",
         tokens: true,
     },
-    {
-        name: "context",
-        type: "textarea",
-        label: "Context",
-        placeholder: "Write the content related to keywords",
-        required: true,
-        cols: 12,
-        row: 4,
-        rows: "3",
+    // {
+    //     name: "context",
+    //     type: "textarea",
+    //     label: "Context",
+    //     placeholder: "Write the content related to keywords",
+    //     required: true,
+    //     cols: 12,
+    //     row: 4,
+    //     rows: "3",
         
-        tokens: true,
-    },
+    //     tokens: true,
+    // },
 ]

@@ -11,6 +11,8 @@ export type FieldType =
     | "switch"
     | "toggle"
     | "email"
+    | "entries"
+    
 
 export interface FormToggleOptions {
     label: string;
