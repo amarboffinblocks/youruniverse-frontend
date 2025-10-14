@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import Image from "next/image";
 
 interface ZoomableImageModalContextProps {
   open: boolean;
@@ -64,8 +65,7 @@ export const ZoomableImageModalContent = ({
 
   // Target position for image (middle-left)
   const targetX = 40; // px from left
-  const targetY = window.innerHeight / 2 - height / 2; // vertical center
-
+  const targetY = typeof window !== "undefined" ? window.innerHeight / 2 - height / 2 : 0;
   return (
     <AnimatePresence>
       {open && startPos && (
@@ -97,8 +97,10 @@ export const ZoomableImageModalContent = ({
             transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
           >
             {/* Image */}
-            <img
+            <Image
               src={imageUrl}
+              width={400}
+              height={400}
               alt="Zoomed"
               className={`rounded-2xl shadow-lg object-cover w-full h-full pointer-events-auto ${className}`}
             />

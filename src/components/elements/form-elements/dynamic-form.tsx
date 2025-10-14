@@ -1,5 +1,5 @@
-"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
 import { FormData } from "@/types/form-types";
 import { buildZodSchema, buildInitialValues } from "@/utils/build-zod-schema";

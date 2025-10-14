@@ -113,6 +113,7 @@ const Header: React.FC = () => {
 
     const handleSelect = () => {
         setOpenDropdown(null); // Close dropdown after selecting
+        setGlowIndex(null)
     };
 
 
@@ -141,7 +142,7 @@ const Header: React.FC = () => {
                                                 onClick={() => toggleDropdown(idx)}
                                                 className="focus:outline-none"
                                             >
-                                                <Icon className={cn("hover:text-primary transition-colors cursor-pointer brightness-75 hover:brightness-100 ", item.iconClassName)} />
+                                                <Icon className={cn("hover:text-primary transition-colors cursor-pointer brightness-75 hover:brightness-100 ", item.iconClassName,glowClass)} />
                                             </button>
                                         </ToolTipElement>
 

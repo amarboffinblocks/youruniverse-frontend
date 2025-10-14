@@ -162,7 +162,7 @@ const ChatMessages = () => {
                                                                     </Avatar>
                                                                 </ZoomableImageModalTrigger>
 
-                                                                <ZoomableImageModalContent imageUrl="https://github.com/shadcn.png"  className="rounded-full" />
+                                                                <ZoomableImageModalContent imageUrl="https://avatars.githubusercontent.com/u/124599?v=4"  className="rounded-full" />
                                                             </ZoomableImageModal>
                                                             <Label className='text-xs'>Tony Stark</Label>
                                                         </div>
