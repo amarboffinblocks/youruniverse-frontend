@@ -8,14 +8,14 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+     
     },
     {
         name: "username",
         type: "text",
         label: "Username",
         required: true,
-        placeholder: "Enter your username",
+        placeholder: "john123",
         cols: 12,
         row: 4,
         rows: "3",
@@ -26,7 +26,7 @@ export const profileSchema: FormData[] = [
         type: "email",
         label: "Email",
         required: true,
-        placeholder: "Enter your email",
+        placeholder: "john@gmail.com",
         cols: 12,
         row: 4,
         rows: "3",
@@ -123,14 +123,25 @@ export const profileSchema: FormData[] = [
         
     },
     {
-        name: "following",
+        name: "aboutme",
         type: "textarea",
-        label: "Following",
+        label: "About Me",
         required: true,
         cols: 12,
         row: 4,
         rows: "3",
-        
+        placeholder:"Write something about you",
+        tokens: false,
+    },
+    {
+        name: "following",
+        type: "textarea",
+        label: "Following",
+        placeholder:"Enter topics or creators you’re currently following",
+        required: true,
+        cols: 12,
+        row: 4,
+        rows: "3",
         tokens: false,
     },
     {

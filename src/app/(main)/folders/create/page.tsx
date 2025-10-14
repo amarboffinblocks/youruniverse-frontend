@@ -1,7 +1,6 @@
 
 
 import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
-import ComingSoon from "@/components/elements/coming-soon";
 import Container from "@/components/elements/container";
 import FolderForm from "@/components/forms/folder-form";
 export default function page() {

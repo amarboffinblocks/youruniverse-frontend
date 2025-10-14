@@ -21,6 +21,7 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
 }) => {
     const [field, meta, helpers] = useField<File | null>(name);
     const { setValue, setTouched } = helpers;
+    console.log(field)
 
     const [preview, setPreview] = useState<string | null>(null);
 

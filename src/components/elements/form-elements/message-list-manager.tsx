@@ -50,6 +50,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   const [messages, setMessages] = useState<string[]>(initialMessages);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newMessage, setNewMessage] = useState('');
+  console.log(isDialogOpen)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -87,13 +88,13 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   };
   const [field, meta] = useField(name);
   const errorMessage = meta.touched && meta.error ? meta.error : "";
-  const errorClasses = useMemo(
-    () =>
-      errorMessage
-        ? "border-destructive focus-visible:border-destructive bg-destructive/20"
-        : "",
-    [errorMessage]
-  );
+  // const errorClasses = useMemo(
+  //   () =>
+  //     errorMessage
+  //       ? "border-destructive focus-visible:border-destructive bg-destructive/20"
+  //       : "",
+  //   [errorMessage]
+  // );
   const tokenCount = typeof field.value === "string" ? field.value.length : 0;
   return (
     <div className='relative space-y-2 '>

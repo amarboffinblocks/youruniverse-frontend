@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Heart, Link2,  MoreVertical, Share2, SquarePen, ThumbsDown, ThumbsUp, Upload } from "lucide-react";
+import { FolderPlus, Link2,  MoreVertical, Share2, SquarePen,Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
+import { Checkbox } from "../ui/checkbox";
 
 interface CharacterCardProps {
     item?: number
@@ -25,31 +26,10 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         >
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
-                    <div className="bg-gray-900 backdrop-blur-2xl rounded-full">
-                        <Button
-                            size="icon"
-                            className=" size-6 bg-transparent "
-                        >
-
-                            <Heart className="size-3" />
-                        </Button>
-                        <Button
-                            size="icon"
-                            variant="ghost"
-                            className="bg-transparent size-6"
-                        >
-
-                            <ThumbsUp className="size-3" />
-                        </Button>
-                        <Button
-                            size="icon"
-                            variant="ghost"
-                            className="bg-transparent size-6"
-                        >
-
-                            <ThumbsDown className="size-3" />
-                        </Button>
-                    </div>
+                      <Checkbox
+                    id="terms"
+                    className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
+                />
                     <div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -97,9 +77,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-                <div className=" absolute  bottom-4 left-4">
-                    <Rating value={3.5} size={18} readOnly={true} />
-                </div>
+                
 
             </CardHeader>
 
@@ -108,6 +86,10 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                 <div className="flex justify-between items-center">
                     <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
                     <span className="text-xs text-gray-400">Tokens: 1000</span>
+                </div>
+                <div className=" flex items-center gap-2 text-gray-400 ">
+                    <Rating value={3.5} size={18} readOnly={true} />
+                    {'( 25k )'}
                 </div>
                 <div className="flex gap-2 flex-wrap ">
                     {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (

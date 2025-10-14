@@ -6,14 +6,16 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { Timer } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import Link from "next/link";
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
-import { useRouter } from "next/navigation"; // 👈 import router
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import Image from "next/image";
+
+interface Otp{
+    otp:string
+}
 
 const VerifyOTP = () => {
     const [otp, setOtp] = useState('');
     const [timeLeft, setTimeLeft] = useState(60);
-    const router = useRouter(); // 👈 initialize
 
     useEffect(() => {
         if (timeLeft <= 0) return;
@@ -21,9 +23,9 @@ const VerifyOTP = () => {
         return () => clearInterval(timer);
     }, [timeLeft]);
 
-    const handleSubmit = async (values: any) => {
+    const handleSubmit = async (values: Otp) => {
         // Mock verification logic
-        console.log("Verifying OTP:", values.otp);
+        console.log("Verifying OTP:", values);
 
         // ✅ Navigate after verification success
         // setTimeout(() => {
@@ -60,7 +62,7 @@ const VerifyOTP = () => {
                             initialValues={{ otp: '' }}
                             onSubmit={handleSubmit}
                         >
-                            {({ isSubmitting, setFieldValue, values }) => (
+                            {({ isSubmitting, setFieldValue }) => (
                                 <Form className="space-y-2">
                                     <div className="space-y-2 flex items-center justify-center">
                                         <InputOTP

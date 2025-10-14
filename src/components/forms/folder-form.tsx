@@ -1,6 +1,5 @@
 "use client"
 import React from "react";
-import { Label } from "../ui/label";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,7 +16,8 @@ import { Menu } from "lucide-react";
 import { Card, CardDescription } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
-import { Input } from "../ui/input";
+import DynamicForm from "../elements/form-elements/dynamic-form";
+import { FolderSchema } from "@/schemas/folder-schema";
 interface Props {
     characterId?: string;
 }
@@ -26,14 +26,14 @@ const FolderForm: React.FC<Props> = () => {
 
     return (
         <div className="py-10 h-full space-y-10 ">
-            <form className=" flex gap-x-4">
-                <div className=" flex-1 space-y-2">
-                    <div className="flex gap-x-2 ">
-                        <div className="space-y-2 flex-1">
-                            <Label>Folder Name</Label>
-                            <Input placeholder="Enter Folder Name" name="characterName" />
-                        </div>
-                        <div className="mt-5">
+            <form className="w-full  grid ">
+                        <DynamicForm
+                            schema={FolderSchema}
+                            onSubmit={(values) => {
+                                console.log("Form Submitted:", values);
+                            }}
+                        >
+
                             <DropdownMenu >
                                 <DropdownMenuTrigger asChild>
                                     <Button className="rounded-full">
@@ -92,26 +92,9 @@ const FolderForm: React.FC<Props> = () => {
                                     </DropdownMenuGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                        </div>
+                        </DynamicForm>
 
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label>Tag Name</Label>
-                        <Input
-                            placeholder="Enter Tag Name"
-                            name="personalitySummary"
-                        />
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label>Description</Label>
-                        <Input
-                            placeholder="Brief Description of Folder"
-                            name="firstMessage"
-                        />
-                    </div>
-                </div>
+                   
             </form>
 
             <div className=" border border-primary bg-primary/30 backdrop-blur-md  h-full w-full max-h-[490px] rounded-4xl py-4   ">

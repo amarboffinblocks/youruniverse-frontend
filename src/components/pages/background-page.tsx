@@ -25,7 +25,7 @@ const BackgroundPage = () => {
             <div className=' max-w-3xl mx-auto w-full space-y-4'>
 
                 <div className='w-full flex items-center gap-x-4 mt-10'>
-                    <SearchField placeholder='Search by background name ' />
+                    <SearchField placeholder='Search by background name or description' />
 
                     <div>
                         <DropdownMenu>
@@ -80,8 +80,8 @@ const BackgroundPage = () => {
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-x-4'>
-                    <SearchField placeholder='Search by tag name' />
-                    <SearchField placeholder='Search tags you want to exclude' />
+                    <SearchField placeholder='Search by background tag' />
+                    <SearchField placeholder='Tags to exclude from search' />
 
                 </div>
 

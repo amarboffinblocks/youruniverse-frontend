@@ -1,20 +1,20 @@
 import React from 'react'
 import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { EllipsisVertical,  FolderPlus,  Link2, MessageCircleMore,  Share2,  SquarePen, ThumbsDown, ThumbsUp, Upload } from "lucide-react";
+import { EllipsisVertical,  FolderPlus,  Link2, MessageCircleMore,  Share2,  SquarePen,  Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Rating from '../elements/rating';
+import { Checkbox } from '../ui/checkbox';
 
 const PersonaCard: React.FC = ({ ...props }) => {
     return (
         <Card {...props} className="w-full rounded-[3rem] relative duration-500 gap-4 cursor-pointer border shadow-sm hover:shadow-md p-4">
             <div className="text-xs absolute  right-4 bg-accent px-2 py-1.5 rounded-full  items-center flex gap-x-2">
-                <div className='flex gap-1 items-center'>
-                    <ThumbsUp size={15} className="cursor-pointer"
-                    /> <span>10k</span>
-                </div>
-                <ThumbsDown size={15} className="cursor-pointer"
+                  <Checkbox
+                    id="terms"
+                    className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
                 />
 
 
@@ -62,6 +62,10 @@ const PersonaCard: React.FC = ({ ...props }) => {
 
                         Tony Stark
                     </h2>
+                     <div className=" flex items-center gap-2 text-gray-400 ">
+                                        <Rating value={3.5} size={18} readOnly={true} />
+                                        {'( 25k )'}
+                                    </div>
                     <div className="flex flex-wrap gap-2 mt-2">
                         {["AI", "Chatbot", "NLP", "ML", "Data",].map((tag: string) =>
                             < Badge key={tag} >

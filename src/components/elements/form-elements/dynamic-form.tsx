@@ -7,6 +7,7 @@ import { Formik, Form } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { Button } from "@/components/ui/button";
 import FormFields from "./fields";
+import { cn } from "@/lib/utils";
 
 interface DynamicFormProps {
     schema: FormData[];
@@ -36,13 +37,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             onSubmit={onSubmit}
         >
             <Form className="grid grid-cols-12 gap-3">
-                <div className="col-span-2 flex flex-col gap-y-3">
+               {fileFields.length > 0 &&<div className="col-span-2 flex flex-col gap-y-3">
                     {fileFields.map((field, index) => (
                         <FormFields key={index} {...field} cols={12} />
                     ))}
-                </div>
+                </div>}
 
-                <div className="col-span-10 grid grid-cols-12 gap-4">
+                <div className={cn(" grid grid-cols-12 gap-4",fileFields.length <= 0 ?"col-span-12":"col-span-10")}>
                     {otherFields.map((field, index) =>
                         index === 0 ? (
                             <div key={index} className="col-span-12 flex gap-x-3">

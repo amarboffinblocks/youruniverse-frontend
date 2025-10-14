@@ -148,7 +148,7 @@ const FolderPage = () => {
         <div className='flex flex-col h-full pt-10' >
             <div className='space-y-4'>
                 <div className='flex flex-1 items-center gap-x-4 '>
-                    <SearchField placeholder='Search by folder name and character name' />
+                    <SearchField placeholder='Search for Folder, Character name, or description' />
                     <div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -199,8 +199,8 @@ const FolderPage = () => {
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-x-4'>
-                    <SearchField placeholder='Search by tags' />
-                    <SearchField placeholder='Tags to exclude' />
+                    <SearchField placeholder='Search by Folder or Character Tag' />
+                    <SearchField placeholder='Tags to exclude from search' />
 
                 </div>
             </div>
