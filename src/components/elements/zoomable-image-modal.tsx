@@ -1,99 +1,119 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 
 interface ZoomableImageModalContextProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    setStartPos: (pos: { x: number; y: number } | null) => void;
-    startPos: { x: number; y: number } | null;
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  startPos: { x: number; y: number } | null;
+  setStartPos: (pos: { x: number; y: number } | null) => void;
 }
 
 const ZoomableImageModalContext = createContext<ZoomableImageModalContextProps | null>(null);
 
-export const ZoomableImageModal = ({ children }: { children: React.ReactNode }) => {
-    const [open, setOpen] = useState(false);
-    const [startPos, setStartPos] = useState<{ x: number; y: number } | null>(null);
+// ----------------- Provider -----------------
+export const ZoomableImageModal = ({ children }: { children: ReactNode }) => {
+  const [open, setOpen] = useState(false);
+  const [startPos, setStartPos] = useState<{ x: number; y: number } | null>(null);
 
-    return (
-        <ZoomableImageModalContext.Provider value={{ open, setOpen, startPos, setStartPos }}>
-            {children}
-        </ZoomableImageModalContext.Provider>
-    );
+  return (
+    <ZoomableImageModalContext.Provider value={{ open, setOpen, startPos, setStartPos }}>
+      {children}
+    </ZoomableImageModalContext.Provider>
+  );
 };
 
-export const ZoomableImageModalTrigger = ({
-    children,
-}: {
-    children: React.ReactNode;
-}) => {
-    const ctx = useContext(ZoomableImageModalContext);
-    if (!ctx) throw new Error("ZoomableImageModalTrigger must be inside ZoomableImageModal");
+// ----------------- Trigger -----------------
+export const ZoomableImageModalTrigger = ({ children }: { children: ReactNode }) => {
+  const ctx = useContext(ZoomableImageModalContext);
+  if (!ctx) throw new Error("ZoomableImageModalTrigger must be inside ZoomableImageModal");
 
-    const { setOpen, setStartPos } = ctx;
+  const { setOpen, setStartPos } = ctx;
 
-    const handleClick = (e: React.MouseEvent) => {
-        const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setStartPos({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
-        setOpen(true);
-    };
+  const handleClick = (e: React.MouseEvent) => {
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    setStartPos({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    setOpen(true);
+  };
 
-    return <div onClick={handleClick}>{children}</div>;
+  return <div onClick={handleClick}>{children}</div>;
 };
+
+// ----------------- Content -----------------
+interface ZoomableImageModalContentProps {
+  imageUrl: string;
+  width?: number;
+  height?: number;
+  className?: string;
+}
 
 export const ZoomableImageModalContent = ({
-    draggable = true,
-    className = "",
-    imageUrl = ""
-}: {
-    draggable?: boolean;
-    className?: string;
-    imageUrl: string
-}) => {
-    const ctx = useContext(ZoomableImageModalContext);
-    if (!ctx) throw new Error("ZoomableImageModalContent must be inside ZoomableImageModal");
+  imageUrl,
+  width = 290,
+  height = 290,
+  className = "",
+}: ZoomableImageModalContentProps) => {
+  const ctx = useContext(ZoomableImageModalContext);
+  if (!ctx) throw new Error("ZoomableImageModalContent must be inside ZoomableImageModal");
 
-    const { open, setOpen, startPos } = ctx;
+  const { open, setOpen, startPos } = ctx;
 
-    const handleClose = () => setOpen(false);
+  const handleClose = () => setOpen(false);
 
-    return (
-        <AnimatePresence>
-            {open && startPos && (
-                <motion.div
-                    className="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={handleClose}
-                >
-                    <motion.img
-                        src={imageUrl}
-                        alt="Zoomed"
-                        className={`max-w-[80%] max-h-[70%] bg-red-300 size-80 rounded-full shadow-lg cursor-grab ${className}`}
-                        initial={{
-                            x: startPos.x - window.innerWidth / 2,
-                            y: startPos.y - window.innerHeight / 2,
-                            scale: 0, // thoda chota start size
-                            opacity: 0,
-                        }}
-                        animate={{ x: 0, y: 0, scale: 1, opacity: 1 }}
-                        exit={{
-                            x: startPos.x - window.innerWidth / 2,
-                            y: startPos.y - window.innerHeight / 2,
-                            scale: 0.2, // exit pe bhi chota ho ke jaye
-                            opacity: 0,
-                        }}
-                        transition={{
-                            duration: 0.6,
-                        }}
-                        drag={draggable}
-                        dragMomentum={false}
-                        onClick={(e) => e.stopPropagation()}
-                    />
-                </motion.div>
-            )}
-        </AnimatePresence>
-    );
+  // Target position for image (middle-left)
+  const targetX = 40; // px from left
+  const targetY = window.innerHeight / 2 - height / 2; // vertical center
+
+  return (
+    <AnimatePresence>
+      {open && startPos && (
+        <motion.div
+          className="fixed inset-0 z-[9999] pointer-events-none "
+        >
+          {/* Wrapper for image + close button */}
+          <motion.div
+            className="absolute"
+            style={{ width: width, height: height }}
+            initial={{
+              x: startPos.x - width / 2,
+              y: startPos.y - height / 2,
+              scale: 0.2,
+              opacity: 0,
+            }}
+            animate={{
+              x: targetX,
+              y: targetY,
+              scale: 1,
+              opacity: 1,
+            }}
+            exit={{
+              x: startPos.x - width / 2,
+              y: startPos.y - height / 2,
+              scale: 0.2,
+              opacity: 0,
+            }}
+            transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+          >
+            {/* Image */}
+            <img
+              src={imageUrl}
+              alt="Zoomed"
+              className={`rounded-2xl shadow-lg object-cover w-full h-full pointer-events-auto ${className}`}
+            />
+
+            {/* Close button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-2 right-2 bg-primary cursor-pointer duration-500 text-white rounded-full p-1 hover:bg-red-600 pointer-events-auto"
+              aria-label="Close"
+            >
+              <X size={16} />
+            </button>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 };
