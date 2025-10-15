@@ -2,7 +2,7 @@
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
 import { ChevronsDown, Plus, Send, Trash, Upload } from "lucide-react";
-import BreadcrumbElements from "./breadcrumb-elements";
+import Footer from "./footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -101,7 +101,7 @@ const ChatPanel = () => {
                     </div>
                 </div>
             </form>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 };

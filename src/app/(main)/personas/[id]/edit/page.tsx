@@ -1,6 +1,6 @@
 
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/elements/footer";
 import ComingSoon from "@/components/elements/coming-soon";
 import Container from "@/components/elements/container";
 
@@ -12,7 +12,7 @@ export default function page() {
                     <ComingSoon />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

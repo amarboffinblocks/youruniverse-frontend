@@ -52,12 +52,13 @@ export const lorebookSchema: FormData[] = [
         row: 4,
         defaultValue: "SFW",
     },
-    {
-        name: "connectToCharater",
+   {
+        name: "linkToCharacters",
         type: "select",
         required: true,
+        label:"Select Character",
         placeholder: "Link to Character",
-        cols: 6,
+        cols: 12,
         row: 4,
         rules: {
             options: [

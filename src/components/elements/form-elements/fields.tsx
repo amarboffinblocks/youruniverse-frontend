@@ -8,6 +8,7 @@ import FormSelect from "./form-select";
 import FormMultiSelect from "./form-multi-select";
 import FormImageUpload from "./image-upload";
 import MessageListManager from "./message-list-manager";
+import FormCheckbox from "./form-checkbox";
 import { useField } from "formik";
 import EntriesField from "./entries-field";
 
@@ -36,6 +37,8 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
         case "entries":
             return (
                 <EntriesField />);
+        case "checkbox":
+            return <FormCheckbox {...props} />
         case "multi-entries":
             return (
                 <MessageListManager

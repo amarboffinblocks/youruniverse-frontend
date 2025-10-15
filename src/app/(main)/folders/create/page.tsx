@@ -1,6 +1,6 @@
 
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/elements/footer";
 import Container from "@/components/elements/container";
 import FolderForm from "@/components/forms/folder-form";
 export default function page() {
@@ -12,7 +12,7 @@ export default function page() {
                     <FolderForm />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

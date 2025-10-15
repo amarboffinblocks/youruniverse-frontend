@@ -1,7 +1,7 @@
 import React from 'react'
 import MessageListManager from './message-list-manager'
 import FormTextarea from './form-textarea'
-import { Plus, Trash, Trash2 } from 'lucide-react'
+import { Plus, Trash2 } from 'lucide-react'
 
 const EntriesField = () => {
     return (
