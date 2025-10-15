@@ -97,7 +97,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   // );
   const tokenCount = typeof field.value === "string" ? field.value.length : 0;
   return (
-    <div className='relative space-y-2 '>
+    <div className='relative space-y-2  '>
       <Dialog>
         {label && (
           <Label
