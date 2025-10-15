@@ -1,6 +1,6 @@
 
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/elements/footer";
 import Container from "@/components/elements/container";
 import BackgroundPage from "@/components/pages/background-page";
 export default function page() {
@@ -11,7 +11,7 @@ export default function page() {
                     <BackgroundPage />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/elements/footer";
 import Container from "@/components/elements/container";
 import LorebookForm from "@/components/forms/lorebook-form";
 
@@ -12,7 +12,7 @@ export default function page() {
                     <LorebookForm />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

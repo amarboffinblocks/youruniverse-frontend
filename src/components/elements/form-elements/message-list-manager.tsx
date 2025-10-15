@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -88,6 +88,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   };
   const [field, meta] = useField(name);
   const errorMessage = meta.touched && meta.error ? meta.error : "";
+
   // const errorClasses = useMemo(
   //   () =>
   //     errorMessage
@@ -95,7 +96,10 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   //       : "",
   //   [errorMessage]
   // );
-  const tokenCount = typeof field.value === "string" ? field.value.length : 0;
+  if(field){
+    console.log(field)
+  }
+  const tokenCount = messages.reduce((acc, msg) => acc + msg.length, 0);
   return (
     <div className='relative space-y-2  '>
       <Dialog>
@@ -116,7 +120,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
             <Plus className='size-14' />
           </button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] ">
+        <DialogContent className="sm:max-w-[600px] ">
           <DialogHeader className='p-4'>
             <DialogTitle>Manage Messages</DialogTitle>
             <DialogDescription>
@@ -139,9 +143,12 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                     }
                   }}
                 />
+                <p className="text-white text-end text-sm mt-1">
+                  {newMessage.length} tokens
+                </p>
               </div>
 
-              <div className=' max-h-[400px] overflow-y-auto'>
+              <div className=''>
                 <DndContext
                   sensors={sensors}
                   collisionDetection={closestCenter}
@@ -149,7 +156,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                   modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
                 >
                   <SortableContext items={messages} strategy={verticalListSortingStrategy}>
-                    <div className="space-y-3">
+                    <div className="space-y-4 mt-4  max-h-[500px] h-full  overflow-y-auto">
                       {messages.map((message, index) => (
                         <SortableMessage
                           key={index}
@@ -191,7 +198,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
           onChange(updatedMessages);
         }}
       />
-      <div className="flex justify-between items-center text-xs px-1 text-white">
+      <div className="flex justify-between items-center text-xs px-1 text-white ">
         <span
           id={`${name}-error`}
           className={cn(
@@ -220,11 +227,11 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
 interface SortableMessageProps {
   id: string;
   message: string;
-  index?: number;
+  index: number;
   onDelete: () => void;
 }
 
-const SortableMessage: React.FC<SortableMessageProps> = ({ id, message, onDelete }) => {
+const SortableMessage: React.FC<SortableMessageProps> = ({ id, message, onDelete, index }) => {
   const {
     attributes,
     listeners,
@@ -241,35 +248,42 @@ const SortableMessage: React.FC<SortableMessageProps> = ({ id, message, onDelete
   };
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="flex items-center justify-between gap-3 border border-primary rounded-2xl px-4 py-2 cursor-pointer"
-    >
-      <ToolTipElement discription={message}>
-        <div className="text-white line-clamp-3 ">{message}</div>
+    <div>
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="flex items-center justify-between gap-3 border border-primary rounded-2xl px-4 py-2 cursor-pointer"
+      >
+        <ToolTipElement discription={message}>
+          <div className="text-white line-clamp-3 "> <span className='font-bold'>{index + 1}</span> {message}</div>
 
-      </ToolTipElement>
-      <div className='flex items-center h-4 gap-x-1  '>
-        <Button
-          onClick={onDelete}
-          variant={"ghost"}
-          size={"icon"}
-          aria-label="Delete message"
-        >
-          <Trash2 className="w-5 h-5 text-white" />
-        </Button>
-        <Separator orientation="vertical" className='bg-white ' />
-        <Button
-          {...attributes}
-          {...listeners}
-          variant={"ghost"}
-          size={"icon"}
-        >
-          <GripVertical className=' text-white' />
-        </Button>
+        </ToolTipElement>
+        <div className='flex items-center h-4 gap-x-1  '>
+          <Button
+            onClick={onDelete}
+            variant={"ghost"}
+            size={"icon"}
+            aria-label="Delete message"
+          >
+            <Trash2 className="w-5 h-5 text-white" />
+          </Button>
+          <Separator orientation="vertical" className='bg-white ' />
+          <Button
+            {...attributes}
+            {...listeners}
+            variant={"ghost"}
+            size={"icon"}
+          >
+            <GripVertical className=' text-white' />
+          </Button>
+        </div>
       </div>
+      <p className="text-white text-end text-sm mt-1 mr-1">
+        {message.length} tokens
+      </p>
+
     </div>
+
   );
 };
 

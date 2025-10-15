@@ -20,11 +20,13 @@ import Download from "@/components/icons/download";
 import Subscriptions from "@/components/icons/subscriptions";
 import { motion, AnimatePresence } from "framer-motion";
 import YourUniverse from "../icons/your-universe";
+import { cn } from "@/lib/utils";
 // ----------------- Types -----------------
 interface HeaderItem {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     title: string;
     href: string;
+    iconClassName?: string;
     dropdown?: {
         icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
         title: string;
@@ -38,11 +40,15 @@ const headerItems: HeaderItem[] = [
         icon: Chat,
         title: "Chat",
         href: "/chat/character-id",
+        iconClassName: "h-16 w-16 text-primary",
+
     },
     {
         icon: Models,
         title: "All Models",
         href: "/models",
+        iconClassName: "h-24 w-24 text-primary",
+
         dropdown: [
             { icon: ModelSelection, title: "Model Selection", href: "/models-selection" },
             { icon: LlmSettings, title: "Model Tuning", href: "/models-tuning" },
@@ -52,6 +58,8 @@ const headerItems: HeaderItem[] = [
         icon: YourUniverse,
         title: "Your Universe",
         href: "/universe",
+        iconClassName: "h-24 w-24 text-primary",
+
         dropdown: [
             { icon: CharacterV1, title: "Characters", href: "/characters" },
             { icon: PersonaV1, title: "Personas", href: "/personas" },
@@ -62,6 +70,8 @@ const headerItems: HeaderItem[] = [
         icon: Community,
         title: "Community",
         href: "/community",
+        iconClassName: "h-18 w-18 text-primary",
+
         dropdown: [
             { icon: Forum, title: "Forum", href: "/community/forum" },
             { icon: BugReport, title: "Bug & Feature Request", href: "/community/bugs" },
@@ -71,6 +81,8 @@ const headerItems: HeaderItem[] = [
         icon: Settings,
         title: "Settings",
         href: "/settings",
+        iconClassName: "h-16 w-16 text-primary",
+
         dropdown: [
             { icon: Profile, title: "Profile", href: "/profile" },
             { icon: Background, title: "Background", href: "/background" },
@@ -83,6 +95,7 @@ const headerItems: HeaderItem[] = [
 // ----------------- Component -----------------
 const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+    const [glowIndex, setGlowIndex] = useState<number | null>(null);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -100,6 +113,7 @@ const Header: React.FC = () => {
 
     const handleSelect = () => {
         setOpenDropdown(null); // Close dropdown after selecting
+        setGlowIndex(null)
     };
 
 
@@ -107,12 +121,17 @@ const Header: React.FC = () => {
         setOpenDropdown(openDropdown === idx ? null : idx);
     };
     return (
-        <header className="sticky top-0 z-50 relative  ">
+        <header className="sticky top-0 z-50   ">
             <Container className="flex justify-center items-center py-6">
                 <div className="flex items-center gap-8">
                     {headerItems.map((item, idx) => {
                         const Icon = item.icon;
                         const hasDropdown = !!item.dropdown;
+                        const isGlowing = glowIndex === idx;
+                        const glowClass = isGlowing
+                            ? "drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-105 transition-all duration-300"
+                            : "";
+
                         return (
                             <div key={idx} className="relative ">
                                 {hasDropdown ? (
@@ -123,7 +142,7 @@ const Header: React.FC = () => {
                                                 onClick={() => toggleDropdown(idx)}
                                                 className="focus:outline-none"
                                             >
-                                                <Icon className="h-16 w-16 text-primary  hover:text-primary transition-colors cursor-pointer " />
+                                                <Icon className={cn("hover:text-primary transition-colors cursor-pointer brightness-75 hover:brightness-100 ", item.iconClassName,glowClass)} />
                                             </button>
                                         </ToolTipElement>
 

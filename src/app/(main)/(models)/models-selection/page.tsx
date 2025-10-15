@@ -1,4 +1,4 @@
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/elements/footer";
 import Container from "@/components/elements/container";
 import { Button } from "@/components/ui/button";
 import { ArrowBigDownDash } from "lucide-react";
@@ -39,7 +39,7 @@ export default function page() {
 
                 </Container>
             </div >
-            <BreadcrumbElements />
+            <Footer />
         </div >
     );
 }   
