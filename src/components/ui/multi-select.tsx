@@ -86,6 +86,7 @@ interface MultiSelectProps
         React.ButtonHTMLAttributes<HTMLButtonElement>,
         "animationConfig"
     >,
+
     VariantProps<typeof multiSelectVariants> {
 
     options: MultiSelectOption[] | MultiSelectGroup[];
@@ -101,6 +102,7 @@ interface MultiSelectProps
     hideSelectAll?: boolean;
     searchable?: boolean;
     emptyIndicator?: React.ReactNode;
+    onAddNewOption?: (option: { label: string; value: string }) => void;
     autoSize?: boolean;
     singleLine?: boolean;
     popoverClassName?: string;
@@ -147,6 +149,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
         {
             options,
             onValueChange,
+            onAddNewOption,
             variant,
             defaultValue = [],
             placeholder = "Select options",
@@ -873,10 +876,41 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                     screenSize === "mobile" && "max-h-[50vh]",
                                     "overscroll-behavior-y-contain"
                                 )}>
-                                <CommandEmpty>
-                                    {emptyIndicator || "No results found."}
 
-                                </CommandEmpty>{" "}
+                                <CommandEmpty className="flex flex-col items-center space-y-2 justify-center py-2 text-center">
+                                    <p className="text-muted-foreground border-b-2 w-full pb-2 border-primary">
+                                        {emptyIndicator || "No result found"}
+                                    </p>
+
+                                    {searchValue?.trim() && (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const newLabel = searchValue.trim();
+                                                const newValue = newLabel.toLowerCase().replace(/\s+/g, "-");
+
+                                                // 1️⃣ If parent provided callback, call it to handle adding
+                                                if (typeof onAddNewOption === "function") {
+                                                    onAddNewOption({ label: newLabel, value: newValue });
+                                                }
+
+                                                // 2️⃣ Select the new option immediately if needed
+                                                toggleOption(newValue);
+
+                                                // 3️⃣ Close popover after adding
+                                                setIsPopoverOpen(false);
+                                            }}
+                                            className="py-[3px] text-md hover:bg-primary w-[95%] rounded-xl   text-muted-foreground hover:text-white/80 h-full"
+                                        >
+                                             Add New
+                                        </button>
+                                    )}
+                                </CommandEmpty>
+
+
+
+
+
                                 {!hideSelectAll && !searchValue && (
                                     <CommandGroup>
                                         <CommandItem

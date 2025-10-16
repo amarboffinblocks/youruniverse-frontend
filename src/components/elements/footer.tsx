@@ -26,7 +26,7 @@ const Footer = () => {
         {/* Alert Dialog for Contact */}
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <button className="text-blue-600 hover:underline">Contact</button>
+            <button className="text-primary hover:underline">Contact</button>
           </AlertDialogTrigger>
           <AlertDialogContent className="border-primary bg-primary/30">
             <AlertDialogHeader>
@@ -44,8 +44,8 @@ const Footer = () => {
           </AlertDialogContent>
         </AlertDialog>
 
-        <span className="text-blue-600">-</span>
-        <Link href="/attributes" className="text-blue-600">Attribute Page</Link>
+        <span className="text-primary">-</span>
+        <Link href="/attributes" className="text-primary hover:underline">Attribute Page</Link>
       </div>
     </div>
   );

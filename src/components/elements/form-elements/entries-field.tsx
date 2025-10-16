@@ -15,9 +15,9 @@ const EntriesField = () => {
                 <Plus className='size-14' />
             </button>
             <div className='pl-14'>
-                <MessageListManager label='keyword' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
+                <MessageListManager label='keywords or Terms' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
             </div>
-            <FormTextarea name='context' label='Context' />
+            <FormTextarea name='context'  label='Context' />
         </div>
 
          <div className='border  border-primary rounded-2xl p-4 relative    '>
@@ -28,7 +28,7 @@ const EntriesField = () => {
                 <Trash2 className='size-10' />
             </button>
             <div className='pl-14'>
-                <MessageListManager label='keyword' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
+                <MessageListManager label='keyword or Terms' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
             </div>
             <FormTextarea name='context' label='Context' />
         </div>

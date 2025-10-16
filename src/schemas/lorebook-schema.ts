@@ -15,7 +15,7 @@ export const lorebookSchema: FormData[] = [
         type: "text",
         label: "Lorebook Name",
         required: true,
-        placeholder: "Enter  lorebook name",
+        placeholder: "Enter Lorebook Name",
         rules: {
             min: 4,
             max: 20
@@ -35,7 +35,7 @@ export const lorebookSchema: FormData[] = [
                 { label: "Public", value: "public" },
             ],
         },
-        cols: 3,
+        cols: 4,
         row: 4,
         defaultValue: "private",
     },
@@ -48,7 +48,7 @@ export const lorebookSchema: FormData[] = [
                 { label: "NSFW", value: "NSFW" },
                 { label: "SFW", value: "SFW" },],
         },
-        cols: 3,
+        cols: 6,
         row: 4,
         defaultValue: "SFW",
     },
@@ -56,7 +56,7 @@ export const lorebookSchema: FormData[] = [
         name: "linkToCharacters",
         type: "select",
         required: true,
-        label:"Select Character",
+        label:"Link to Character",
         placeholder: "Link to Character",
         cols: 12,
         row: 4,
@@ -75,6 +75,7 @@ export const lorebookSchema: FormData[] = [
         name: "connectToPersona",
         type: "select",
         required: true,
+        label:"Link to Persona",
         placeholder: "Link to Persona",
         cols: 12,
         row: 4,
@@ -94,7 +95,7 @@ export const lorebookSchema: FormData[] = [
         type: "multi-select",
         label: "Tags",
         required: true,
-        placeholder: "Single words describing your Character or Scenario",
+        placeholder: "Single words describing your Lorebook",
         rules: {
             model: "tags"
         },
