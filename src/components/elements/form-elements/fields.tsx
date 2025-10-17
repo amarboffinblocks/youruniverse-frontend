@@ -11,6 +11,7 @@ import MessageListManager from "./message-list-manager";
 import FormCheckbox from "./form-checkbox";
 import { useField } from "formik";
 import EntriesField from "./entries-field";
+import FormMultiFile from "./form-multi-file";
 
 interface FormFieldsProps extends FormData {
     cols?: FormData["cols"];
@@ -34,9 +35,12 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
             return <FormMultiSelect {...props} />
         case "file":
             return <FormImageUpload {...props} />
+        case "multiple-file":
+            return <FormMultiFile {...props} />
         case "entries":
-            return (
-                <EntriesField />);
+            return ( <EntriesField /> 
+                
+            );
         case "checkbox":
             return <FormCheckbox {...props} />
         case "multi-entries":

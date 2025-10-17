@@ -82,7 +82,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             </CardHeader>
 
             {/* Content */}
-            <CardContent className="space-y-3 px-4 ">
+            <CardContent className="space-y-2 px-4 ">
                 <div className="flex justify-between items-center">
                     <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
                     <span className="text-xs text-gray-400">Tokens: 1000</span>
@@ -106,7 +106,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                 <span className="float-end text-xs text-gray-300">-- Author Name </span>
             </CardContent>
 
-            <CardFooter className="flex mt-3 justify-between px-4 py-2  border-t border-gray-800 text-[10px] text-gray-500">
+            <CardFooter className="flex mt-3 justify-between px-4 py-2  border-t border-primary text-[10px] text-gray-500">
                 <div>
                     Created:- 20-08-2023
                 </div>
