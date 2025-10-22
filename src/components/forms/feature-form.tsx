@@ -1,17 +1,6 @@
 "use client"
 import React from "react";
-import { Menu, Trash2} from "lucide-react";
 
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "../ui/button";
 import DynamicForm from "../elements/form-elements/dynamic-form";
 import { FeatureSchema } from "@/schemas/feature-schema";
 interface Props {
