@@ -13,10 +13,9 @@ function InputOTP({
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
-  length?:number
-}) 
-{
-  console.log(length )
+  length?: number
+}) {
+  if (length) { console.log(length) }
   return (
     <OTPInput
       data-slot="input-otp"
