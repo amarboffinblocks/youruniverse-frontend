@@ -74,7 +74,7 @@ const headerItems: HeaderItem[] = [
 
         dropdown: [
             { icon: Forum, title: "Forum", href: "/community/forum" },
-            { icon: BugReport, title: "Bug & Feature Request", href: "/community/bugs" },
+            { icon: BugReport, title: "Bug & Feature Request", href: "/community/feature-request" },
         ],
     },
     {
@@ -142,7 +142,7 @@ const Header: React.FC = () => {
                                                 onClick={() => toggleDropdown(idx)}
                                                 className="focus:outline-none"
                                             >
-                                                <Icon className={cn("hover:text-primary transition-colors cursor-pointer brightness-75 hover:brightness-100 ", item.iconClassName,glowClass)} />
+                                                <Icon className={cn("hover:text-primary  cursor-pointer brightness-75 hover:brightness-100 hover:scale-110 transition-all duration-500 ", item.iconClassName,glowClass)} />
                                             </button>
                                         </ToolTipElement>
 
@@ -191,7 +191,7 @@ const Header: React.FC = () => {
                                 ) : (
                                     <ToolTipElement discription={item.title}>
                                         <Link href={item.href} >
-                                            <Icon className="h-16 w-16  transition-colors cursor-pointer" />
+                                            <Icon className="h-16 w-16 hover:scale-110 transition-all duration-500     cursor-pointer" />
                                         </Link>
                                     </ToolTipElement>
                                 )}
