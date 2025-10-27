@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
-import Chat from "../icons/chat";
+// import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
 

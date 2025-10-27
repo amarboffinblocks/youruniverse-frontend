@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
-import { ChevronsDown, Plus, Send, Trash, Upload } from "lucide-react";
+import {  Plus, Send, Trash, Upload } from "lucide-react";
 import Footer from "./footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");

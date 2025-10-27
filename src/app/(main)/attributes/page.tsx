@@ -1,8 +1,7 @@
 import Container from "@/components/elements/container"
 import Footer from "@/components/elements/footer"
 import SearchField from "@/components/elements/search-field";
-import { Button } from "@/components/ui/button"
-import { ArrowBigDownDash } from "lucide-react"
+
 
 export interface Resource {
   resourceUsed: string;
