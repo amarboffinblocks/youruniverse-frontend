@@ -9,14 +9,14 @@ export const characterSchema: FormData[] = [
         row: 4,
         rows: "3",
     },
-    {
-        name: "backgroundImage",
-        type: "file",
-        required: true,
-        cols: 12,
-        row: 4,
-        rows: "3",
-    },
+    // {
+    //     name: "backgroundImage",
+    //     type: "file",
+    //     required: true,
+    //     cols: 12,
+    //     row: 4,
+    //     rows: "3",
+    // },
     {
         name: "characterName",
         type: "text",
@@ -62,18 +62,18 @@ export const characterSchema: FormData[] = [
         name: "favourite",
         type: "checkbox",
         required: false,
-        label:'Add To Favourite',
+        label: 'Add To Favourite',
         cols: 4,
         row: 4,
         defaultValue: false,
     },
-{
+    {
         name: "linkToLorebook",
         type: "select",
         required: true,
-        label:"Link to Lorebook",
+        label: "Link to Lorebook",
         placeholder: "Link to Lorebook",
-        cols: 6, 
+        cols: 6,
         row: 4,
         rules: {
             options: [
@@ -84,12 +84,12 @@ export const characterSchema: FormData[] = [
             ],
         },
         rows: "3",
-        
-    },{
+
+    }, {
         name: "linkToPersona",
         type: "select",
         required: true,
-        label:"Link to Persona",
+        label: "Link to Persona",
         placeholder: "Link to Persona",
         cols: 6,
         row: 4,
@@ -102,22 +102,22 @@ export const characterSchema: FormData[] = [
             ],
         },
         rows: "3",
-        
+
     },
-    {
-        name: "tags",
-        type: "multi-select",
-        label: "Choose Characters Tags",
-        required: true,
-        placeholder: "Select tags that best describe your character",
-        rules: {
-            model: "tags"
-        },
-        cols: 12,
-        row: 4,
-        rows: "3",
-        
-    },
+    // {
+    //     name: "tags",
+    //     type: "multi-select",
+    //     label: "Choose Characters Tags",
+    //     required: true,
+    //     placeholder: "Select tags that best describe your character",
+    //     rules: {
+    //         model: "tags"
+    //     },
+    //     cols: 12,
+    //     row: 4,
+    //     rows: "3",
+
+    // },
     {
         name: "description",
         type: "textarea",
@@ -138,7 +138,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -150,7 +150,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -162,7 +162,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -185,7 +185,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -197,8 +197,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
-        tokens: true,
+        tokens: false,
     },
     {
         name: "characterNotes",
@@ -209,7 +208,6 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
-        tokens: true,
+        tokens: false,
     },
 ];

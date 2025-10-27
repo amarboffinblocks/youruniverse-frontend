@@ -30,7 +30,7 @@ const CharacterPage = () => {
       <div className=" max-w-3xl w-full mx-auto">
         <div className=' space-y-4'>
           <div className='flex items-center gap-x-4 w-full '>
-            <SearchField placeholder={`Search by character name or description`} />
+            <SearchField placeholder={`Search by Character name or description`} />
             <div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -41,8 +41,17 @@ const CharacterPage = () => {
 
                 <DropdownMenuContent className="w-72" align="end">
                   <DropdownMenuGroup>
-                    <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-                    <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
+                    <DropdownMenuItem>Show Favorites only</DropdownMenuItem>
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem>Private Characters</DropdownMenuItem>
+                          <DropdownMenuItem>Public Characters</DropdownMenuItem>
+                          <DropdownMenuItem>Public & Private Characters</DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
@@ -62,39 +71,30 @@ const CharacterPage = () => {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
-                    <DropdownMenuSub>
-                      <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
-                      <DropdownMenuPortal>
-                        <DropdownMenuSubContent>
-                          <DropdownMenuItem>Saved Characters</DropdownMenuItem>
-                          <DropdownMenuItem>Public Characters</DropdownMenuItem>
-                          <DropdownMenuItem>Folders</DropdownMenuItem>
-                        </DropdownMenuSubContent>
-                      </DropdownMenuPortal>
-                    </DropdownMenuSub>
+                    <DropdownMenuItem className='font-bold'>Duplicate Selected Character (s)</DropdownMenuItem>
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          <Link href={"/folders/create"} passHref>
-                            <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                          </Link>
                           <Link href={"/characters/create"} passHref>
                             <DropdownMenuItem>Create Character</DropdownMenuItem>
                           </Link>
-                          <DropdownMenuItem>Import Single Character</DropdownMenuItem>
+                          <Link href={"/folders/create"} passHref>
+                            <DropdownMenuItem>Create Folder</DropdownMenuItem>
+                          </Link>
+                          <DropdownMenuItem>Import Character</DropdownMenuItem>
                           <DropdownMenuItem>Bulk Import Characters</DropdownMenuItem>
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
 
                     <DropdownMenuSub >
-                      <DropdownMenuSubTrigger  >Delete Character</DropdownMenuSubTrigger>
+                      <DropdownMenuSubTrigger>Delete Character</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          <DropdownMenuItem>Delete Character Only</DropdownMenuItem>
-                          <DropdownMenuItem>Delete Character and Chat</DropdownMenuItem>
-                          <DropdownMenuItem>Delete Character and Saved Chat</DropdownMenuItem>
+                          <DropdownMenuItem>Delete selected Character (s) only</DropdownMenuItem>
+                          <DropdownMenuItem>Delete selected Character (s) and current chat</DropdownMenuItem>
+                          <DropdownMenuItem>Delete selected Character (s), saved chat and current chat</DropdownMenuItem>
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
@@ -104,7 +104,7 @@ const CharacterPage = () => {
             </div>
           </div>
           <div className='flex items-center justify-center gap-4 w-full '>
-            <SearchField placeholder='Search by character tags' />
+            <SearchField placeholder='Search by Character tags' />
             <SearchField placeholder='Tags to exclude from search' />
             <ToggleSwitch
               options={[
