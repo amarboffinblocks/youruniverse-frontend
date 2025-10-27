@@ -45,7 +45,11 @@ const Footer = () => {
         </AlertDialog>
 
         <span className="text-primary">-</span>
-        <Link href="/attributes" className="text-primary hover:underline">Attribute Page</Link>
+        <Link href="/attributes" className="text-primary hover:underline">Attribution Page</Link>
+        <span className="text-primary">-</span>
+        <Link href="/privacy" className="text-primary hover:underline">Privacy</Link>
+        <span className="text-primary">-</span>
+        <Link href="/terms-of-services" className="text-primary hover:underline">Terms of Services</Link>
       </div>
     </div>
   );
