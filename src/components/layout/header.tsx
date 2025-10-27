@@ -21,27 +21,51 @@ import Subscriptions from "@/components/icons/subscriptions";
 import { motion, AnimatePresence } from "framer-motion";
 import YourUniverse from "../icons/your-universe";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
+import Folder from "../icons/folder";
 // ----------------- Types -----------------
 interface HeaderItem {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     title: string;
-    href: string;
+    href?: string;
     iconClassName?: string;
     dropdown?: {
         icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
         title: string;
-        href: string;
+        href?: string;
+        type?: string
+        createdAt?: string
+        children?: { id: string; title: string ,createdAt:string}[];
     }[];
 }
+const folderData = [
+    { id: "chat-001", title: "Character Name " , createdAt:'31-01-1998' },
+    { id: "chat-002", title: "Character Name " , createdAt:'31-01-1998' },
+    { id: "chat-003", title: "Character Name " , createdAt:'31-01-1998'},
+];
 
 // ----------------- Data -----------------
 const headerItems: HeaderItem[] = [
     {
         icon: Chat,
         title: "Chat",
-        href: "/chat/character-id",
         iconClassName: "h-16 w-16 text-primary",
-
+        dropdown: [
+            { icon: ModelSelection, type: "button", title: "Search Saved Chat" },
+            { icon: LlmSettings, type: "button", title: "Saved Chat Menu" },
+            {
+                icon: Lorebook,
+                title: "Folder Name",
+                createdAt:'23-02-2002',
+                children: folderData, // nested folders
+            },
+            {
+                icon: Lorebook,
+                title: "Folder Name",
+                createdAt:'23-02-2002',
+                children: folderData, // nested folders
+            },
+        ],
     },
     {
         icon: Models,
@@ -64,6 +88,7 @@ const headerItems: HeaderItem[] = [
             { icon: CharacterV1, title: "Characters", href: "/characters" },
             { icon: PersonaV1, title: "Personas", href: "/personas" },
             { icon: Lorebook, title: "Lorebook", href: "/lorebooks" },
+            { icon: Folder, title: "Folder", href: "/folders" },
         ],
     },
     {
@@ -95,15 +120,17 @@ const headerItems: HeaderItem[] = [
 // ----------------- Component -----------------
 const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+      const [openSubDropdown, setOpenSubDropdown] = useState<number | null>(null);
     const [glowIndex, setGlowIndex] = useState<number | null>(null);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        function handleClickOutside() {
-            if (dropdownRef.current) {
-                setOpenDropdown(null); // Close when clicking outside
-            }
-        }
+       function handleClickOutside(e: MouseEvent) {
+  if (dropdownRef.current && !(dropdownRef.current as HTMLElement).contains(e.target as Node)) {
+    setOpenDropdown(null);
+    setOpenSubDropdown(null);
+  }
+}
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
@@ -112,7 +139,8 @@ const Header: React.FC = () => {
     }, [dropdownRef]);
 
     const handleSelect = () => {
-        setOpenDropdown(null); // Close dropdown after selecting
+        setOpenDropdown(null);
+        setOpenSubDropdown(null);
         setGlowIndex(null)
     };
 
@@ -120,87 +148,226 @@ const Header: React.FC = () => {
     const toggleDropdown = (idx: number) => {
         setOpenDropdown(openDropdown === idx ? null : idx);
     };
+     const toggleSubDropdown = (idx: number) => {
+    setOpenSubDropdown(openSubDropdown === idx ? null : idx);
+  };
     return (
-        <header className="sticky top-0 z-50   ">
-            <Container className="flex justify-center items-center py-6">
-                <div className="flex items-center gap-8">
-                    {headerItems.map((item, idx) => {
-                        const Icon = item.icon;
-                        const hasDropdown = !!item.dropdown;
-                        const isGlowing = glowIndex === idx;
-                        const glowClass = isGlowing
-                            ? "drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-105 transition-all duration-300"
-                            : "";
+        // <header className="sticky top-0 z-50   ">
+        //     <Container className="flex justify-center items-center py-6">
+        //         <div className="flex items-center gap-8">
+        //             {headerItems.map((item, idx) => {
+        //                 const Icon = item.icon;
+        //                 const hasDropdown = !!item.dropdown;
+        //                 const isGlowing = glowIndex === idx;
+        //                 const glowClass = isGlowing
+        //                     ? "drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-105 transition-all duration-300"
+        //                     : "";
 
-                        return (
-                            <div key={idx} className="relative ">
-                                {hasDropdown ? (
-                                    <div className="relative">
-                                        <ToolTipElement discription={item.title}>
-                                            <button
-                                                type="button"
-                                                onClick={() => toggleDropdown(idx)}
-                                                className="focus:outline-none"
+        //                 return (
+        //                     <div key={idx} className="relative ">
+        //                         {hasDropdown ? (
+        //                             <div className="relative">
+        //                                 <ToolTipElement discription={item.title}>
+        //                                     <button
+        //                                         type="button"
+        //                                         onClick={() => toggleDropdown(idx)}
+        //                                         className="focus:outline-none"
+        //                                     >
+        //                                         <Icon className={cn("hover:text-primary  cursor-pointer brightness-75 hover:brightness-100 hover:scale-110 transition-all duration-500 ", item.iconClassName, glowClass)} />
+        //                                     </button>
+        //                                 </ToolTipElement>
+
+        //                                 <AnimatePresence>
+        //                                     {openDropdown === idx && (
+        //                                         <motion.div
+        //                                             ref={dropdownRef}
+        //                                             className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2 z-50"
+        //                                             initial={{ opacity: 0 }}
+        //                                             animate={{ opacity: 1 }}
+        //                                             exit={{ opacity: 0 }}
+        //                                         >
+        //                                             <ul className="flex flex-col gap-6 items-center">
+        //                                                 {item.dropdown?.map((drop, dIdx) => {
+        //                                                     if (drop.type === 'button') return (
+        //                                                         <>
+        //                                                             <Button >
+        //                                                                 {drop.title}
+        //                                                             </Button>
+        //                                                         </>
+        //                                                     );
+
+        //                                                     const DropIcon = drop.icon;
+        //                                                     return (
+        //                                                         <motion.li
+        //                                                             key={dIdx}
+        //                                                             initial={{ opacity: 0, y: -50 }}
+        //                                                             animate={{
+        //                                                                 opacity: 1,
+        //                                                                 y: 0,
+        //                                                                 transition: {
+        //                                                                     duration: 0.8,
+        //                                                                     delay: dIdx * 0.1,
+        //                                                                     type: "spring",
+        //                                                                     stiffness: 120,
+        //                                                                 },
+        //                                                             }}
+        //                                                             exit={{ opacity: 0, y: -30, transition: { duration: 0.2 } }}
+        //                                                         >
+        //                                                             <ToolTipElement discription={drop.title}>
+        //                                                                 {drop.href && <Link href={drop.href} onClick={handleSelect}>
+        //                                                                     <DropIcon className="w-16 h-16 text-primary" />
+        //                                                                 </Link>}
+        //                                                             </ToolTipElement>
+        //                                                         </motion.li>
+        //                                                     );
+        //                                                 })}
+        //                                             </ul>
+        //                                         </motion.div>
+        //                                     )}
+        //                                 </AnimatePresence>
+
+        //                             </div>
+        //                         ) : (
+        //                             <ToolTipElement discription={item.title}>
+        //                                 {item.href && <Link href={item.href} >
+        //                                     <Icon className="h-16 w-16 hover:scale-110 transition-all duration-500 cursor-pointer" />
+        //                                 </Link>}
+        //                             </ToolTipElement>
+        //                         )}
+        //                     </div>
+        //                 );
+        //             })}
+        //         </div>
+        //     </Container>
+        // </header>
+        <header className="sticky top-0 z-50">
+      <Container className="flex justify-center items-center py-6">
+        <div className="flex items-center gap-8">
+          {headerItems.map((item, idx) => {
+            const Icon = item.icon;
+            const hasDropdown = !!item.dropdown;
+            const isGlowing = glowIndex === idx;
+
+            return (
+              <div key={idx} className="relative">
+                {hasDropdown ? (
+                  <div className="relative">
+                    <ToolTipElement discription={item.title}>
+                      <button
+                        type="button"
+                        onClick={() => toggleDropdown(idx)}
+                        className="focus:outline-none"
+                      >
+                        <Icon
+                          className={cn(
+                            "hover:text-primary cursor-pointer brightness-75 hover:brightness-100 hover:scale-110 transition-all duration-500",
+                            item.iconClassName,
+                            isGlowing ? "drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-105" : ""
+                          )}
+                        />
+                      </button>
+                    </ToolTipElement>
+
+                    <AnimatePresence>
+                      {openDropdown === idx && (
+                        <motion.div
+                          ref={dropdownRef}
+                          className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2 z-50"
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                        >
+                          <ul className="flex flex-col gap-2 items-center min-w-[180px]">
+                            {item.dropdown?.map((drop, dIdx) => {
+                              const DropIcon = drop.icon;
+                              // 🔹 Render button-type dropdowns
+                              if (drop.type === "button") {
+                                return (
+                                  <Button
+                                    key={dIdx}
+                                    className="w-full bg-primary hover:bg-primary/90 text-white flex !items-start !justify-start rounded-lg"
+                                  >
+                                    {drop.title}
+                                  </Button>
+                                );
+                              }
+
+                              // 🔹 Handle folders with dynamic children
+                              if (drop.children) {
+                                return (
+                                  <div key={dIdx} className="relative w-full">
+                                    <Button
+                                      onClick={() => toggleSubDropdown(dIdx)}
+                                      className="w-full bg-primary hover:bg-primary/90 text-white rounded-lg flex justify-between"
+                                    >
+                                      {drop.title}
+                                      <span className="ml-2">{drop.createdAt}</span>
+                                    </Button>
+
+                                    <AnimatePresence>
+                                      {openSubDropdown === dIdx && (
+                                        <motion.ul
+                                          initial={{ opacity: 0, y: -5 }}
+                                          animate={{ opacity: 1, y: 0 }}
+                                          exit={{ opacity: 0, y: -5 }}
+                                          className="absolute left-full top-0 ml-2 mt-1 bg-background border border-primary/30 rounded-lg shadow-lg p-2 flex flex-col gap-2 z-50"
+                                        >
+                                          {drop.children.map((folder) => (
+                                            <Link
+                                              key={folder.id}
+                                              href={`/chat/${folder.id}`}
+                                              onClick={handleSelect}
+                                              className="px-3 py-2 !text-sm rounded-md bg-primary hover:bg-primary text-white whitespace-nowrap"
                                             >
-                                                <Icon className={cn("hover:text-primary  cursor-pointer brightness-75 hover:brightness-100 hover:scale-110 transition-all duration-500 ", item.iconClassName,glowClass)} />
-                                            </button>
-                                        </ToolTipElement>
+                                              {folder.title}
+                                              {folder.createdAt}
+                                            </Link>
+                                          ))}
+                                        </motion.ul>
+                                      )}
+                                    </AnimatePresence>
+                                  </div>
+                                );
+                              }
 
-                                        <AnimatePresence>
-                                            {openDropdown === idx && (
-                                                <motion.div
-                                                    ref={dropdownRef}
-                                                    className="absolute left-1/2 top-20 transform -translate-x-1/2 p-2 z-50"
-                                                    initial={{ opacity: 0 }}
-                                                    animate={{ opacity: 1 }}
-                                                    exit={{ opacity: 0 }}
-                                                >
-                                                    <ul className="flex flex-col gap-6 items-center">
-                                                        {item.dropdown?.map((drop, dIdx) => {
-                                                            const DropIcon = drop.icon;
-                                                            return (
-                                                                <motion.li
-                                                                    key={dIdx}
-                                                                    initial={{ opacity: 0, y: -50 }}
-                                                                    animate={{
-                                                                        opacity: 1,
-                                                                        y: 0,
-                                                                        transition: {
-                                                                            duration: 0.8,
-                                                                            delay: dIdx * 0.1,
-                                                                            type: "spring",
-                                                                            stiffness: 120,
-                                                                        },
-                                                                    }}
-                                                                    exit={{ opacity: 0, y: -30, transition: { duration: 0.2 } }}
-                                                                >
-                                                                    <ToolTipElement discription={drop.title}>
-                                                                        <Link href={drop.href} onClick={handleSelect}>
-                                                                            <DropIcon className="w-16 h-16 text-primary" />
-                                                                        </Link>
-                                                                    </ToolTipElement>
-                                                                </motion.li>
-                                                            );
-                                                        })}
-                                                    </ul>
-                                                </motion.div>
-                                            )}
-                                        </AnimatePresence>
-
-                                    </div>
-                                ) : (
-                                    <ToolTipElement discription={item.title}>
-                                        <Link href={item.href} >
-                                            <Icon className="h-16 w-16 hover:scale-110 transition-all duration-500     cursor-pointer" />
-                                        </Link>
-                                    </ToolTipElement>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            </Container>
-        </header>
+                              // 🔹 Regular dropdown link
+                              return (
+                                <motion.li
+                                  key={dIdx}
+                                  initial={{ opacity: 0, y: -20 }}
+                                  animate={{ opacity: 1, y: 0 }}
+                                  exit={{ opacity: 0, y: -20 }}
+                                >
+                                  <ToolTipElement discription={drop.title}>
+                                    {drop.href && (
+                                      <Link href={drop.href} onClick={handleSelect}>
+                                        <DropIcon className="w-16 h-16 text-primary" />
+                                      </Link>
+                                    )}
+                                  </ToolTipElement>
+                                </motion.li>
+                              );
+                            })}
+                          </ul>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <ToolTipElement discription={item.title}>
+                    {item.href && (
+                      <Link href={item.href}>
+                        <Icon className="h-16 w-16 hover:scale-110 transition-all duration-500 cursor-pointer" />
+                      </Link>
+                    )}
+                  </ToolTipElement>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </Container>
+    </header>
     );
 };
 

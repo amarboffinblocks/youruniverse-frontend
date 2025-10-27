@@ -1,17 +1,11 @@
 "use client"
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Footer from "@/components/elements/footer";
+import Header from "@/components/layout/header";
 export default function Home() {
-  const router = useRouter();
-
-  useEffect(() => {
-    // Redirect to chat route on page load
-    router.push("/chat");
-  }, [router]);
 
   return (
     <div className="flex-1 flex flex-col relative">
+      <Header/>
       <div className="flex-1">
       </div>
       <Footer/>
