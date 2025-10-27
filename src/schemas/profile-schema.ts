@@ -8,28 +8,33 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
+        label:"Avatar"
      
     },
     {
         name: "username",
         type: "text",
         label: "Username",
-        required: true,
+        required: false,
         placeholder: "john123",
+        disabled:true,
         cols: 12,
         row: 4,
         rows: "3",
+        defaultValue:"Ben ten"
         
     },
     {
         name: "email",
-        type: "email",
+        type: "text",
         label: "Email",
-        required: true,
+        required: false,
         placeholder: "john@gmail.com",
         cols: 12,
+        disabled:true,
         row: 4,
         rows: "3",
+        defaultValue:"ben10@gmail.com"
         
     },
     {
@@ -76,39 +81,7 @@ export const profileSchema: FormData[] = [
         rows: "3",
         
     },
-    {
-        name: "connectToPersona",
-        type: "select",
-        required: true,
-        placeholder: "Connect to Persona",
-        cols: 12,
-        row: 4,
-        rules: {
-            options: [
-                { label: "Luna AI", value: "luna-ai" },
-                { label: "Astro Bot", value: "astro-bot" },
-                { label: "Neo Guide", value: "neo-guide" },
-                { label: "Zara Mentor", value: "zara-mentor" },
-            ],
-        },
-        rows: "3",
-        
-    },
-    {
-        name: "tag-to-avoid",
-        type: "multi-select",
-        label: "Tags To Avoid",
-        required: true,
-        placeholder: "Tags To Avoid",
-        rules: {
-            model: "tags"
-        },
-        cols: 12,
-        row: 4,
-        rows: "3",
-        
-    },
-    {
+  {
         name: "tags",
         type: "multi-select",
         label: "Tags To follow",
@@ -123,6 +96,21 @@ export const profileSchema: FormData[] = [
         
     },
     {
+        name: "tag-to-avoid",
+        type: "multi-select",
+        label: "Tags To avoid",
+        required: true,
+        placeholder: "Tags To Avoid",
+        rules: {
+            model: "tags"
+        },
+        cols: 12,
+        row: 4,
+        rows: "3",
+        
+    },
+  
+    {
         name: "aboutme",
         type: "textarea",
         label: "About Me",
@@ -135,24 +123,32 @@ export const profileSchema: FormData[] = [
     },
     {
         name: "following",
-        type: "textarea",
+        type: "text",
         label: "Following",
         placeholder:"Enter topics or creators you’re currently following",
         required: true,
+        disabled:true,
         cols: 12,
         row: 4,
         rows: "3",
         tokens: false,
     },
     {
-        name: "subscription",
-        type: "textarea",
-        label: "Subscription",
-        required: true,
-        cols: 12,
-        row: 4,
-        rows: "3",
-        
-        tokens: true,
-    },
+  name: "plan",
+  label: "Subscription Plan",
+  type: "select",
+  required: true,
+  placeholder: "Choose your subscription plan",
+  cols: 12,
+  row: 4,
+  rules: {
+    options: [
+      { label: "Basic (Free)", value: "basic" },
+      { label: "Pro (Monthly)", value: "pro-monthly" },
+      { label: "Pro (Yearly)", value: "pro-yearly" },
+      { label: "Enterprise", value: "enterprise" },
+    ],
+  },
+  rows: "3",
+}
 ]

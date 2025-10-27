@@ -160,6 +160,17 @@ const FolderPage = () => {
                             <DropdownMenuContent className="w-72" align="end">
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
+                                      <DropdownMenuSub>
+                                        <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                                        <DropdownMenuPortal>
+                                            <DropdownMenuSubContent>
+                                                <DropdownMenuItem>Favourites</DropdownMenuItem>
+                                                <DropdownMenuItem>Private Folders only</DropdownMenuItem>
+                                                <DropdownMenuItem>Public Folders only</DropdownMenuItem>
+                                                <DropdownMenuItem>Private and Public Folders</DropdownMenuItem>
+                                            </DropdownMenuSubContent>
+                                        </DropdownMenuPortal>
+                                    </DropdownMenuSub>
                                     <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
@@ -182,16 +193,7 @@ const FolderPage = () => {
 
                                     <Link href={"/folders/create"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
 
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuItem>Saved Characters</DropdownMenuItem>
-                                                <DropdownMenuItem>Public Characters</DropdownMenuItem>
-                                                <DropdownMenuItem>Folders</DropdownMenuItem>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub>
+                                  
                                     <DropdownMenuItem variant='destructive'>Delete Folder</DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
