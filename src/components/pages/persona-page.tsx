@@ -20,7 +20,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
-import CharacterCard from '../cards/character-card';
+import PersonaCard from '../cards/persona-card';
 
 const PersonaPage = () => {
     const [page, setPage] = useState(1)
@@ -86,9 +86,6 @@ const PersonaPage = () => {
                                             <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <Link href="/folders/create" passHref>
-                                                        <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                                                    </Link>
                                                     <Link href="/personas/create" passHref>
                                                         <DropdownMenuItem>Create Persona</DropdownMenuItem>
                                                     </Link>
@@ -102,9 +99,8 @@ const PersonaPage = () => {
                                             <DropdownMenuSubTrigger>Delete Persona</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Delete Persona Only</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete Persona + Chat</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete Persona + Saved Chat</DropdownMenuItem>
+                                                    <DropdownMenuItem>Delete Selected Persona (s)</DropdownMenuItem>
+                                       
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
@@ -137,7 +133,7 @@ const PersonaPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {
                             [1, 2, 3, 4].map((item) => (
-                                <CharacterCard key={item} />
+                                <PersonaCard key={item} />
                             ))
                         }
 

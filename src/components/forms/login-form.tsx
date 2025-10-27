@@ -18,16 +18,15 @@ const LoginForm = () => {
 
     return (
         <div className='w-full max-w-md '>
-              <div className="flex flex-col gap-10 w-full h-[250px] relative py-5">
-                <div className="relative w-full h-[60%] ">
-                    <Image
-                        src="/logo1.png"
-                        alt="universe-logo"
-                        fill
-                        priority
-                        className="object-contain transform scale-250"
-                    />
-                </div>
+            <div className="relative w-full h-50 ">
+                <Image
+                    src="/logo/logo.png"
+                    alt="universe-logo"
+                    fill
+                    priority
+                    className="object-contain"
+                />
+            </div>
                 <div className="relative w-[85%] h-[40%] mx-auto">
                     <Image
                         src="/logoname.png"
@@ -37,7 +36,6 @@ const LoginForm = () => {
                         className="object-contain "
                     />
                 </div>
-            </div>
             <Card className='px-6 py-8 text-center bg-primary/20  space-y-4'>
                 <div>
                     <h2 className='text-2xl  font-semibold tracking-widest text-white/90'>Welcome Back</h2>

@@ -69,19 +69,7 @@ export const personaSchema: FormData[] = [
         
         tokens: true,
     },
-    {
-        name: "catchphrases",
-        type: "multi-entries",
-        label: "Catchphrases ",
-        required: true,
-        placeholder: "Write the relative catchphrases",
-        cols: 12,
-        row: 4,
-        rows: "3",
-        tokens: true,
-    },
-   
-   
 
+   
 
 ]
