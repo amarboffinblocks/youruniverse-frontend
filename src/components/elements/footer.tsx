@@ -49,7 +49,7 @@ const Footer = () => {
         <span className="text-primary">-</span>
         <Link href="/privacy" className="text-primary hover:underline">Privacy</Link>
         <span className="text-primary">-</span>
-        <Link href="/terms-of-services" className="text-primary hover:underline">Terms of Services</Link>
+        <Link href="/terms-of-service" className="text-primary hover:underline">Terms of Services</Link>
       </div>
     </div>
   );
