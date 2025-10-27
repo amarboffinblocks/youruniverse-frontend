@@ -9,12 +9,16 @@ interface FormInputFieldProps {
     name: string;
     label?: string;
     className?: string
+    placeholder?:string
+    disabled?:boolean
 }
 
 const FormInputField: React.FC<FormInputFieldProps> = ({
     name,
     label,
     className,
+    placeholder='',
+    disabled=false,
     ...props
 }) => {
     const [field, meta] = useField(name);
@@ -44,7 +48,9 @@ const FormInputField: React.FC<FormInputFieldProps> = ({
                 id={name}
                 {...field}
                 {...props}
-                className={cn(errorClasses, className)}
+                disabled={disabled}
+                placeholder={placeholder}
+                className={cn(errorClasses,'', className)}
             />
 
             <div className="flex justify-between items-center text-xs px-1 text-white">

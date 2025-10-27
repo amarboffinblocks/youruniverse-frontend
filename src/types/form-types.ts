@@ -44,4 +44,5 @@ export interface FormData {
     rows?: string;
     defaultValue?: string |string[]|boolean|undefined;
     tokens?: boolean
+    disabled?:boolean
 }
