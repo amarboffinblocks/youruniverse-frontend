@@ -8,6 +8,7 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
+        label:"Avatar"
         
     },
     {
