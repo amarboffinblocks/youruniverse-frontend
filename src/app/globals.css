@@ -232,3 +232,93 @@ body {
 .glass-effect {
   background-color: rgba(85, 46, 251, 0.5);
 }
+
+
+
+
+
+/* globals.css or tailwind.css */
+/* @layer utilities {
+  @keyframes pulse-glow {
+    0%, 100% {
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8));
+      transform: scale(1);
+    }
+    50% {
+      filter: drop-shadow(0 0 30px rgba(255, 255, 255, 1));
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes soft-glow {
+    0% {
+      filter: drop-shadow(0 0 0px rgba(255,255,255,0));
+    }
+    100% {
+      filter: drop-shadow(0 0 20px rgba(255,255,255,0.8));
+    }
+  }
+
+  @keyframes steady-glow {
+    0% {
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+    }
+    100% {
+      filter: drop-shadow(0 0 18px rgba(255,255,255,0.8));
+    }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 0.8s ease-in-out 3;
+  }
+
+  .animate-soft-glow {
+    animation: soft-glow 0.6s forwards ease-in-out;
+  }
+
+  .animate-steady-glow {
+    animation: steady-glow 1.2s infinite alternate ease-in-out;
+  }
+} */
+
+
+
+
+
+@layer utilities {
+  @keyframes hover-glow {
+    0% {
+      filter: drop-shadow(0 0 0px rgba(255,255,255,0));
+      transform: scale(1);
+    }
+    100% {
+      filter: drop-shadow(0 0 25px #552EFB)
+              drop-shadow(0 0 45px #552EFB);
+      transform: scale(1.2);
+    }
+  }
+
+  .hover-glow {
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    animation: hover-glow 0.6s forwards ease-in-out;
+  }
+}
+
+@keyframes soft-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px #552EFB); }
+  50% { filter: drop-shadow(0 0 25px #552EFB); }
+}
+@keyframes pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 6px #552EFB); }
+  50% { filter: drop-shadow(0 0 16px #552EFB); transform: scale(1.2); }
+}
+@keyframes steady-glow {
+  0%, 100% { filter: drop-shadow(0 0 5px #552EFB); }
+}
+
+.animate-soft-glow { animation: soft-glow 2s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 0.8s ease-in-out infinite; }
+.animate-steady-glow { animation: steady-glow 3s ease-in-out infinite; }

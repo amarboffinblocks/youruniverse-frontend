@@ -138,8 +138,11 @@ Raised in harsh conditions, Kevin’s exposure to alien tech led him down a trou
         parts: [{ type: 'text', text: 'Of course! Here’s a simple JavaScript example: `console.log("Hello, world!");`' }],
     },
 ];
+interface Props {
+  setPreviewModel: (value: boolean) => void;
+}
 
-const ChatMessages = () => {
+const ChatMessages:React.FC<Props> = ({setPreviewModel}) => {
     // const [messages, setMessages] = useState(dummyMessages)
 
     return (
@@ -322,7 +325,7 @@ const ChatMessages = () => {
                                                                 <DropdownMenuItem>
                                                                     Character Notes
                                                                 </DropdownMenuItem>
-                                                                <DropdownMenuItem>
+                                                                <DropdownMenuItem onClick={()=>setPreviewModel(true)}>
                                                                     Character Perview
                                                                 </DropdownMenuItem>
                                                             </DropdownMenuContent>

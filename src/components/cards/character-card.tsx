@@ -1,12 +1,11 @@
 "use client";
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, Heart, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
@@ -20,6 +19,7 @@ interface CharacterCardProps {
 const CharacterCard: React.FC<CharacterCardProps> = ({
     ...props
 }) => {
+    const [liked,setLiked]=useState<boolean>(false)
     return (
         <Card
             {...props}
@@ -31,7 +31,8 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                         id="terms"
                         className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
                     />
-                    <div>
+                    <div className="flex items-center gap-1">
+                        < Heart onClick={()=>setLiked(prev=>!prev)} size={26} fill={!liked?"#101828":"red"} stroke="0"/>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
