@@ -13,7 +13,7 @@ const AttributeForm: React.FC = () => {
             <DynamicForm
                 schema={AttributeSchema}
                 onSubmit={(values) => {
-                    console.log("Form Submitted:", values);
+                    console.log("Form Submitted :", values);
                 }}
             >
             </DynamicForm>
