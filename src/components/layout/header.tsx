@@ -21,6 +21,7 @@ import Subscriptions from "@/components/icons/subscriptions";
 import { motion, AnimatePresence } from "framer-motion";
 import YourUniverse from "../icons/your-universe";
 import { cn } from "@/lib/utils";
+import Folders from "../icons/folders";
 // ----------------- Types -----------------
 interface HeaderItem {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
@@ -64,6 +65,8 @@ const headerItems: HeaderItem[] = [
             { icon: CharacterV1, title: "Characters", href: "/characters" },
             { icon: PersonaV1, title: "Personas", href: "/personas" },
             { icon: Lorebook, title: "Lorebook", href: "/lorebooks" },
+            { icon: Folders, title: "Folders", href: "/folders" },
+
         ],
     },
     {
@@ -96,6 +99,7 @@ const headerItems: HeaderItem[] = [
 const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
     const [glowIndex, setGlowIndex] = useState<number | null>(null);
+    const [pulsingIndex, setPulsingIndex] = useState<number | null>(null);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
@@ -120,6 +124,16 @@ const Header: React.FC = () => {
     const toggleDropdown = (idx: number) => {
         setOpenDropdown(openDropdown === idx ? null : idx);
     };
+
+    const handleIconClick = (idx: number) => {
+        setGlowIndex(idx);
+        setPulsingIndex(idx);
+        setOpenDropdown(openDropdown === idx ? null : idx);
+        // After 3 pulses (approx 2.4s), stop pulse and keep steady glow
+        setTimeout(() => {
+            setPulsingIndex(null);
+        }, 2400);
+    };
     return (
         <header className="sticky top-0 z-50   ">
             <Container className="flex justify-center items-center py-6">
@@ -127,10 +141,7 @@ const Header: React.FC = () => {
                     {headerItems.map((item, idx) => {
                         const Icon = item.icon;
                         const hasDropdown = !!item.dropdown;
-                        const isGlowing = glowIndex === idx;
-                        const glowClass = isGlowing
-                            ? "drop-shadow-[0_0_12px_rgba(255,255,255,0.8)] scale-105 transition-all duration-300"
-                            : "";
+
 
                         return (
                             <div key={idx} className="relative ">
@@ -139,10 +150,22 @@ const Header: React.FC = () => {
                                         <ToolTipElement discription={item.title}>
                                             <button
                                                 type="button"
-                                                onClick={() => toggleDropdown(idx)}
+                                                onMouseEnter={() => setGlowIndex(idx)}   // soft glow start
+                                                onMouseLeave={() => {
+                                                    if (glowIndex !== idx) setGlowIndex(null);
+                                                }}
+                                                onClick={() => handleIconClick(idx)}     // pulse + glow
                                                 className="focus:outline-none"
                                             >
-                                                <Icon className={cn("hover:text-primary transition-colors cursor-pointer brightness-75 hover:brightness-100 ", item.iconClassName,glowClass)} />
+                                                <Icon
+                                                    className={cn(
+                                                        "hover:brightness-110 transition-all duration-500 cursor-pointer",
+                                                        item.iconClassName,
+                                                        glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
+                                                        pulsingIndex === idx && "animate-pulse-glow",
+                                                        glowIndex === idx && pulsingIndex === null && "animate-steady-glow"
+                                                    )}
+                                                />
                                             </button>
                                         </ToolTipElement>
 
@@ -176,7 +199,7 @@ const Header: React.FC = () => {
                                                                 >
                                                                     <ToolTipElement discription={drop.title}>
                                                                         <Link href={drop.href} onClick={handleSelect}>
-                                                                            <DropIcon className="w-16 h-16 text-primary" />
+                                                                            <DropIcon className={cn("w-16 h-16 text-primary hover-glow"  )} />
                                                                         </Link>
                                                                     </ToolTipElement>
                                                                 </motion.li>
@@ -190,8 +213,15 @@ const Header: React.FC = () => {
                                     </div>
                                 ) : (
                                     <ToolTipElement discription={item.title}>
-                                        <Link href={item.href} >
-                                            <Icon className="h-16 w-16  transition-colors cursor-pointer" />
+                                        <Link href={item.href} onMouseEnter={() => setGlowIndex(idx)}   // soft glow start
+                                            onMouseLeave={() => {
+                                                if (glowIndex !== idx) setGlowIndex(null);
+                                            }}
+                                            onClick={() => handleIconClick(idx)}  >
+                                            <Icon className={cn("transition-all duration-500 cursor-pointer", item.iconClassName,
+                                                glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
+                                                pulsingIndex === idx && "animate-pulse-glow",
+                                                glowIndex === idx && pulsingIndex === null && "animate-steady-glow")} />
                                         </Link>
                                     </ToolTipElement>
                                 )}
