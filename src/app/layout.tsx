@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Atkinson_Hyperlegible } from "next/font/google";
 
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-atkinson",
+  weight: ["400", "700"], 
 });
 
 export const metadata: Metadata = {
@@ -26,13 +22,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} relative antialiased bg-background w-screen h-screen flex flex-col `}
-      >
+    <html lang="en" className={atkinson.variable}>
+      <body className={`${atkinson.className} relative antialiased bg-background w-screen h-screen flex flex-col`}>
         <ShootingStars />
         <StarsBackground />
-
         {children}
       </body>
     </html>
