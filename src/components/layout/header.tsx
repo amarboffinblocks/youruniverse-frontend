@@ -26,23 +26,45 @@ import Folders from "../icons/folders";
 interface HeaderItem {
     icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
     title: string;
-    href: string;
+    href?: string;
     iconClassName?: string;
     dropdown?: {
         icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
         title: string;
-        href: string;
+        href?: string;
+        type?: string
+        createdAt?: string
+        children?: { id: string; title: string ,createdAt:string}[];
     }[];
 }
+const folderData = [
+    { id: "chat-001", title: "Character Name " , createdAt:'31-01-1998' },
+    { id: "chat-002", title: "Character Name " , createdAt:'31-01-1998' },
+    { id: "chat-003", title: "Character Name " , createdAt:'31-01-1998'},
+];
 
 // ----------------- Data -----------------
 const headerItems: HeaderItem[] = [
     {
         icon: Chat,
         title: "Chat",
-        href: "/chat/character-id",
         iconClassName: "h-16 w-16 text-primary",
-
+        dropdown: [
+            { icon: ModelSelection, type: "button", title: "Search Saved Chat" },
+            { icon: LlmSettings, type: "button", title: "Saved Chat Menu" },
+            {
+                icon: Lorebook,
+                title: "Folder Name",
+                createdAt:'23-02-2002',
+                children: folderData, // nested folders
+            },
+            {
+                icon: Lorebook,
+                title: "Folder Name",
+                createdAt:'23-02-2002',
+                children: folderData, // nested folders
+            },
+        ],
     },
     {
         icon: Models,
@@ -77,7 +99,7 @@ const headerItems: HeaderItem[] = [
 
         dropdown: [
             { icon: Forum, title: "Forum", href: "/community/forum" },
-            { icon: BugReport, title: "Bug & Feature Request", href: "/community/bugs" },
+            { icon: BugReport, title: "Bug & Feature Request", href: "/community/feature-request" },
         ],
     },
     {
@@ -98,16 +120,18 @@ const headerItems: HeaderItem[] = [
 // ----------------- Component -----------------
 const Header: React.FC = () => {
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
+      const [openSubDropdown, setOpenSubDropdown] = useState<number | null>(null);
     const [glowIndex, setGlowIndex] = useState<number | null>(null);
     const [pulsingIndex, setPulsingIndex] = useState<number | null>(null);
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        function handleClickOutside() {
-            if (dropdownRef.current) {
-                setOpenDropdown(null); // Close when clicking outside
-            }
-        }
+       function handleClickOutside(e: MouseEvent) {
+  if (dropdownRef.current && !(dropdownRef.current as HTMLElement).contains(e.target as Node)) {
+    setOpenDropdown(null);
+    setOpenSubDropdown(null);
+  }
+}
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
@@ -116,7 +140,8 @@ const Header: React.FC = () => {
     }, [dropdownRef]);
 
     const handleSelect = () => {
-        setOpenDropdown(null); // Close dropdown after selecting
+        setOpenDropdown(null);
+        setOpenSubDropdown(null);
         setGlowIndex(null)
     };
 

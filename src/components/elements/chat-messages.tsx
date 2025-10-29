@@ -26,7 +26,7 @@ import {
 } from '@/components/ai-elements/conversation';
 
 import { Response } from '@/components/ai-elements/response';
-import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, SquarePen, GitBranch } from 'lucide-react';
+import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, SquarePen, GitBranch, ArrowRightLeft, ArrowRightLeftIcon } from 'lucide-react';
 import { Fragment } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
@@ -50,6 +50,11 @@ export interface ChatMessage {
 export type ChatMessages = ChatMessage[];
 
 const dummyMessages: ChatMessages = [
+    {
+        id: '0',
+        role: 'assistant',
+        parts: [{ type: 'text', text: 'Hi, how can I help you.' }],
+    },
     {
         id: '1',
         role: 'user',
@@ -162,7 +167,7 @@ const ChatMessages = () => {
                                                                     </Avatar>
                                                                 </ZoomableImageModalTrigger>
 
-                                                                <ZoomableImageModalContent imageUrl="https://avatars.githubusercontent.com/u/124599?v=4"  className="rounded-full" />
+                                                                <ZoomableImageModalContent imageUrl="https://avatars.githubusercontent.com/u/124599?v=4" className="rounded-full" />
                                                             </ZoomableImageModal>
                                                             <Label className='text-xs'>Tony Stark</Label>
                                                         </div>
@@ -188,18 +193,72 @@ const ChatMessages = () => {
                                                                 onClick={() =>
                                                                     navigator.clipboard.writeText(part.text)
                                                                 }
-                                                                label="squarepen"
-                                                            >
-                                                                <SquarePen className="size-3" />
-                                                            </Action>
-                                                            <Action
-                                                                onClick={() =>
-                                                                    navigator.clipboard.writeText(part.text)
-                                                                }
                                                                 label="delete"
                                                             >
                                                                 <Trash className="size-3" />
                                                             </Action>
+                                                                <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button
+                                                                    suppressHydrationWarning
+                                                                    type='button'
+                                                                    onClick={() =>
+                                                                        navigator.clipboard.writeText(part.text)
+                                                                    }
+                                                                    size={"icon"}
+                                                                    className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
+                                                                // label="Copyfdsss"
+                                                                >
+                                                                    <Info className="size-3" />
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent className="w-56" align="start">
+                                                                <DropdownMenuItem>
+                                                                    Edit
+                                                                    {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Impresonate
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Narrate
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Persona Perview
+                                                                </DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button
+                                                                    suppressHydrationWarning
+                                                                    type='button'
+                                                                    onClick={() =>
+                                                                        navigator.clipboard.writeText(part.text)
+                                                                    }
+                                                                    size={"icon"}
+                                                                    className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
+                                                                // label="Copyfdsss"
+                                                                >
+                                                                    <EllipsisVertical className="size-3" />
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent className="w-56" align="start">
+                                                                <DropdownMenuItem>
+                                                                    Save chat
+                                                                    {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Manage saved chat
+
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Exclude Message from Prompts
+
+                                                                </DropdownMenuItem>
+
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
                                                         </Actions>
                                                     )
                                                 }
@@ -227,14 +286,47 @@ const ChatMessages = () => {
                                                         >
                                                             <Trash className="size-3" />
                                                         </Action>
-                                                        <Action
-                                                            onClick={() =>
-                                                                navigator.clipboard.writeText(part.text)
-                                                            }
-                                                            label="info"
-                                                        >
-                                                            <Info className="size-3" />
-                                                        </Action>
+
+                                                        <DropdownMenu>
+                                                            <DropdownMenuTrigger asChild>
+                                                                <Button
+                                                                    suppressHydrationWarning
+                                                                    type='button'
+                                                                    onClick={() =>
+                                                                        navigator.clipboard.writeText(part.text)
+                                                                    }
+                                                                    size={"icon"}
+                                                                    className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
+                                                                // label="Copyfdsss"
+                                                                >
+                                                                    <Info className="size-3" />
+                                                                </Button>
+                                                            </DropdownMenuTrigger>
+                                                            <DropdownMenuContent className="w-56" align="start">
+                                                                <DropdownMenuItem>
+                                                                    Edit
+                                                                    {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Continue
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Impresonate
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Narrate
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Author Notes
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Character Notes
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Character Perview
+                                                                </DropdownMenuItem>
+                                                            </DropdownMenuContent>
+                                                        </DropdownMenu>
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger asChild>
                                                                 <Button
@@ -252,13 +344,40 @@ const ChatMessages = () => {
                                                             </DropdownMenuTrigger>
                                                             <DropdownMenuContent className="w-56" align="start">
                                                                 <DropdownMenuItem>
-                                                                    Branch
-                                                                    <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut>
+                                                                    Stop
+                                                                    {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Start new chat
+
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Branch chat
+
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Save chat
+
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Manage saved chat
+
+                                                                </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    Exclude Message from Prompts
+
                                                                 </DropdownMenuItem>
 
                                                             </DropdownMenuContent>
                                                         </DropdownMenu>
-
+                                                        <Action
+                                                            onClick={() =>
+                                                                navigator.clipboard.writeText(part.text)
+                                                            }
+                                                            label="delete"
+                                                        >
+                                                            <ArrowRightLeft className="size-3" />
+                                                        </Action>
                                                     </Actions>
                                                 )}
                                             </div>

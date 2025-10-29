@@ -37,9 +37,9 @@ const BackgroundPage = () => {
 
                             <DropdownMenuContent className="w-72" align="end" >
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem>Link to Account</DropdownMenuItem>
-                                    <DropdownMenuItem>Make Global Default for Account</DropdownMenuItem>
-                                    <DropdownMenuItem>Duplicate</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Link<span className='font-bold'>Selected</span> to Account</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Make <span className='font-bold'>Selected</span>  Global Default</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Duplicate <span className='font-bold'>Selected</span> </DropdownMenuItem>
 
                                     {/* Add To submenu */}
                                     <DropdownMenuSub>
@@ -58,6 +58,7 @@ const BackgroundPage = () => {
                                         <DropdownMenuSubTrigger>Import</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
+                                                <DropdownMenuItem>Import Selected</DropdownMenuItem>
                                                 <DropdownMenuItem>Bulk Import</DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
@@ -67,13 +68,14 @@ const BackgroundPage = () => {
                                         <DropdownMenuSubTrigger>Export</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
+                                                <DropdownMenuItem>Export Selected</DropdownMenuItem>
                                                 <DropdownMenuItem>Bulk Export</DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <DropdownMenuItem>Share</DropdownMenuItem>
-                                    <DropdownMenuItem variant='destructive' >Delete</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Share<span className='font-bold'>Selected</span> </DropdownMenuItem>
+                                    <DropdownMenuItem variant='destructive' className='gap-1' >Delete<span className='font-bold'>Selected</span> </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

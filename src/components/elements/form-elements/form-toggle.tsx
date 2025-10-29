@@ -9,7 +9,7 @@ import { FieldRules } from "@/types/form-types";
 
 interface FormToggleProps {
     name: string;
-    defaultValue?: string | string[]| undefined;
+    defaultValue?: string | string[]|boolean| undefined;
     className?: string;
     rules?: FieldRules;
 }

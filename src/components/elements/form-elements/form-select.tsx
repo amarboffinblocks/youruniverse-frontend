@@ -18,7 +18,8 @@ interface FormSelectProps {
     name: string;
     label?: string;
     placeholder?: string;
-    defaultValue?: string |string[]|undefined;
+        defaultValue?: string | string[]|boolean| undefined;
+
     className?: string;
     rules?: FieldRules
 }

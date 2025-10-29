@@ -96,9 +96,12 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   //       : "",
   //   [errorMessage]
   // );
+  if(field){
+    console.log(field)
+  }
   const tokenCount = messages.reduce((acc, msg) => acc + msg.length, 0);
   return (
-    <div className='relative space-y-2 '>
+    <div className='relative space-y-2  '>
       <Dialog>
         {label && (
           <Label

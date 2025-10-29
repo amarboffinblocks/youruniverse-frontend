@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
-import { ChevronsDown, Plus, Send, Trash, Upload } from "lucide-react";
-import BreadcrumbElements from "./breadcrumb-elements";
+import {  Plus, Send, Trash, Upload } from "lucide-react";
+import Footer from "./footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -64,7 +64,8 @@ const ChatPanel = () => {
                         >
                             <Trash className="h-8 w-8 text-white" />
                         </Button>
-                        <Button
+                        {/* commented by client feedback */}
+                        {/* <Button
                             type="submit"
                             size="icon"
                             variant={"ghost"}
@@ -81,7 +82,7 @@ const ChatPanel = () => {
 
                         >
                             <ChevronsDown className="h-8 w-8 text-white" />
-                        </Button>
+                        </Button> */}
 
                         <Button
                             type="button"
@@ -101,7 +102,7 @@ const ChatPanel = () => {
                     </div>
                 </div>
             </form>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react'
-import MessageListManager from './message-list-manager'
 import FormTextarea from './form-textarea'
-import { Plus, Trash, Trash2 } from 'lucide-react'
+import { Plus, Trash2 } from 'lucide-react'
+import FormInputField from './form-Input-field'
 
 const EntriesField = () => {
     return (
@@ -14,10 +14,10 @@ const EntriesField = () => {
             >
                 <Plus className='size-14' />
             </button>
-            <div className='pl-14'>
-                <MessageListManager label='keyword' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
+            <div className=''>
+                <FormInputField label='Keywords or Terms' placeholder="Enter the keywords or Terms"  name='keyword' />
             </div>
-            <FormTextarea name='context' label='Context' />
+            <FormTextarea name='context' placeholder='Enter the relavent context about the character' label='Context' />
         </div>
 
          <div className='border  border-primary rounded-2xl p-4 relative    '>
@@ -27,10 +27,10 @@ const EntriesField = () => {
             >
                 <Trash2 className='size-10' />
             </button>
-            <div className='pl-14'>
-                <MessageListManager label='keyword' name='keyword' onChange={(messages: string[]) => console.log(messages)} />
+              <div className=''>
+                <FormInputField label='Keywords or Terms' placeholder="Enter the keywords or Terms"  name='keyword' />
             </div>
-            <FormTextarea name='context' label='Context' />
+            <FormTextarea name='context' placeholder='Enter the relavent context about the character' label='Context' />
         </div>
         </div>
     )
