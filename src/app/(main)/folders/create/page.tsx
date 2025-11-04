@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import FolderForm from "@/components/forms/folder-form";
 export default function page() {

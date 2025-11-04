@@ -1,6 +1,6 @@
 
 import React from "react";
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import Android from "@/components/icons/android";
 import Apple from "@/components/icons/apple";

@@ -1,6 +1,6 @@
 
 import Container from "@/components/elements/container"
-import Footer from "@/components/elements/footer"
+import Footer from "@/components/layout/footer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -8,23 +8,23 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Edit } from "lucide-react"
 
 const page = () => {
-const defaultTags = [
-  { label: "Warrior", value: "warrior" },
-  { label: "Mage", value: "mage" },
-  { label: "Rogue", value: "rogue" },
-  { label: "Beast", value: "beast" },
-  { label: "Animal", value: "animal" },
-  { label: "Human", value: "human" },
-  { label: "Elf", value: "elf" },
-  { label: "Vampire", value: "vampire" },
-  { label: "Cyberpunk", value: "cyberpunk" },
-  { label: "Sci-Fi", value: "sci-fi" },
-  { label: "Men", value: "men" },
-  { label: "Women", value: "women" },
-  { label: "Mystical", value: "mystical" },
-  { label: "Hero", value: "hero" },
-  { label: "Villain", value: "villain" },
-];
+    const defaultTags = [
+        { label: "Warrior", value: "warrior" },
+        { label: "Mage", value: "mage" },
+        { label: "Rogue", value: "rogue" },
+        { label: "Beast", value: "beast" },
+        { label: "Animal", value: "animal" },
+        { label: "Human", value: "human" },
+        { label: "Elf", value: "elf" },
+        { label: "Vampire", value: "vampire" },
+        { label: "Cyberpunk", value: "cyberpunk" },
+        { label: "Sci-Fi", value: "sci-fi" },
+        { label: "Men", value: "men" },
+        { label: "Women", value: "women" },
+        { label: "Mystical", value: "mystical" },
+        { label: "Hero", value: "hero" },
+        { label: "Villain", value: "villain" },
+    ];
 
     // Mock character data
     const character = {
@@ -106,7 +106,7 @@ const defaultTags = [
                                             </p>
                                           
                                             </div> */}
-                                            {/* <div className="flex items-center text-sm text-gray-300 gap-4 py-1">
+                                        {/* <div className="flex items-center text-sm text-gray-300 gap-4 py-1">
                                                 <span className="text-xs">
                                                     Created: {formatRelativeTime(new Date(character.created_at))}
                                                 </span>
@@ -114,15 +114,15 @@ const defaultTags = [
                                     </CardHeader>
                                 </Card>
                                 <Card className="col-span-2 transition-shadow p-4 px-8">
-  <div className="flex gap-3  flex-wrap ">
-                                                {defaultTags.map((tag, idx) => (
-                                                    <Badge
-                                                        key={idx} className="text-lg"
-                                                    >
-                                                        {tag.label}
-                                                    </Badge>
-                                                ))}
-                                            </div>
+                                    <div className="flex gap-3  flex-wrap ">
+                                        {defaultTags.map((tag, idx) => (
+                                            <Badge
+                                                key={idx} className="text-lg"
+                                            >
+                                                {tag.label}
+                                            </Badge>
+                                        ))}
+                                    </div>
                                 </Card>
 
                                 {/* Basic Info */}
@@ -182,7 +182,6 @@ const defaultTags = [
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
         </Container>
     )
 }

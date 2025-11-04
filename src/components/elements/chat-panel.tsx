@@ -1,8 +1,8 @@
 "use client"
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
-import {  Plus, Send, Trash, Upload } from "lucide-react";
-import Footer from "./footer";
+import { Plus, Send, Trash, Upload } from "lucide-react";
+import Footer from "../layout/footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);

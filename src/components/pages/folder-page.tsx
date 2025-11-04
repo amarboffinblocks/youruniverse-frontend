@@ -146,7 +146,7 @@ const FolderPage = () => {
 
     return (
         <div className='flex flex-col h-full pt-10' >
-            <div className='space-y-4'>
+            <div className='space-y-4 w-full max-w-3xl mx-auto'>
                 <div className='flex flex-1 items-center gap-x-4 '>
                     <SearchField placeholder='Search for Folder, Character name, or description' />
                     <div>
@@ -160,7 +160,7 @@ const FolderPage = () => {
                             <DropdownMenuContent className="w-72" align="end">
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-                                      <DropdownMenuSub>
+                                    <DropdownMenuSub>
                                         <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
@@ -193,7 +193,7 @@ const FolderPage = () => {
 
                                     <Link href={"/folders/create"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
 
-                                  
+
                                     <DropdownMenuItem variant='destructive'>Delete Folder</DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
@@ -206,7 +206,7 @@ const FolderPage = () => {
 
                 </div>
             </div>
-            <div className='flex-1   mt-10'>
+            <div className='flex-1   mt-14'>
                 <div className='h-full w-full'>
                     <MasonryGrid
                         items={folderItems}

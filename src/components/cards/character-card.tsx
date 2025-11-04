@@ -17,22 +17,21 @@ interface CharacterCardProps {
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
-    ...props
+    saved, item, ...props
 }) => {
-    const [liked,setLiked]=useState<boolean>(false)
     return (
         <Card
             {...props}
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative", props.saved && "border-2 border-primary")}
+            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative", saved && "border-2 border-primary")}
         >
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
                     <Checkbox
                         id="terms"
-                        className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
+                        className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                     />
+
                     <div className="flex items-center gap-1">
-                        < Heart onClick={()=>setLiked(prev=>!prev)} size={26} fill={!liked?"#101828":"red"} stroke="0"/>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
@@ -47,15 +46,15 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 align="end"
                             // className=" bg-gray-900 text-white border border-gray-800"
                             >
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger className="w-full  space-x-4"><Link2 className="w-4 h-4 mr-2 text-white" /> Link</DropdownMenuSubTrigger>
-                                        <DropdownMenuPortal>
-                                            <DropdownMenuSubContent>
-                                                <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Persona</DropdownMenuItem>
-                                                <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Lorebook</DropdownMenuItem>
-                                            </DropdownMenuSubContent>
-                                        </DropdownMenuPortal>
-                                    </DropdownMenuSub>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger className="w-full  space-x-4"><Link2 className="w-4 h-4 mr-2 text-white" /> Link</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Persona</DropdownMenuItem>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Lorebook</DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
 
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Folder
@@ -96,9 +95,9 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                     <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
                     <span className="text-xs text-gray-400">Tokens: 1000</span>
                 </div>
-                <div className=" flex items-center gap-2 text-gray-400 ">
-                    <Rating value={3.5} size={18} readOnly={true} />
-                    {'( 25k )'}
+                <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">
+                    <Rating value={3.5} size={14} readOnly={true} />
+                    <span className="text-xs">(25k)</span>
                 </div>
                 <div className="flex gap-2 flex-wrap ">
                     {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (
@@ -119,7 +118,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                 </div>
             </CardContent>
 
-            <CardFooter className="flex mt-2 justify-between px-4 py-2  border-t border-primary text-[10px] text-gray-500">
+            <CardFooter className="flex mt-2 justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
                 <div>
                     Created:- 20-08-2023
                 </div>

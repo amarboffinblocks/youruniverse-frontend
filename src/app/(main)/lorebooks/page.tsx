@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import LorebookPage from "@/components/pages/lorebook-page";
 
 export default function page() {

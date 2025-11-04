@@ -19,16 +19,13 @@ const Footer = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col relative">
-      <div className="flex-1"></div>
-
-      <div className="flex py-5 justify-center items-center gap-2 text-lg font-semibold text-primary bg-transparent">
-        {/* Alert Dialog for Contact */}
+    <div className="flex flex-col relative ">
+      <div className="flex py-5 justify-center items-center gap-2 text-white    backdrop-blur-sm ">
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <button className="text-primary hover:underline">Contact</button>
+            <button className="hover:underline">Contact</button>
           </AlertDialogTrigger>
-          <AlertDialogContent className="border-primary bg-primary/30">
+          <AlertDialogContent className="border-primary bg-primary/30 backdrop-blur-sm ">
             <AlertDialogHeader>
               <AlertDialogTitle className="text-white">Open Gmail?</AlertDialogTitle>
               <AlertDialogDescription>
@@ -44,12 +41,12 @@ const Footer = () => {
           </AlertDialogContent>
         </AlertDialog>
 
-        <span className="text-primary">-</span>
-        <Link href="/attributes" className="text-primary hover:underline">Attribution Page</Link>
-        <span className="text-primary">-</span>
-        <Link href="/privacy" className="text-primary hover:underline">Privacy</Link>
-        <span className="text-primary">-</span>
-        <Link href="/terms-of-service" className="text-primary hover:underline">Terms of Services</Link>
+        <span >-</span>
+        <Link href="/attributes" className=" hover:underline">Attribution Page</Link>
+        <span >-</span>
+        <Link href="/privacy" className=" hover:underline">Privacy</Link>
+        <span >-</span>
+        <Link href="/terms-of-service" className="hover:underline">Terms of Services</Link>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 
 interface FormCheckboxProps {
   name: string;
-  defaultValue?: boolean|string|string[];
+  defaultValue?: boolean | string | string[];
   className?: string;
   label?: string;
   rules?: FieldRules;
@@ -37,7 +37,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
         id={name}
         checked={!!value}
         onCheckedChange={(checked) => setValue(checked)}
-        className="bg-primary/30 border-none font-bold cursor-pointer 
+        className="bg-primary/30 backdrop-blur-sm  border-primary/80  font-bold cursor-pointer 
                    data-[state=checked]:text-white text-primary rounded-lg size-8"
       />
       {label && (

@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import PersonaPage from "@/components/pages/persona-page";
 
 export default function page() {

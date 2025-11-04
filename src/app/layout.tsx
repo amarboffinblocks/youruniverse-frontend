@@ -4,11 +4,12 @@ import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
+import Footer from "@/components/layout/footer";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
   variable: "--font-atkinson",
-  weight: ["400", "700"], 
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {

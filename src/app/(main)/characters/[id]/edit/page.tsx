@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import CharacterForm from "@/components/forms/character-form";
 export default function page() {

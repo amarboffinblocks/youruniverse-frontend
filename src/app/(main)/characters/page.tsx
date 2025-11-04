@@ -1,5 +1,5 @@
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import CharacterPage from "@/components/pages/character-page";
 
 

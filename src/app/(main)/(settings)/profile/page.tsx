@@ -1,4 +1,4 @@
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import ProfileForm from "@/components/forms/profile-form";
 export default function page() {

@@ -1,5 +1,5 @@
 import Container from "@/components/elements/container"
-import Footer from "@/components/elements/footer"
+import Footer from "@/components/layout/footer"
 import SearchField from "@/components/elements/search-field";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -41,21 +41,20 @@ const page = () => {
   return (
     <div className="flex-1 flex flex-col relative">
       <div className="flex-1  text-white">
-        <Container>
-          <div className="space-y-4">
-            <div className="flex gap-3 items-center">
-
-              <SearchField placeholder={`Search by Resources used`} />
-              <Link href="/attributes/create">
-                <Button>Create New Attribute</Button>
-              </Link>
-            </div>
+        <Container className="flex flex-col ">
+          <div className="flex gap-3 max-w-3xl w-full mx-auto items-center">
+            <SearchField placeholder={`Search by Resources used`} />
+            <Link href="/attributes/create">
+              <Button>Create New Attribute</Button>
+            </Link>
+          </div>
+          <div className="flex-1 flex flex-col gap-6 mt-14">
             {
               resources.map((item: Resource, index) => (
                 <div key={index} className="flex flex-col md:flex-row gap-4 ">
                   <div className="bg-primary/50  backdrop-blur-2xl rounded-2xl p-4 px-6 flex-1 relative ">
-                    <div className="w-0 h-0 absolute -top-3 md:-left-4.5   md:top-6 md:-rotate-90 bg-none border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-primary/50  ">
-                    </div>
+                    {/* <div className="w-0 h-0 absolute -top-3 md:-left-4.5   md:top-6 md:-rotate-90 bg-none border-l-[12px] border-l-transparent border-r-[12px] border-r-transparent border-b-[12px] border-b-primary/50  ">
+                    </div> */}
                     <h4 className="font-semibold text-md text-white">Resourse used : {item.resourceUsed}</h4>
 
                     <h4 className="font-semibold text-md text-white">Used For : {item.usedFor}</h4>
@@ -74,7 +73,6 @@ const page = () => {
                 </div>
               ))
             }
-
           </div>
 
         </Container>

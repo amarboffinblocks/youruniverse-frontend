@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/elements/footer";
+import Footer from "@/components/layout/footer";
 import ComingSoon from "@/components/elements/coming-soon";
 import Container from "@/components/elements/container";
 
