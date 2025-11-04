@@ -16,10 +16,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useResetPassword } from "@/hooks/useAuth";
 
 const ForgetEmail = () => {
 
-    // ✅ Zod validation schema
     const validationSchema = z
         .object({
             password1: z
@@ -33,12 +33,33 @@ const ForgetEmail = () => {
         })
         .refine((data) => data.password === data.password1, {
             message: "Passwords must match",
-            path: ["password"], // attach error to confirm field
+            path: ["password"],
         });
+    const resetPasswordMutation = useResetPassword();
 
-    // ✅ Submit handler
     const handleSubmit = async (values: { password1: string; password: string }) => {
-        console.log(values)
+        console.log("Form Submitted:", values);
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            console.error("❌ Activation token not found in localStorage");
+            return;
+        }
+        console.log("--", token)
+        resetPasswordMutation.mutate(
+            {
+                activation_token: token,
+                password: values.password,
+            },
+            {
+                onSuccess: (data) => {
+                    console.log("✅ Password Reset Successful:", data);
+                },
+                onError: (error: any) => {
+                    console.error("❌ Password Reset Failed:", error?.message);
+                },
+            }
+        );
     };
 
     return (
@@ -64,12 +85,11 @@ const ForgetEmail = () => {
                     <CardContent>
                         <Formik
                             initialValues={{ password1: "", password: "" }}
-                            validationSchema={toFormikValidationSchema(validationSchema)} // ✅ Zod + Formik adapter
+                            validationSchema={toFormikValidationSchema(validationSchema)}
                             onSubmit={handleSubmit}
                         >
-                            {({  }) => (
+                            {({ }) => (
                                 <Form className="space-y-4">
-                                    {/* New Password Field */}
                                     <div className="space-y-2">
                                         <Label htmlFor="password1">New Password</Label>
                                         <Field
@@ -86,7 +106,6 @@ const ForgetEmail = () => {
                                         />
                                     </div>
 
-                                    {/* Confirm Password Field */}
                                     <div className="space-y-2">
                                         <Label htmlFor="password">Confirm Password</Label>
                                         <Field
@@ -103,7 +122,6 @@ const ForgetEmail = () => {
                                         />
                                     </div>
 
-                                    {/* Submit Button */}
                                     <Button
                                         type="submit"
                                         className="w-full"

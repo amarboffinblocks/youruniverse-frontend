@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 import { Button } from "../ui/button";
+import { usePersonaCreate } from "@/hooks/usePersona";
 interface Props {
   characterId?: string;
 }
 
 const PersonaForm: React.FC<Props> = () => {
-
+const personaMutation= usePersonaCreate()
 
   return (
     <div className="py-10">
@@ -25,6 +26,7 @@ const PersonaForm: React.FC<Props> = () => {
         schema={personaSchema}
         onSubmit={(values) => {
           console.log("Form Submitted:", values);
+          personaMutation.mutate({...values,tokens:'300'})
         }}
         initialValues={{
           name: 'xyz',

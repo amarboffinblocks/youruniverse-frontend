@@ -19,7 +19,7 @@ interface FormSelectProps {
     label?: string;
     placeholder?: string;
         defaultValue?: string | string[]|boolean| undefined;
-
+    tokens?:boolean
     className?: string;
     rules?: FieldRules
 }
@@ -29,6 +29,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     label,
     placeholder = "Select an option",
     rules,
+    tokens,
     defaultValue,
     className = "",
 }) => {
@@ -37,6 +38,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
     const { setValue } = helpers;
     const options = rules?.options || [];
     const activeValue = value || defaultValue || options[0]?.value || "";
+
+
+ const tokenCount = typeof field.value === "string" ? field.value.length : 0;
 
     return (
         <div className="w-full space-y-2">
@@ -60,8 +64,28 @@ const FormSelect: React.FC<FormSelectProps> = ({
                 </SelectContent>
             </Select>
 
-            <p className={cn("text-xs text-destructive bg-red-200", meta.touched && meta.error ? "visible" : "invisible")}>{meta.error || "placeholder"}</p>
-
+            {/* <p className={cn("text-xs text-destructive bg-red-200", meta.touched && meta.error ? "visible" : "invisible")}>{meta.error || "placeholder"}</p> */}
+  <div className="flex justify-between items-center text-xs px-1 text-white">
+                         <span
+                             id={`${name}-error`}
+                             className={cn(
+                                 "text-destructive",
+                                 meta.touched && meta.error  ? "visible" : "invisible"
+                             )}
+                         >
+                             {meta.touched && meta.error  || "placeholder"}
+                         </span>
+         
+                         {tokens === true && (
+                             <span
+                                 className={cn(
+                                     meta.touched && meta.error  && "text-destructive",
+                                 )}
+                             >
+                                 {tokenCount} Tokens
+                             </span>
+                         )}
+                     </div>
         </div>
     );
 };

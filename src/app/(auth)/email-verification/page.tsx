@@ -16,16 +16,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useEmailVerification } from "@/hooks/useAuth";
 
 const EmailVerification = () => {
     const validationSchema = z.object({
         email: z.string().email("Invalid email").nonempty("Email is required"),
     });
 
+    const emailVerificationMutation = useEmailVerification();
 
     const handleSubmit = async (values: { email: string }) => {
-        console.log("Form Submitted:", values);
+        console.log("📩 Form Submitted:", values);
 
+        emailVerificationMutation.mutate(
+            { email: values.email },
+            {
+                onSuccess: (data) => {
+                    console.log("✅ Verification Success:", data);
+                },
+                onError: (error: any) => {
+                    console.error("❌ Verification Failed:", error?.message);
+                },
+            }
+        );
     };
 
     return (

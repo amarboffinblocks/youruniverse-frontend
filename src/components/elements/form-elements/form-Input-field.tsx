@@ -11,12 +11,14 @@ interface FormInputFieldProps {
     className?: string
     placeholder?:string
     disabled?:boolean
+    tokens?:boolean
 }
 
 const FormInputField: React.FC<FormInputFieldProps> = ({
     name,
     label,
     className,
+     tokens = false,
     placeholder='',
     disabled=false,
     ...props
@@ -32,7 +34,7 @@ const FormInputField: React.FC<FormInputFieldProps> = ({
         [errorMessage]
     );
 
-
+ const tokenCount = typeof field.value === "string" ? field.value.length : 0;
     return (
         <div className="w-full space-y-2">
             {label && (
@@ -53,18 +55,27 @@ const FormInputField: React.FC<FormInputFieldProps> = ({
                 className={cn(errorClasses,'', className)}
             />
 
-            <div className="flex justify-between items-center text-xs px-1 text-white">
-                <span
-                    id={`${name}-error`}
-                    className={cn(
-                        "text-destructive",
-                        errorMessage ? "visible" : "invisible"
-                    )}
-                >
-                    {errorMessage || "placeholder"}
-                </span>
-
-            </div>
+         <div className="flex justify-between items-center text-xs px-1 text-white">
+                         <span
+                             id={`${name}-error`}
+                             className={cn(
+                                 "text-destructive",
+                                 errorMessage ? "visible" : "invisible"
+                             )}
+                         >
+                             {errorMessage || "placeholder"}
+                         </span>
+         
+                         {tokens === true && (
+                             <span
+                                 className={cn(
+                                     errorMessage && "text-destructive",
+                                 )}
+                             >
+                                 {tokenCount} Tokens
+                             </span>
+                         )}
+                     </div>
         </div>
     );
 };

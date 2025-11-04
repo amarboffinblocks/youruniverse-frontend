@@ -6,7 +6,7 @@ const page = () => {
   return (
     <div className='flex justify-center items-center h-full'>
       {/* <ComingSoon /> */}
-      <LoginForm></LoginForm>
+      <LoginForm />
     </div>
   )
 }

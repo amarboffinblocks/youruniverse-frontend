@@ -21,9 +21,17 @@ import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
 import PersonaCard from '../cards/persona-card';
+import { useDeletedPernaById, useGetAllPersonas } from '@/hooks/usePersona';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store';
 
 const PersonaPage = () => {
     const [page, setPage] = useState(1)
+    const personaIds = useSelector((state: RootState) => state.persona.personaIds);
+    const { data } = useGetAllPersonas();
+    const personasList = data?.data || [];
+    const personaMutation = useDeletedPernaById()
+
 
     return (
         <Container className="flex flex-col h-full "  >
@@ -48,7 +56,7 @@ const PersonaPage = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-<DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
+                                        <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
@@ -94,13 +102,11 @@ const PersonaPage = () => {
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
-
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Delete Persona</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Delete Selected Persona (s)</DropdownMenuItem>
-                                       
+                                                    <DropdownMenuItem onClick={() => { personaMutation.mutate(personaIds) }}>Delete Selected Persona (s)</DropdownMenuItem>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
@@ -132,8 +138,8 @@ const PersonaPage = () => {
                 <TabsContent value="all" >
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {
-                            [1, 2, 3, 4].map((item) => (
-                                <PersonaCard key={item} />
+                            personasList.map((item: any) => (
+                                <PersonaCard key={item.id} item={item} />
                             ))
                         }
 
@@ -154,7 +160,7 @@ const PersonaPage = () => {
 
                 <PaginationComponent
                     currentPage={page}
-                    totalPages={10}
+                    totalPages={data?.total}
                     onPageChange={(p) => setPage(p)}
                 />
             </div>

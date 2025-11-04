@@ -4,7 +4,9 @@ import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
-import Footer from "@/components/layout/footer";
+import { Providers } from "./providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
@@ -27,7 +29,7 @@ export default function RootLayout({
       <body className={`${atkinson.className} relative antialiased bg-background w-screen h-screen flex flex-col`}>
         <ShootingStars />
         <StarsBackground />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

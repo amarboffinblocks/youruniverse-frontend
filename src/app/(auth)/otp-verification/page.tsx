@@ -8,34 +8,57 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from "next/link";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import Image from "next/image";
+import { useOtpVerify } from "@/hooks/useAuth";
 
-interface Otp{
-    otp:string
+interface Otp {
+    otp: string;
 }
 
 const VerifyOTP = () => {
-    const [otp, setOtp] = useState('');
+    const [otp, setOtp] = useState("");
     const [timeLeft, setTimeLeft] = useState(60);
+
+    const OtpVerifyMutation = useOtpVerify();
 
     useEffect(() => {
         if (timeLeft <= 0) return;
-        const timer = setInterval(() => setTimeLeft(prev => Math.max(0, prev - 1)), 1000);
+        const timer = setInterval(
+            () => setTimeLeft((prev) => Math.max(0, prev - 1)),
+            1000
+        );
         return () => clearInterval(timer);
     }, [timeLeft]);
 
     const handleSubmit = async (values: Otp) => {
-        // Mock verification logic
         console.log("Verifying OTP:", values);
 
-        // ✅ Navigate after verification success
-        // setTimeout(() => {
-        //     router.push("/dashboard"); // change to your target route
-        // }, 800);
+        const activationToken = localStorage.getItem("activationToken");
+        console.log(activationToken)
+        if (!activationToken) {
+            console.error("❌ Activation token not found");
+            return;
+        }
+
+        OtpVerifyMutation.mutate(
+            {
+                activation_token: activationToken,
+                activation_code: otp,
+            },
+            {
+                onSuccess: (data) => {
+                    console.log("✅ User Data:", data);
+                },
+                onError: (error: any) => {
+                    console.error("❌ Error:", error?.message || "Invalid credentials!");
+                },
+            }
+        );
     };
 
     const resendOTP = useCallback(() => {
         setTimeLeft(60);
     }, []);
+
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -67,7 +90,7 @@ const VerifyOTP = () => {
                                     <div className="space-y-2 flex items-center justify-center">
                                         <InputOTP
                                             maxLength={4}
-                                            onChange={(value) => {
+                                            onChange={(value: any) => {
                                                 setOtp(value);
                                                 setFieldValue('otp', value);
                                             }}
@@ -120,7 +143,7 @@ const VerifyOTP = () => {
                     <CardFooter className="flex flex-col items-center space-y-2">
                         <p className="text-sm text-gray-600">
                             Wrong email?{" "}
-                            <Link href="/register" className="font-medium text-primary hover:underline">
+                            <Link href="/sign-up" className="font-medium text-primary hover:underline">
                                 Go back
                             </Link>
                         </p>
