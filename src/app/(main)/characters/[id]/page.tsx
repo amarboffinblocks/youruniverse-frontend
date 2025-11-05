@@ -69,7 +69,6 @@ const page = () => {
         if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`
         return `${Math.floor(diff / 86400)} days ago`
     }
-    console.log(formatRelativeTime)
 
     return (
         <Container className=" h-full flex flex-col"  >

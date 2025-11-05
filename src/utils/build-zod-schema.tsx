@@ -2,63 +2,175 @@
 import { FormData } from "@/types/form-types";
 import { z } from "zod";
 
+
 export function buildZodSchema(fields: FormData[]) {
-    const shape: Record<string, any> = {}; 
+    const shape: Record<string, any> = {};
 
     fields.forEach((field) => {
         let schema: any;
 
         switch (field.type) {
+            /** 📝 Text & Textarea */
             case "text":
-            case "textarea":
-                schema = z.string().trim();
-                if (field.rules?.min) schema = schema.min(field.rules.min);
-                if (field.rules?.max) schema = schema.max(field.rules.max);
-                if (field.required) schema = schema.nonempty(`${field.label} is required`);
-                break;
-
-            case "radio":
-            case "select":
-                schema = z.string();
-                if (field.required) schema = schema.nonempty(`${field.label} is required`);
-                break;
-
-            case "file":
+            case "textarea": {
                 schema = z
-                    .any()
-                    .refine(
-                        (file) => (!field.required && !file) || file instanceof File,
-                        `${field.label} must be a file`
+                    .union([
+                        z.string(),
+                        z.undefined().transform(() => ""), 
+                    ])
+                    .refine((val) => field.required ? val.trim().length > 0 : true, {
+                        message: `${field.label || field.name} is required`,
+                    });
+
+                if (field.rules) {
+                    const { min, max } = field.rules;
+                    if (min)
+                        schema = schema.refine((val: string | any[]) => val.length >= min, {
+                            message: `${field.label || field.name} must be at least ${min} characters`,
+                        });
+                    if (max)
+                        schema = schema.refine((val: string | any[]) => val.length <= max, {
+                            message: `${field.label || field.name} must be less than ${max} characters`,
+                        });
+                }
+                break;
+            }
+            /** 🟢 Toggle */
+            case "toggle": {
+                const options = field.rules?.options?.map((opt) => opt.value) || [];
+
+                if (options.length > 0) {
+                    schema = z.enum(
+                        options as [string, ...string[]],
+                        { required_error: `${field.label || field.name} is required` }
                     );
-                break;
+                } else {
+                    schema = z.string();
+                }
 
-            case "multi-select":
-                schema = field.multiple ? z.array(z.string()) : z.string();
                 if (!field.required) schema = schema.optional();
-                if (field.required) schema = schema.refine((val: any) => !!val, `${field.label} is required`);
-                break;
 
-            case "toggle":
-            case "switch":
+                if (field.defaultValue) {
+                    schema = schema.default(field.defaultValue);
+                }
+                break;
+            }
+            /** 🔽 Select Field */
+            case "select": {
+                const options = field.rules?.options?.map((opt) => opt.value) || [];
+
+                if (options.length > 0) {
+                    schema = z.enum(
+                        options as [string, ...string[]],
+                        { required_error: `${field.label || field.name} is required` }
+                    );
+                } else {
+                    schema = z.string();
+                }
+
+                if (!field.required) schema = schema.optional();
+                if (field.defaultValue) schema = schema.default(field.defaultValue);
+                break;
+            }
+            /** 🏷️ Multi-select */
+            case "multi-select": {
+                schema = z
+                    .array(z.string())
+                    .refine((arr) => (field.required ? arr.length > 0 : true), {
+                        message: `${field.label || field.name} must have at least one selection`,
+                    });
+
+                if (!field.required) schema = schema.optional();
+
+                schema = schema.default(field.defaultValue || []);
+
+                break;
+            }
+            case "file": {
+                if (field.required) {
+                    schema = z.any().refine(
+                        (value) => {
+                            return !!value;
+                        },
+                        { message: `${field.label || field.name} is required.` }
+                    );
+                } else {
+                    schema = z.any().optional();
+                }
+                break;
+            }
+            case "checkbox": {
                 schema = z.boolean();
-                if (!field.required) schema = schema.optional();
-                if (field.required) schema = schema.refine((val: any) => val !== undefined, `${field.label} is required`);
-                break;
 
-            default:
-                schema = z.any();
+                if (field.required) {
+                    schema = schema.refine(
+                        (val: boolean) => val === true,
+                        {
+                            message: `${field.label || field.name} must be checked`,
+                        }
+                    );
+                }
+
+                if (field.defaultValue !== undefined) {
+                    schema = schema.default(field.defaultValue);
+                } else {
+                    schema = schema.default(false);
+                }
+
+                break;
+            }
+            case "multi-entries": {
+                schema = z.array(z.string())
+                    .refine(
+                        (arr) => arr.length > 0 && arr.some(item => item.trim().length > 0),
+                        { message: "Alternate Messages must have at least one valid message" }
+                    )
+                    .refine(
+                        (arr) => arr.every(item => item.trim().length > 0),
+                        { message: "All Alternate Messages entries must contain text" }
+                    )
+                    .default([""]);
+                break;
+            }
+            default: {
+                schema = z.any().optional();
+                break;
+            }
         }
 
-        shape[field.name] = schema;
+        if (schema) shape[field.name] = schema;
     });
 
     return z.object(shape);
 }
-
 export function buildInitialValues(fields: FormData[]) {
-    const values: Record<string, any> = {};
+    const initialValues: Record<string, any> = {};
+
     fields.forEach((field) => {
-        values[field.name] = field.defaultValue ?? "";
+        switch (field.type) {
+            case "text":
+            case "textarea":
+                initialValues[field.name] = "";
+                break;
+            case "file":
+                initialValues[field.name] = null;
+                break;
+            case "checkbox":
+                initialValues[field.name] = false;
+                break;
+            case "multi-select":
+            case "multi-entries":
+                initialValues[field.name] = [];
+                break;
+            case "toggle":
+            case "select":
+                initialValues[field.name] = "";
+                break;
+            default:
+                initialValues[field.name] = "";
+                break;
+        }
     });
-    return values;
+
+    return initialValues;
 }

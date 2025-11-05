@@ -32,7 +32,7 @@ interface FormMultiSelectProps {
     label?: string;
     options?: MultiSelectOption[];
     placeholder?: string;
-        defaultValue?: string | string[]|boolean| undefined;
+    defaultValue?: string | string[] | boolean | undefined;
 
     className?: string;
     maxCount?: number;
@@ -58,7 +58,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
 
     return (
         <div className={cn("w-full space-y-1", className)}>
-            {label && <Label className="block text-sm font-medium">{label}</Label>}
+            {label && <Label className={cn("block text-sm font-medium", meta.touched && meta.error && "text-destructive")}>{label}</Label>}
 
             <MultiSelect
                 options={options}
@@ -67,8 +67,9 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
                 placeholder={placeholder}
                 maxCount={maxCount}
                 singleLine={singleLine}
+                className={cn(meta.touched && meta.error && "border-red-500 bg-red-500/20")}
             />
-            <p className={cn("text-xs text-destructive bg-red-200", meta.touched && meta.error ? "visible" : "invisible")}>{meta.error || "placeholder"}</p>
+            <p className={cn("text-xs text-destructive ", meta.touched && meta.error ? "visible" : "invisible")}>{meta.error || "placeholder"}</p>
 
         </div>
     );

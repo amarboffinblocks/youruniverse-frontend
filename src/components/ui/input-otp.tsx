@@ -16,7 +16,6 @@ function InputOTP({
   length?:number
 }) 
 {
-  console.log(length )
   return (
     <OTPInput
       data-slot="input-otp"

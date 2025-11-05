@@ -20,7 +20,6 @@ const ChatPanel = () => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             // Submit logic here
-            console.log("Send:", message);
             setMessage("");
             if (textareaRef.current) {
                 textareaRef.current.style.height = "auto";
