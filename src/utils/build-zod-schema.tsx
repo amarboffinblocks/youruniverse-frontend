@@ -16,7 +16,7 @@ export function buildZodSchema(fields: FormData[]) {
                 schema = z
                     .union([
                         z.string(),
-                        z.undefined().transform(() => ""), 
+                        z.undefined().transform(() => ""),
                     ])
                     .refine((val) => field.required ? val.trim().length > 0 : true, {
                         message: `${field.label || field.name} is required`,
@@ -40,15 +40,18 @@ export function buildZodSchema(fields: FormData[]) {
                 const options = field.rules?.options?.map((opt) => opt.value) || [];
 
                 if (options.length > 0) {
-                    schema = z.enum(
-                        options as [string, ...string[]],
-                        { required_error: `${field.label || field.name} is required` }
-                    );
+                    schema = z.enum(options as [string, ...string[]]);
                 } else {
                     schema = z.string();
                 }
 
-                if (!field.required) schema = schema.optional();
+                if (field.required) {
+                    schema = schema.refine((val: any) => !!val, {
+                        message: `${field.label || field.name} is required`,
+                    });
+                } else {
+                    schema = schema.optional();
+                }
 
                 if (field.defaultValue) {
                     schema = schema.default(field.defaultValue);
@@ -59,19 +62,47 @@ export function buildZodSchema(fields: FormData[]) {
             case "select": {
                 const options = field.rules?.options?.map((opt) => opt.value) || [];
 
-                if (options.length > 0) {
-                    schema = z.enum(
-                        options as [string, ...string[]],
-                        { required_error: `${field.label || field.name} is required` }
+                // ✅ Allow undefined for empty state
+                schema = z.string().optional();
+
+                // ✅ Required validation
+                if (field.required) {
+                    schema = schema.refine(
+                        (val: string | null | undefined) => {
+                            return val !== undefined &&
+                                val !== null &&
+                                val !== '' &&
+                                val !== 'placeholder';
+                        },
+                        {
+                            message: `Please select a ${field.label || field.name.toLowerCase()}`
+                        }
                     );
-                } else {
-                    schema = z.string();
                 }
 
-                if (!field.required) schema = schema.optional();
-                if (field.defaultValue) schema = schema.default(field.defaultValue);
+                // ✅ Options validation
+                if (options.length > 0) {
+                    schema = schema.refine(
+                        (val: string) => {
+                            // For optional fields, undefined is valid
+                            if (!field.required && !val) return true;
+                            // For required fields or when value exists, validate against options
+                            return options.includes(val as string);
+                        },
+                        {
+                            message: `Please select a valid ${field.label || field.name.toLowerCase()}`
+                        }
+                    );
+                }
+
+                // ✅ Set default value only if provided
+                if (field.defaultValue !== undefined) {
+                    schema = schema.default(field.defaultValue);
+                }
+
                 break;
             }
+
             /** 🏷️ Multi-select */
             case "multi-select": {
                 schema = z

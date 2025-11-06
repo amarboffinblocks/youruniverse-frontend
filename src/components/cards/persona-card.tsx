@@ -2,11 +2,11 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Heart, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import React, { useState } from "react";
+import React from "react";
 import { cn } from "@/lib/utils";
 // import Chat from "../icons/chat";
 import Rating from "../elements/rating";
@@ -19,7 +19,6 @@ interface PersonaCardProps {
 const PersonaCard: React.FC<PersonaCardProps> = ({
     ...props
 }) => {
-    const [liked, setLiked] = useState<boolean>(false)
     return (
         <Card
             {...props}

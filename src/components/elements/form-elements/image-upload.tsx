@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { useField } from "formik";
-import { UserRound } from "lucide-react";
+import { CloudUpload } from "lucide-react";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
@@ -96,12 +96,8 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
                         />
                     </div>
                 ) : (
-                    <UserRound
-                        fill={meta.error && meta.touched ? "#fb2c36" : "#552EFB"}
-                        className={cn(
-                            "size-28 opacity-80 stroke-0 absolute -bottom-4 left-1/2 -translate-x-1/2",
-                            meta.error && "!text-destructive/80"
-                        )}
+                    <CloudUpload
+                        className={cn("text-primary size-12", meta.touched && meta.error && "text-destructive")}
                     />
                 )}
                 <input

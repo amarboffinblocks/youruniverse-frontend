@@ -91,7 +91,7 @@ export const characterSchema: FormData[] = [
                 { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
-        defaultValue: "luna-ai",
+        // defaultValue: "luna-ai",
         rows: "3",
 
     }, {
@@ -110,7 +110,7 @@ export const characterSchema: FormData[] = [
                 { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
-        defaultValue: "astro-bot",
+        // defaultValue: "astro-bot",
         rows: "3",
 
     },

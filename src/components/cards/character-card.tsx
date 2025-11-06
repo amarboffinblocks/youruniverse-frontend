@@ -1,11 +1,11 @@
 "use client";
+import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Heart, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
@@ -17,7 +17,7 @@ interface CharacterCardProps {
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
-    saved, item, ...props
+    saved, ...props
 }) => {
     return (
         <Card

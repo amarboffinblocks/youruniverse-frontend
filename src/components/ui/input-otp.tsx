@@ -7,15 +7,12 @@ import { MinusIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 function InputOTP({
-  length,
   className,
   containerClassName,
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string
-  length?:number
-}) 
-{
+}) {
   return (
     <OTPInput
       data-slot="input-otp"

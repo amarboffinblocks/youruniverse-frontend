@@ -9,9 +9,9 @@ import Link from "next/link";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import Image from "next/image";
 
-interface Otp {
-    otp: string
-}
+// interface Otp {
+//     otp: string
+// }
 
 const VerifyOTP = () => {
     const [otp, setOtp] = useState('');
@@ -23,7 +23,7 @@ const VerifyOTP = () => {
         return () => clearInterval(timer);
     }, [timeLeft]);
 
-    const handleSubmit = async (values: Otp) => {
+    const handleSubmit = async () => {
         // Mock verification logic
 
         // ✅ Navigate after verification success

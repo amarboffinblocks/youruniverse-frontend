@@ -49,7 +49,7 @@ const FormSelect: React.FC<FormSelectProps> = ({
     return (
         <div className="w-full space-y-2">
             {label && (
-                <Label htmlFor={name} className={cn("block text-sm font-medium")}>
+                <Label htmlFor={name} className={cn("block text-sm font-medium", meta.touched && meta.error && "text-destructive")}>
                     {label}
                 </Label>
             )}
@@ -59,8 +59,9 @@ const FormSelect: React.FC<FormSelectProps> = ({
                 onValueChange={(newValue) => {
                     setValue(newValue);
                 }}
+
             >
-                <SelectTrigger className={cn("w-full", className)}>
+                <SelectTrigger className={cn("w-full", className, meta.touched && meta.error && "border-red-500 bg-red-500/20")}>
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
 
