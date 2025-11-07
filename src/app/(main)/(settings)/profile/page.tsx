@@ -1,4 +1,4 @@
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import ProfileForm from "@/components/forms/profile-form";
 export default function page() {
@@ -9,7 +9,7 @@ export default function page() {
                     <ProfileForm />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

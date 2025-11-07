@@ -29,7 +29,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
             type="single"
             value={active}
             onValueChange={handleChange}
-            className="bg-primary/40 backdrop-blur-3xl px-2 py-1 rounded-full  "
+            className="bg-primary/40 backdrop-blur-3xl px-2 py-1 rounded-full border border-primary/80 "
         >
             {options.map((option) => (
                 <ToggleGroupItem

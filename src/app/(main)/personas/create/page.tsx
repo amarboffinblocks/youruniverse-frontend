@@ -1,6 +1,6 @@
 
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import PersonaForm from "@/components/forms/persona-form";
 
@@ -12,7 +12,7 @@ export default function page() {
                     <PersonaForm />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

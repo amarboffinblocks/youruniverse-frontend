@@ -1,12 +1,11 @@
 "use client";
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Link2,  MoreVertical, Share2, SquarePen,Upload } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FolderPlus, Heart, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
@@ -14,23 +13,25 @@ import { Checkbox } from "../ui/checkbox";
 
 interface CharacterCardProps {
     item?: number
+    saved?: boolean
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({
-    ...props
+    saved, item, ...props
 }) => {
     return (
         <Card
             {...props}
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative")}
+            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative", saved && "border-2 border-primary")}
         >
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
-                      <Checkbox
-                    id="terms"
-                    className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
-                />
-                    <div>
+                    <Checkbox
+                        id="terms"
+                        className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
+                    />
+
+                    <div className="flex items-center gap-1">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button
@@ -45,9 +46,16 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 align="end"
                             // className=" bg-gray-900 text-white border border-gray-800"
                             >
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer ">
-                                    <Link2 className="w-4 h-4 mr-2 text-white" /> Link
-                                </DropdownMenuItem>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger className="w-full  space-x-4"><Link2 className="w-4 h-4 mr-2 text-white" /> Link</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Persona</DropdownMenuItem>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Lorebook</DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Folder
                                 </DropdownMenuItem>
@@ -77,19 +85,19 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-                
+
 
             </CardHeader>
 
             {/* Content */}
-            <CardContent className="space-y-3 px-4 ">
+            <CardContent className="space-y-2 px-4 ">
                 <div className="flex justify-between items-center">
                     <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
                     <span className="text-xs text-gray-400">Tokens: 1000</span>
                 </div>
-                <div className=" flex items-center gap-2 text-gray-400 ">
-                    <Rating value={3.5} size={18} readOnly={true} />
-                    {'( 25k )'}
+                <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">
+                    <Rating value={3.5} size={14} readOnly={true} />
+                    <span className="text-xs">(25k)</span>
                 </div>
                 <div className="flex gap-2 flex-wrap ">
                     {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (
@@ -103,10 +111,14 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                 <CardDescription className="text-gray-400 text-sm line-clamp-3">
                     Lyriana is a tall, ethereal sorceress with long silver hair that glimmers like moonlight. Her piercing violet eyes seem to hold the mysteries of forgotten worlds, and she carries herself with regal grace. Draped in flowing robes embroidered with celestial patterns, she wields a staff crowned by a radiant crystal that hums softly with arcane energy.
                 </CardDescription>
-                <span className="float-end text-xs text-gray-300">-- Author Name </span>
+                <div className="w-full  flex items-center justify-between text-xs text-gray-300">
+
+                    <span className="">(Private) </span>
+                    <span className="">-- Author Name </span>
+                </div>
             </CardContent>
 
-            <CardFooter className="flex mt-3 justify-between px-4 py-2  border-t border-gray-800 text-[10px] text-gray-500">
+            <CardFooter className="flex mt-2 justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
                 <div>
                     Created:- 20-08-2023
                 </div>

@@ -9,7 +9,7 @@ import { FieldRules } from "@/types/form-types";
 
 interface FormToggleProps {
     name: string;
-    defaultValue?: string | string[]| undefined;
+    defaultValue?: string | string[] | boolean | undefined;
     className?: string;
     rules?: FieldRules;
 }
@@ -37,7 +37,7 @@ const FormToggle: React.FC<FormToggleProps> = ({
             type="single"
             value={activeValue}
             onValueChange={handleChange}
-            className={`flex gap-2 bg-primary/40 backdrop-blur-3xl px-2 py-1 rounded-full ${className}`}
+            className={`flex gap-2 bg-primary/40 backdrop-blur-3xl px-2 py-1 rounded-full border border-primary/80 ${className}`}
         >
             {options.map(({ label, value }) => (
                 <ToggleGroupItem

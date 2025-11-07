@@ -1,12 +1,31 @@
 
 import Container from "@/components/elements/container"
+import Footer from "@/components/layout/footer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Edit, Volume2 } from "lucide-react"
+import { Edit } from "lucide-react"
 
 const page = () => {
+    const defaultTags = [
+        { label: "Warrior", value: "warrior" },
+        { label: "Mage", value: "mage" },
+        { label: "Rogue", value: "rogue" },
+        { label: "Beast", value: "beast" },
+        { label: "Animal", value: "animal" },
+        { label: "Human", value: "human" },
+        { label: "Elf", value: "elf" },
+        { label: "Vampire", value: "vampire" },
+        { label: "Cyberpunk", value: "cyberpunk" },
+        { label: "Sci-Fi", value: "sci-fi" },
+        { label: "Men", value: "men" },
+        { label: "Women", value: "women" },
+        { label: "Mystical", value: "mystical" },
+        { label: "Hero", value: "hero" },
+        { label: "Villain", value: "villain" },
+    ];
+
     // Mock character data
     const character = {
         id: "1",
@@ -56,8 +75,8 @@ const page = () => {
         <Container className=" h-full flex flex-col"  >
 
             <div className="flex flex-col h-screen">
-                <div className="flex py-4 px-4 items-center justify-end">
-                    <Button>
+                <div className="flex py-4 px-4 items-center  justify-end">
+                    <Button className="text-lg !px-4 flex items-center ">
                         <Edit />Edit
                     </Button>
                 </div>
@@ -66,11 +85,11 @@ const page = () => {
                     <div className="">
                         <div className="grid grid-cols-1 lg:grid-cols-4  gap-6">
                             {/* Left Column */}
-                            <div className="space-y-6  col-span-2 ">
+                            <div className="space-y-6  col-span-4 ">
                                 {/* Character Info Card */}
                                 <Card className="transition-shadow py-4">
                                     <CardHeader className="flex flex-row items-start space-x-4 space-y-0">
-                                        <Avatar className="h-22 w-22 rounded-full">
+                                        <Avatar className="aspect-square w-1/2 h-fit rounded-full">
                                             <AvatarImage
                                                 src="https://github.com/shadcn.png"
                                                 alt="@shadcn"
@@ -80,27 +99,30 @@ const page = () => {
                                                 {character.name.charAt(0)}
                                             </AvatarFallback>
                                         </Avatar>
-                                        <div className="space-y-1">
+                                        {/* <div className="space-y-1">
                                              <CardTitle className="text-white/90 text-2xl font-semibold">Tony Stark</CardTitle>
                                             <p className="text-md  pb-1 line-clamp-3 text-gray-300">
                                                 {character.tagline}
                                             </p>
-                                            <div className="flex gap-2 text-md flex-wrap ">
-                                                {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (
-                                                    <Badge
-                                                        key={idx}
-                                                    >
-                                                        {tag}
-                                                    </Badge>
-                                                ))}
-                                            </div>
-                                            {/* <div className="flex items-center text-sm text-gray-300 gap-4 py-1">
+                                          
+                                            </div> */}
+                                        {/* <div className="flex items-center text-sm text-gray-300 gap-4 py-1">
                                                 <span className="text-xs">
                                                     Created: {formatRelativeTime(new Date(character.created_at))}
                                                 </span>
                                             </div> */}
-                                        </div>
                                     </CardHeader>
+                                </Card>
+                                <Card className="col-span-2 transition-shadow p-4 px-8">
+                                    <div className="flex gap-3  flex-wrap ">
+                                        {defaultTags.map((tag, idx) => (
+                                            <Badge
+                                                key={idx} className="text-lg"
+                                            >
+                                                {tag.label}
+                                            </Badge>
+                                        ))}
+                                    </div>
                                 </Card>
 
                                 {/* Basic Info */}
@@ -124,34 +146,6 @@ const page = () => {
                                     </CardContent>
                                 </Card>
 
-                                {/* Voice Settings */}
-                                <Card className="transition-shadow py-4">
-                                    <CardHeader>
-                                        <CardTitle className="flex justify-between items-center">
-                                            <span>Voice Settings</span>
-                                            <Button variant="ghost" size="sm" className="space-x-2">
-                                                <Volume2 className="h-4 w-4" />
-                                                <span>Preview</span>
-                                            </Button>
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div>
-                                            <h3 className="text-sm font-medium text-muted-foreground">
-                                                Voice Provider
-                                            </h3>
-                                            <p className="text-foreground">{character.voiceProvider}</p>
-                                        </div>
-                                        <div className="mt-4">
-                                            <h3 className="text-sm font-medium text-muted-foreground">
-                                                Voice Preview
-                                            </h3>
-                                            <div className="flex items-center mt-2">
-                                                <span className="text-muted-foreground">🔍️</span>
-                                            </div>
-                                        </div>
-                                    </CardContent>
-                                </Card>
                             </div>
 
                             {/* Right Column */}

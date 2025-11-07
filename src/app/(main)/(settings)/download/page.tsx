@@ -1,6 +1,6 @@
 
 import React from "react";
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import Android from "@/components/icons/android";
 import Apple from "@/components/icons/apple";
@@ -95,7 +95,7 @@ export default function page() {
                     </div>
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

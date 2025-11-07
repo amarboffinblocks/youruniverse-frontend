@@ -47,7 +47,15 @@ const LorebookPage = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-<DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
+                                         <DropdownMenuSub>
+                                            <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                                            <DropdownMenuPortal>
+                                                <DropdownMenuSubContent>
+                                                    <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
+                                                    <DropdownMenuItem>Public Lorebooks</DropdownMenuItem>
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuPortal>
+                                        </DropdownMenuSub>
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
@@ -68,24 +76,13 @@ const LorebookPage = () => {
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
 
-                                        <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
-                                            <DropdownMenuPortal>
-                                                <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
-                                                    <DropdownMenuItem>Public Lorebooks</DropdownMenuItem>
-                                                    <DropdownMenuItem>Folders</DropdownMenuItem>
-                                                </DropdownMenuSubContent>
-                                            </DropdownMenuPortal>
-                                        </DropdownMenuSub>
+                                        <DropdownMenuItem className='font-bold'>Duplicate Selected Lorebook</DropdownMenuItem>
+                                       
 
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <Link href="/folders/create" passHref>
-                                                        <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                                                    </Link>
                                                     <Link href="/lorebooks/create" passHref>
                                                         <DropdownMenuItem>Create Lorebook</DropdownMenuItem>
                                                     </Link>
@@ -99,9 +96,8 @@ const LorebookPage = () => {
                                             <DropdownMenuSubTrigger>Delete Lorebook</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Delete Lorebook Only</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete Lorebook + Chat</DropdownMenuItem>
-                                                    <DropdownMenuItem>Delete Lorebook + Saved Chat</DropdownMenuItem>
+                                                    <DropdownMenuItem>Delete Selected Lorebook (s)</DropdownMenuItem>
+                                             
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>

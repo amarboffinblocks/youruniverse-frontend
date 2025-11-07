@@ -1,5 +1,5 @@
 
-import BreadcrumbElements from "@/components/elements/breadcrumb-elements";
+import Footer from "@/components/layout/footer";
 import Container from "@/components/elements/container";
 import FolderPage from "@/components/pages/folder-page";
 
@@ -12,7 +12,7 @@ export default function page() {
                     <FolderPage />
                 </Container>
             </div>
-            <BreadcrumbElements />
+            <Footer />
         </div>
     );
 }

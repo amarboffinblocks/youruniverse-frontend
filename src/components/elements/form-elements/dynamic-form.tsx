@@ -1,9 +1,9 @@
-"use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
 import { FormData } from "@/types/form-types";
 import { buildZodSchema, buildInitialValues } from "@/utils/build-zod-schema";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { Button } from "@/components/ui/button";
 import FormFields from "./fields";
@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 interface DynamicFormProps {
     schema: FormData[];
-    initialValues?: Record<string,any>;
+    initialValues?: Record<string, any>;
     onSubmit: (values: any) => void;
     children?: React.ReactNode;
 }
@@ -36,14 +36,14 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             enableReinitialize
             onSubmit={onSubmit}
         >
-            <Form className="grid grid-cols-12 gap-3">
-               {fileFields.length > 0 &&<div className="col-span-2 flex flex-col gap-y-3">
+            <form className="grid grid-cols-12 gap-3">
+                {fileFields.length > 0 && <div className="col-span-2 flex flex-col gap-y-3">
                     {fileFields.map((field, index) => (
                         <FormFields key={index} {...field} cols={12} />
                     ))}
                 </div>}
 
-                <div className={cn(" grid grid-cols-12 gap-4",fileFields.length <= 0 ?"col-span-12":"col-span-10")}>
+                <div className={cn(" grid grid-cols-12 gap-4", fileFields.length <= 0 ? "col-span-12" : "col-span-10")}>
                     {otherFields.map((field, index) =>
                         index === 0 ? (
                             <div key={index} className="col-span-12 flex gap-x-3">
@@ -59,9 +59,9 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                 </div>
 
                 <div className="col-span-12 flex justify-end">
-                    <Button type="submit">Save</Button>
+                    <Button type="submit">Submit</Button>
                 </div>
-            </Form>
+            </form>
         </Formik>
     );
 };

@@ -15,7 +15,7 @@ export const lorebookSchema: FormData[] = [
         type: "text",
         label: "Lorebook Name",
         required: true,
-        placeholder: "Enter the lorebook name",
+        placeholder: "Enter Lorebook Name",
         rules: {
             min: 4,
             max: 20
@@ -35,7 +35,7 @@ export const lorebookSchema: FormData[] = [
                 { label: "Public", value: "public" },
             ],
         },
-        cols: 3,
+        cols: 4,
         row: 4,
         defaultValue: "private",
     },
@@ -48,16 +48,17 @@ export const lorebookSchema: FormData[] = [
                 { label: "NSFW", value: "NSFW" },
                 { label: "SFW", value: "SFW" },],
         },
-        cols: 3,
+        cols: 6,
         row: 4,
         defaultValue: "SFW",
     },
-    {
-        name: "connectToCharater",
+   {
+        name: "linkToCharacters",
         type: "select",
         required: true,
-        placeholder: "Connect to charater",
-        cols: 6,
+        label:"Link to Character",
+        placeholder: "Link to Character",
+        cols: 12,
         row: 4,
         rules: {
             options: [
@@ -74,7 +75,8 @@ export const lorebookSchema: FormData[] = [
         name: "connectToPersona",
         type: "select",
         required: true,
-        placeholder: "Connect to Persona",
+        label:"Link to Persona",
+        placeholder: "Link to Persona",
         cols: 12,
         row: 4,
         rules: {
@@ -91,9 +93,9 @@ export const lorebookSchema: FormData[] = [
     {
         name: "tags",
         type: "multi-select",
-        label: "Choose Tags",
+        label: "Tags",
         required: true,
-        placeholder: "Select tags that best describe your lorebook",
+        placeholder: "Single words describing your Lorebook",
         rules: {
             model: "tags"
         },
@@ -104,7 +106,7 @@ export const lorebookSchema: FormData[] = [
     },
      {
         name: "keyword",
-        type: "multi-entries",
+        type: "entries",
         label: "Keyword or Term ",
         required: true,
         placeholder: "Write the Keywords",
@@ -113,16 +115,16 @@ export const lorebookSchema: FormData[] = [
         rows: "3",
         tokens: true,
     },
-    {
-        name: "context",
-        type: "textarea",
-        label: "Context",
-        placeholder: "Write the content related to keywords",
-        required: true,
-        cols: 12,
-        row: 4,
-        rows: "3",
+    // {
+    //     name: "context",
+    //     type: "textarea",
+    //     label: "Context",
+    //     placeholder: "Write the content related to keywords",
+    //     required: true,
+    //     cols: 12,
+    //     row: 4,
+    //     rows: "3",
         
-        tokens: true,
-    },
+    //     tokens: true,
+    // },
 ]

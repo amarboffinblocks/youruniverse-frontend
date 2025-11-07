@@ -5,6 +5,7 @@ export const characterSchema: FormData[] = [
         name: "avatar",
         type: "file",
         required: true,
+        label:"Avatar",
         cols: 12,
         row: 4,
         rows: "3",
@@ -13,6 +14,7 @@ export const characterSchema: FormData[] = [
         name: "backgroundImage",
         type: "file",
         required: true,
+        label:"Background",
         cols: 12,
         row: 4,
         rows: "3",
@@ -40,7 +42,7 @@ export const characterSchema: FormData[] = [
                 { label: "Public", value: "public" },
                 { label: "Private", value: "private" },],
         },
-        cols: 3,
+        cols: 4,
         row: 4,
         defaultValue: "private",
     },
@@ -54,32 +56,62 @@ export const characterSchema: FormData[] = [
                 { label: "NSFW", value: "NSFW" },
                 { label: "SFW", value: "SFW" },],
         },
-        cols: 3,
+        cols: 4,
         row: 4,
         defaultValue: "SFW",
     },
     {
-        name: "lorebook",
+        name: "favourite",
+        type: "checkbox",
+        required: false,
+        label:'Add To Favourites',
+        cols: 4,
+        row: 4,
+        defaultValue: false,
+    },
+    {
+        name: "linkToLorebook",
         type: "select",
         required: true,
-        placeholder: "Select a lorebook",
+        label: "Link to Lorebook",
+        placeholder: "Link to Lorebook",
         cols: 6,
         row: 4,
         rules: {
             options: [
-                { label: "Lorebook 1", value: "lorebook-1" },
-                { label: "Lorebook 2", value: "lorebook-2" },
-                { label: "Lorebook 3", value: "lorebook-3" },
+                { label: "Luna AI", value: "luna-ai" },
+                { label: "Astro Bot", value: "astro-bot" },
+                { label: "Neo Guide", value: "neo-guide" },
+                { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
         rows: "3",
+
+    }, {
+        name: "linkToPersona",
+        type: "select",
+        required: true,
+        label: "Link to Persona",
+        placeholder: "Link to Persona",
+        cols: 6,
+        row: 4,
+        rules: {
+            options: [
+                { label: "Luna AI", value: "luna-ai" },
+                { label: "Astro Bot", value: "astro-bot" },
+                { label: "Neo Guide", value: "neo-guide" },
+                { label: "Zara Mentor", value: "zara-mentor" },
+            ],
+        },
+        rows: "3",
+        
     },
     {
         name: "tags",
         type: "multi-select",
         label: "Choose Characters Tags",
         required: true,
-        placeholder: "Select tags that best describe your character",
+        placeholder: "Single words describing your Character or Scenario.",
         rules: {
             model: "tags"
         },
@@ -88,12 +120,13 @@ export const characterSchema: FormData[] = [
         rows: "3",
         
     },
+
     {
         name: "description",
         type: "textarea",
         label: "Description",
         required: true,
-        placeholder: "Describe your character's background, story, or key traits",
+        placeholder: "Describe your Character, Scenario, or Universe here. For Characters please describe their physical and mental characteristics. For Scenario’s, Worlds, or Universe, use this place to establish the foundation. Link Lorebooks to further enhance the experience. ",
         cols: 12,
         row: 4,
         rows: "3",
@@ -104,11 +137,11 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "Scenario",
         required: true,
-        placeholder: "Describe the scenario or background story",
+        placeholder: "The scenario describes the current circumstances of the chat. It should also describe the context of the interaction.",
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -116,11 +149,11 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "Personality Summary",
         required: true,
-        placeholder: "Write a short summary of the character's personality",
+        placeholder: "A short summary of your Character’s personality. This can also be used to set a tone for the chat if creating or editing a Scenario, World, Universe.",
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -128,11 +161,11 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "First Message",
         required: true,
-        placeholder: "Write the character's first message",
+        placeholder: "A short summary of your Character’s personality. This can also be used to set a tone for the chat if creating or editing a Scenario, World, Universe.",
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -140,7 +173,7 @@ export const characterSchema: FormData[] = [
         type: "multi-entries",
         label: "Alternate Messages",
         required: true,
-        placeholder: "Write the character's first message",
+        placeholder: "A short summary of your Character’s personality. This can also be used to set a tone for the chat if creating or editing a Scenario, World, Universe.",
         cols: 12,
         row: 4,
         rows: "3",
@@ -151,11 +184,11 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "Example Dialogue",
         required: true,
-        placeholder: "Provide example dialogues for better context",
+        placeholder: "Example Dialogues helps the model to speak and act as your character, scenario, world, universe would. PLEASE NOTE, each Example Dialogue will start with <START>, then on the next line the dialogue. Multiple Example Dialogues can be added.",
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
     {
@@ -163,23 +196,21 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "Author Notes",
         required: true,
-        placeholder: "Add notes or instructions for the character",
+        placeholder: "This section does not impact the Character or Scenario at all and is primarily used for any notes you wish to keep with your Character or Scenario.",
         cols: 12,
         row: 4,
         rows: "3",
-        
-        tokens: true,
+        tokens: false,
     },
     {
         name: "characterNotes",
         type: "textarea",
         label: "Character Notes",
         required: true,
-        placeholder: "Add any additional details about the character",
+        placeholder: "This section does not impact the Character or Scenario at all and is primarily used for any notes you wish to keep with your Character or Scenario.",
         cols: 12,
         row: 4,
         rows: "3",
-        
-        tokens: true,
+        tokens: false,
     },
 ];

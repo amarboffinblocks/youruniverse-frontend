@@ -9,12 +9,14 @@ interface FormTextareaProps {
     label?: string;
     tokens?: boolean;
     className?: string
+    placeholder?: string
 }
 
 const FormTextarea: React.FC<FormTextareaProps> = ({
     name,
     label,
     tokens = true,
+    placeholder='',
     className,
     ...props
 }) => {
@@ -45,6 +47,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
             <Textarea
                 id={name}
                 {...field}
+                placeholder={placeholder}
                 {...props}
                 className={cn(errorClasses, className)}
             />

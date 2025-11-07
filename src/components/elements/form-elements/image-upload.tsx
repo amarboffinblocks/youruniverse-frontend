@@ -36,11 +36,7 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
 
     return (
         <div className="text-center space-y-2">
-            {label && (
-                <p className="text-sm font-medium text-left text-muted-foreground">
-                    {label}
-                </p>
-            )}
+           
 
             <label
                 className={cn(
@@ -73,7 +69,11 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
                     className="hidden"
                 />
             </label>
-
+ {label && (
+                <p className="text-sm font-medium text-center pr-2 text-muted-foreground">
+                    {label}
+                </p>
+            )}
             {meta.touched && meta.error && (
                 <p className="text-sm text-destructive">{meta.error}</p>
             )}

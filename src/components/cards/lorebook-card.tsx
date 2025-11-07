@@ -1,7 +1,8 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { EllipsisVertical,  FolderPlus,  Link2, MessageCircleMore,  Share2,  SquarePen,  Upload } from "lucide-react";
+import { EllipsisVertical,  FolderPlus,  Heart,  Link2, MessageCircleMore,  Share2,  SquarePen,  Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -9,6 +10,7 @@ import Rating from '../elements/rating';
 import { Checkbox } from '../ui/checkbox';
 
 const LorebookCard: React.FC = ({ ...props }) => {
+       const [liked,setLiked]=useState<boolean>(false)
     return (
         <Card {...props} className="w-full rounded-[3rem] relative duration-500 gap-4 cursor-pointer border shadow-sm hover:shadow-md p-4">
             <div className="text-xs absolute  right-4 bg-accent px-2 py-1.5 rounded-full  items-center flex gap-x-2">
@@ -18,7 +20,9 @@ const LorebookCard: React.FC = ({ ...props }) => {
                 />
 
 
-                <DropdownMenu>
+                 <div className="flex items-center gap-1">
+                        < Heart onClick={()=>setLiked(prev=>!prev)} size={26} fill={!liked?"#101828":"red"} stroke="0"/>
+                 <DropdownMenu>
                     <DropdownMenuTrigger className='cursor-pointer'>
                         <EllipsisVertical className=" hover:text-accent-foreground" size={15} />
 
@@ -44,6 +48,7 @@ const LorebookCard: React.FC = ({ ...props }) => {
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+               </div>
 
             </div>
             <div className='flex gap-x-2 items-center'>
