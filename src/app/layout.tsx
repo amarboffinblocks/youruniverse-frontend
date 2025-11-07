@@ -5,6 +5,7 @@ import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
 import Footer from "@/components/layout/footer";
+import { Providers } from "./providers";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
