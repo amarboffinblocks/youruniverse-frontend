@@ -18,7 +18,7 @@ export const useRegister = () => {
                 localStorage.setItem("activationToken", data.activationToken);
             }
 
-            toast.success(data?.message || "Registration successful!");
+            toast.success(data?.message || "Registration  successful!");
             router.push("/otp-verification");
         },
         onError: (error: any) => {
