@@ -43,7 +43,7 @@ const CharacterPage = () => {
                   <DropdownMenuGroup>
                     <DropdownMenuItem>Show Favorites only</DropdownMenuItem>
                     <DropdownMenuSub>
-                      <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                      <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
                           <DropdownMenuItem>Private Characters</DropdownMenuItem>
@@ -71,7 +71,7 @@ const CharacterPage = () => {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
-                    <DropdownMenuItem className='font-bold'>Duplicate Selected Character (s)</DropdownMenuItem>
+                    <DropdownMenuItem >Duplicate Selected Character (s)</DropdownMenuItem>
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>

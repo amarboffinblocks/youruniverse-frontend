@@ -160,8 +160,8 @@ const FolderPage = () => {
                             <DropdownMenuContent className="w-72" align="end">
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-                                    <DropdownMenuSub>
-                                        <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                                      <DropdownMenuSub>
+                                        <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
                                                 <DropdownMenuItem>Favourites</DropdownMenuItem>

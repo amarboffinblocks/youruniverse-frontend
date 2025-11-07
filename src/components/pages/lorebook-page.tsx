@@ -48,7 +48,7 @@ const LorebookPage = () => {
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
                                          <DropdownMenuSub>
-                                            <DropdownMenuSubTrigger className='font-bold'>Set Default View</DropdownMenuSubTrigger>
+                                            <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
                                                     <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
@@ -76,7 +76,7 @@ const LorebookPage = () => {
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
 
-                                        <DropdownMenuItem className='font-bold'>Duplicate Selected Lorebook</DropdownMenuItem>
+                                        <DropdownMenuItem >Duplicate Selected Lorebook</DropdownMenuItem>
                                        
 
                                         <DropdownMenuSub>

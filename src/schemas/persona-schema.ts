@@ -27,12 +27,15 @@ export const personaSchema: FormData[] = [
         
     },
     
-    {
-        name: "tagline",
-        type: "text",
-        label: " Tagline",
+ {
+        name: "tags",
+        type: "multi-select",
+        label: "Choose Persona Tags",
         required: true,
-        placeholder: "Enter the tagline",
+        placeholder: "Single words describing your personas or Scenario.",
+        rules: {
+            model: "tags"
+        },
         cols: 12,
         row: 4,
         rows: "3",
@@ -61,7 +64,7 @@ export const personaSchema: FormData[] = [
         name: "details",
         type: "textarea",
         label: "Persona Details",
-        placeholder: "Enter the some details about persona",
+        placeholder: "Enter your Persona information here, or in other words, who would you like to be in Your Universe. The Character will use this to know more about you. ",
 
         required: true,
         cols: 12,

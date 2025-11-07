@@ -4,9 +4,7 @@ import { Atkinson_Hyperlegible } from "next/font/google";
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
-import { Providers } from "./providers";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import Footer from "@/components/layout/footer";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],

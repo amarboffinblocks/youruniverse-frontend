@@ -9,7 +9,6 @@ import FormMultiSelect from "./form-multi-select";
 import FormImageUpload from "./image-upload";
 import MessageListManager from "./message-list-manager";
 import FormCheckbox from "./form-checkbox";
-import { useField } from "formik";
 import EntriesField from "./entries-field";
 import FormMultiFile from "./form-multi-file";
 
@@ -18,10 +17,7 @@ interface FormFieldsProps extends FormData {
 }
 
 const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
-    const [field, meta, helpers] = useField<string[]>(props.name);
-    const { value } = field;
-    console.log(meta, value)
-    const { setValue } = helpers;
+
     switch (type) {
         case "textarea":
             return <FormTextarea {...props} />;
@@ -38,15 +34,14 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
         case "multiple-file":
             return <FormMultiFile {...props} />
         case "entries":
-            return ( <EntriesField /> 
-                
+            return (<EntriesField />
+
             );
         case "checkbox":
             return <FormCheckbox {...props} />
         case "multi-entries":
             return (
                 <MessageListManager
-                    onChange={(messages: string[]) => setValue(messages)}
                     {...props}
                 />
             );
@@ -71,11 +66,10 @@ const colSpanClasses: Record<number, string> = {
     12: "col-span-12",
 };
 
-const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, ...rest }) => {
+const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, required: _required, ...rest }) => {
     const colClass = colSpanClasses[cols] || "col-span-12";
 
     return (
-
         <div className={cn(colClass)}>
             <FieldRenderer {...rest} />
         </div>

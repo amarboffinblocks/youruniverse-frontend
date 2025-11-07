@@ -118,7 +118,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        placeholder:"Write something about you",
+        placeholder:"Write something about yourself",
         tokens: false,
     },
     {

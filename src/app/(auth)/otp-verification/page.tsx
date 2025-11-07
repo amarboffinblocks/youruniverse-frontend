@@ -10,9 +10,15 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import Image from "next/image";
 import { useOtpVerify } from "@/hooks/useAuth";
 
+<<<<<<< HEAD
 interface Otp {
     otp: string;
 }
+=======
+// interface Otp {
+//     otp: string
+// }
+>>>>>>> 1bd498ec7e9e5c846a5f40971e66a63b20afeaa4
 
 const VerifyOTP = () => {
     const [otp, setOtp] = useState("");
@@ -29,8 +35,13 @@ const VerifyOTP = () => {
         return () => clearInterval(timer);
     }, [timeLeft]);
 
+<<<<<<< HEAD
     const handleSubmit = async (values: Otp) => {
         console.log("Verifying OTP:", values);
+=======
+    const handleSubmit = async () => {
+        // Mock verification logic
+>>>>>>> 1bd498ec7e9e5c846a5f40971e66a63b20afeaa4
 
         const activationToken = localStorage.getItem("activationToken");
         console.log(activationToken)

@@ -1,6 +1,5 @@
 
 import Container from "@/components/elements/container"
-import Footer from "@/components/layout/footer"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -62,14 +61,13 @@ const page = () => {
     }
 
     // Helper for date formatting
-    const formatRelativeTime = (date: Date) => {
-        const diff = (Date.now() - date.getTime()) / 1000
-        if (diff < 60) return "just now"
-        if (diff < 3600) return `${Math.floor(diff / 60)} mins ago`
-        if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`
-        return `${Math.floor(diff / 86400)} days ago`
-    }
-    console.log(formatRelativeTime)
+    // const formatRelativeTime = (date: Date) => {
+    //     const diff = (Date.now() - date.getTime()) / 1000
+    //     if (diff < 60) return "just now"
+    //     if (diff < 3600) return `${Math.floor(diff / 60)} mins ago`
+    //     if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`
+    //     return `${Math.floor(diff / 86400)} days ago`
+    // }
 
     return (
         <Container className=" h-full flex flex-col"  >

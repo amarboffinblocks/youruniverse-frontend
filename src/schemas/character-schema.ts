@@ -5,7 +5,10 @@ export const characterSchema: FormData[] = [
         name: "avatar",
         type: "file",
         required: true,
-        label:"Avatar",
+        label: "Avatar",
+        rules: {
+            accept: ["png", "jpg"]
+        },
         cols: 12,
         row: 4,
         rows: "3",
@@ -14,7 +17,10 @@ export const characterSchema: FormData[] = [
         name: "backgroundImage",
         type: "file",
         required: true,
-        label:"Background",
+        rules: {
+            accept: ["png", "jpg"]
+        },
+        label: "Background",
         cols: 12,
         row: 4,
         rows: "3",
@@ -64,13 +70,13 @@ export const characterSchema: FormData[] = [
         name: "favourite",
         type: "checkbox",
         required: false,
-        label:'Add To Favourites',
+        label: 'Add To Favourites',
         cols: 4,
         row: 4,
         defaultValue: false,
     },
     {
-        name: "linkToLorebook",
+        name: "lorebook",
         type: "select",
         required: true,
         label: "Link to Lorebook",
@@ -85,10 +91,11 @@ export const characterSchema: FormData[] = [
                 { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
+        // defaultValue: "luna-ai",
         rows: "3",
 
     }, {
-        name: "linkToPersona",
+        name: "persona",
         type: "select",
         required: true,
         label: "Link to Persona",
@@ -103,8 +110,9 @@ export const characterSchema: FormData[] = [
                 { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
+        // defaultValue: "astro-bot",
         rows: "3",
-        
+
     },
     {
         name: "tags",
@@ -118,7 +126,7 @@ export const characterSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
 
     {
@@ -145,7 +153,7 @@ export const characterSchema: FormData[] = [
         tokens: true,
     },
     {
-        name: "personalitySummary",
+        name: "personality",
         type: "textarea",
         label: "Personality Summary",
         required: true,
@@ -161,10 +169,10 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "First Message",
         required: true,
-        placeholder: "A short summary of your Character’s personality. This can also be used to set a tone for the chat if creating or editing a Scenario, World, Universe.",
+        placeholder: "This is the first message that you will see and will begin everything.",
         cols: 12,
         row: 4,
-        rows: "3",
+        rows: "2",
 
         tokens: true,
     },
@@ -173,7 +181,7 @@ export const characterSchema: FormData[] = [
         type: "multi-entries",
         label: "Alternate Messages",
         required: true,
-        placeholder: "A short summary of your Character’s personality. This can also be used to set a tone for the chat if creating or editing a Scenario, World, Universe.",
+        placeholder: "This is exactly like the First Message, but allows you to change the opening, creating a whole new experience.",
         cols: 12,
         row: 4,
         rows: "3",

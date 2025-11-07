@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus , Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import React from "react";
@@ -49,41 +49,41 @@ const PersonaCard: React.FC<PersonaCardProps> = ({ item }) => {
                                 <DropdownMenuItem><FolderPlus className="w-4 h-4 mr-2 text-white" />Add to Folder</DropdownMenuItem>
                                 <DropdownMenuItem><Share2 className="w-4 h-4 mr-2 text-white" />Share</DropdownMenuItem>
                                 <DropdownMenuItem><Upload className="w-4 h-4 mr-2 text-white" />Export</DropdownMenuItem>
-                                    <Link href={`/personas/${item.id}/edit`}>
-                                <DropdownMenuItem>
-                                    <SquarePen className="w-4 h-4 mr-2 text-white" />Edit
+                                <Link href={`/personas/${item.id}/edit`}>
+                                    <DropdownMenuItem>
+                                        <SquarePen className="w-4 h-4 mr-2 text-white" />Edit
                                     </DropdownMenuItem>
-                                    </Link>
+                                </Link>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
                 </div>
 
-                    <Avatar className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500 transition">
-                        <AvatarImage src={item?.avatar?.url} alt="Persona Avatar" className="object-cover" />
-                        <AvatarFallback>NA</AvatarFallback>
-                    </Avatar>
+                <Avatar className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500 transition">
+                    <AvatarImage src={item?.avatar?.url} alt="Persona Avatar" className="object-cover" />
+                    <AvatarFallback>NA</AvatarFallback>
+                </Avatar>
             </CardHeader>
 
-                <CardContent className="space-y-2 px-4">
-                    <div className="flex justify-between items-center">
-                        <CardTitle className="text-white/80 text-xl font-semibold">{item.name}</CardTitle>
-                        <span className="text-xs text-gray-400">Tokens: {item.tokens}</span>
-                    </div>
+            <CardContent className="space-y-2 px-4">
+                <div className="flex justify-between items-center">
+                    <CardTitle className="text-white/80 text-xl font-semibold">{item.name}</CardTitle>
+                    <span className="text-xs text-gray-400">Tokens: {item.tokens}</span>
+                </div>
 
-                    <CardDescription className="text-gray-400 text-sm line-clamp-3">
-                        {item?.persona_details}
-                    </CardDescription>
+                <CardDescription className="text-gray-400 text-sm line-clamp-3">
+                    {item?.persona_details}
+                </CardDescription>
 
-                    <div className="w-full flex items-center justify-end text-xs text-gray-300">
-                        <span>-- {item?.creator_name}</span>
-                    </div>
-                </CardContent>
+                <div className="w-full flex items-center justify-end text-xs text-gray-300">
+                    <span>-- {item?.creator_name}</span>
+                </div>
+            </CardContent>
 
-                <CardFooter className="flex mt-3 justify-between px-4 py-2 border-t border-primary/70 text-[10px] text-gray-500">
-                    <div>Created: {formatDateToDDMMYYYY(item?.created_at)}</div>
-                    <div>Updated: {formatDateToDDMMYYYY(item?.updated_at)}</div>
-                </CardFooter>
+            <CardFooter className="flex mt-3 justify-between px-4 py-2 border-t border-primary/70 text-[10px] text-gray-500">
+                <div>Created: {formatDateToDDMMYYYY(item?.created_at)}</div>
+                <div>Updated: {formatDateToDDMMYYYY(item?.updated_at)}</div>
+            </CardFooter>
         </Card>
     );
 };

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useRef } from "react";
 import { Button } from "../ui/button";
-import { Plus, Send, Trash, Upload } from "lucide-react";
+import {  Send, Trash, Upload } from "lucide-react";
 import Footer from "../layout/footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
@@ -20,7 +20,6 @@ const ChatPanel = () => {
         if (e.key === "Enter" && !e.shiftKey) {
             e.preventDefault();
             // Submit logic here
-            console.log("Send:", message);
             setMessage("");
             if (textareaRef.current) {
                 textareaRef.current.style.height = "auto";
@@ -45,14 +44,14 @@ const ChatPanel = () => {
 
                     />
                 </div>
-                <div className="flex justify-between w-full ">
-                    <Button
+                <div className="flex justify-end w-full ">
+                    {/* <Button
                         type="button"
                         size="icon"
                         variant="ghost"
                     >
                         <Plus className="h-8 w-8" />
-                    </Button>
+                    </Button> */}
 
                     <div className="space-x-2">
                         <Button

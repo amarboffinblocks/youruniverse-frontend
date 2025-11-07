@@ -57,6 +57,7 @@ const PersonaPage = () => {
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
                                         <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
+                                        <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>

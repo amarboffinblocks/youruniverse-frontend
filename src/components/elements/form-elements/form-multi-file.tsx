@@ -19,7 +19,7 @@ const FormMultiFile: React.FC<FormMultiFileProps> = ({
   acceptedFormats = "image/*",
   className,
 }) => {
-  const [field, meta, helpers] = useField<File | null>(name);
+  const [, meta, helpers] = useField<File | null>(name);
   const { setValue, setTouched } = helpers;
 
   const [preview, setPreview] = useState<string | null>(null);
@@ -61,7 +61,7 @@ const FormMultiFile: React.FC<FormMultiFileProps> = ({
         {/* Overlay text/button */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/20 transition-all duration-200">
           <span className="text-white/70 hover:bg-primary text-sm border border-dashed border-primary rounded-lg px-5 py-3 font-medium z-10">
-            Upload the screenshot or image 
+            Upload the screenshot or image
           </span>
         </div>
 

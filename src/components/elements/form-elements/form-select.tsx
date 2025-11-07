@@ -18,8 +18,8 @@ interface FormSelectProps {
     name: string;
     label?: string;
     placeholder?: string;
-        defaultValue?: string | string[]|boolean| undefined;
-    tokens?:boolean
+    tokens?: boolean
+    defaultValue?: string | string[] | boolean | undefined;
     className?: string;
     rules?: FieldRules
 }
@@ -37,19 +37,37 @@ const FormSelect: React.FC<FormSelectProps> = ({
     const { value } = field;
     const { setValue } = helpers;
     const options = rules?.options || [];
-    const activeValue = value || defaultValue || options[0]?.value || "";
+
+    // ✅ Properly handle defaultValue
+    React.useEffect(() => {
+        if (defaultValue !== undefined && defaultValue !== null && !value) {
+            setValue(defaultValue as string);
+        }
+    }, [defaultValue, setValue, value]);
+
+    // ✅ Get the current value - prioritize Formik value, then defaultValue
+    const currentValue = value || defaultValue || "";
 
 
- const tokenCount = typeof field.value === "string" ? field.value.length : 0;
+
+    const tokenCount = typeof field.value === "string" ? field.value.length : 0;
 
     return (
         <div className="w-full space-y-2">
             {label && (
-                <Label htmlFor={name} className={cn("block text-sm font-medium")}>{label}</Label>
+                <Label htmlFor={name} className={cn("block text-sm font-medium", meta.touched && meta.error && "text-destructive")}>
+                    {label}
+                </Label>
             )}
 
-            <Select value={activeValue} onValueChange={setValue}>
-                <SelectTrigger className={cn("w-full", className)}>
+            <Select
+                value={currentValue}
+                onValueChange={(newValue) => {
+                    setValue(newValue);
+                }}
+
+            >
+                <SelectTrigger className={cn("w-full", className, meta.touched && meta.error && "border-red-500 bg-red-500/20")}>
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
 
@@ -65,27 +83,33 @@ const FormSelect: React.FC<FormSelectProps> = ({
             </Select>
 
             {/* <p className={cn("text-xs text-destructive bg-red-200", meta.touched && meta.error ? "visible" : "invisible")}>{meta.error || "placeholder"}</p> */}
-  <div className="flex justify-between items-center text-xs px-1 text-white">
-                         <span
-                             id={`${name}-error`}
-                             className={cn(
-                                 "text-destructive",
-                                 meta.touched && meta.error  ? "visible" : "invisible"
-                             )}
-                         >
-                             {meta.touched && meta.error  || "placeholder"}
-                         </span>
-         
-                         {tokens === true && (
-                             <span
-                                 className={cn(
-                                     meta.touched && meta.error  && "text-destructive",
-                                 )}
-                             >
-                                 {tokenCount} Tokens
-                             </span>
-                         )}
-                     </div>
+            <div className="flex justify-between items-center text-xs px-1 text-white">
+                <span
+                    id={`${name}-error`}
+                    className={cn(
+                        "text-destructive",
+                        meta.touched && meta.error ? "visible" : "invisible"
+                    )}
+                >
+                    {meta.touched && meta.error || "placeholder"}
+                </span>
+
+                {tokens === true && (
+                    <span
+                        className={cn(
+                            meta.touched && meta.error && "text-destructive",
+                        )}
+                    >
+                        {tokenCount} Tokens
+                    </span>
+                )}
+            </div>
+            <p className={cn(
+                "text-xs text-destructive min-h-[20px]",
+                meta.touched && meta.error ? "visible" : "invisible"
+            )}>
+                {meta.error || "placeholder"}
+            </p>
         </div>
     );
 };
