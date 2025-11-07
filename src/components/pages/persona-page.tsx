@@ -48,7 +48,7 @@ const PersonaPage = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-<DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
+                                        <DropdownMenuItem>Go To Folder Page</DropdownMenuItem>
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Alphabetical Order</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
@@ -100,7 +100,7 @@ const PersonaPage = () => {
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
                                                     <DropdownMenuItem>Delete Selected Persona (s)</DropdownMenuItem>
-                                       
+
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>

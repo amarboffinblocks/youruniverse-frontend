@@ -37,9 +37,9 @@ const BackgroundPage = () => {
 
                             <DropdownMenuContent className="w-72" align="end" >
                                 <DropdownMenuGroup>
-                                    <DropdownMenuItem className='gap-1'>Link<span className='font-bold'>Selected</span> to Account</DropdownMenuItem>
-                                    <DropdownMenuItem className='gap-1'>Make <span className='font-bold'>Selected</span>  Global Default</DropdownMenuItem>
-                                    <DropdownMenuItem className='gap-1'>Duplicate <span className='font-bold'>Selected</span> </DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Link Selected to Account</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Make Selected  Global Default</DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Duplicate Selected </DropdownMenuItem>
 
                                     {/* Add To submenu */}
                                     <DropdownMenuSub>
@@ -74,8 +74,8 @@ const BackgroundPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <DropdownMenuItem className='gap-1'>Share<span className='font-bold'>Selected</span> </DropdownMenuItem>
-                                    <DropdownMenuItem variant='destructive' className='gap-1' >Delete<span className='font-bold'>Selected</span> </DropdownMenuItem>
+                                    <DropdownMenuItem className='gap-1'>Share Selected </DropdownMenuItem>
+                                    <DropdownMenuItem variant='destructive' className='gap-1' >Delete Selected </DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>

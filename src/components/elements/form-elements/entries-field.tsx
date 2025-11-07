@@ -15,7 +15,7 @@ const EntriesField = () => {
                 <Plus className='size-14' />
             </button>
             <div className=''>
-                <FormInputField label='Keywords or Terms' placeholder="Enter the keywords or Terms"  name='keyword' />
+                <FormInputField label='Keywords or Terms' placeholder="Please enter the Keyword or Term here. You can add multiple by separating them with a comma."  name='keyword' />
             </div>
             <FormTextarea name='context' placeholder='Enter the relavent context about the character' label='Context' />
         </div>
