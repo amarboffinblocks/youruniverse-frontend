@@ -69,7 +69,7 @@ export const characterSchema: FormData[] = [
     {
         name: "favourite",
         type: "checkbox",
-        required: false,
+        required: true,
         label: 'Add To Favourites',
         cols: 4,
         row: 4,

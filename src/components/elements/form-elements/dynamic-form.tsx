@@ -33,35 +33,43 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
             initialValues={{ ...defaultValues, ...initialValues }}
             validationSchema={toFormikValidationSchema(validationSchema)}
             enableReinitialize
-            
+
             onSubmit={onSubmit}
         >
-            <Form className="grid grid-cols-12 gap-3">
-                {fileFields.length > 0 && <div className="col-span-2 flex flex-col gap-y-3">
-                    {fileFields.map((field, index) => (
-                        <FormFields key={index} {...field} cols={12} />
-                    ))}
-                </div>}
+            {
+                ({ }) => (
+                    <Form className="grid grid-cols-12 gap-3">
+                        {fileFields.length > 0 && <div className="col-span-2 flex flex-col gap-y-3">
+                            {fileFields.map((field, index) => (
+                                <FormFields key={index} {...field} cols={12} />
+                            ))}
+                        </div>}
 
-                <div className={cn(" grid grid-cols-12 gap-4", fileFields.length <= 0 ? "col-span-12" : "col-span-10")}>
-                    {otherFields.map((field, index) =>
-                        index === 0 ? (
-                            <div key={index} className="col-span-12 flex gap-x-3">
-                                <div className="flex-1">
-                                    <FormFields {...field} />
-                                </div>
-                                {children && <div className="pt-5.5">{children}</div>}
-                            </div>
-                        ) : (
-                            <FormFields key={index} {...field} />
-                        )
-                    )}
-                </div>
+                        <div className={cn(" grid grid-cols-12 gap-4", fileFields.length <= 0 ? "col-span-12" : "col-span-10")}>
+                            {otherFields.map((field, index) =>
+                                index === 0 ? (
+                                    <div key={index} className="col-span-12 flex gap-x-3">
+                                        <div className="flex-1">
+                                            <FormFields {...field} />
+                                        </div>
+                                        {children && <div className="pt-5.5">{children}</div>}
+                                    </div>
+                                ) : (
+                                    <FormFields key={index} {...field} />
+                                )
+                            )}
+                        </div>
 
-                <div className="col-span-12 flex justify-end">
-                    <Button type="submit">Submit</Button>
-                </div>
-            </Form>
+                        <div className="col-span-12 flex justify-end">
+                            <Button
+                                type="submit"
+                            >
+                                Submit
+                            </Button>
+                        </div>
+                    </Form>
+                )
+            }
         </Formik>
     );
 };

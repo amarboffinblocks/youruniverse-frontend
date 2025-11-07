@@ -26,9 +26,10 @@ import Download from "@/components/icons/download";
 import Subscriptions from "@/components/icons/subscriptions";
 import YourUniverse from "../icons/your-universe";
 import Folders from "../icons/folders";
+import { Search } from "lucide-react";
 
 
-interface HeaderItem { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; iconClassName?: string; dropdown?: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; type?: string ;createdAt?: string; children?: { id: string; title: string, createdAt: string }[]; }[]; }
+interface HeaderItem { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; iconClassName?: string; dropdown?: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; type?: string; createdAt?: string; children?: { id: string; title: string, createdAt: string }[]; }[]; }
 // ------- Data -------
 const folderData = [
   { id: "chat-001", title: "Character A", createdAt: "31-01-1998" },
@@ -36,7 +37,7 @@ const folderData = [
   { id: "chat-003", title: "Character C", createdAt: "15-08-2005" },
 ];
 
-const headerItems :HeaderItem[]= [
+const headerItems: HeaderItem[] = [
   {
     icon: Chat,
     title: "Chat",
@@ -166,13 +167,14 @@ const Header: React.FC = () => {
                         className="focus:outline-none"
                       >
                         <Icon
-                          className={cn(
-                            "hover:brightness-110 transition-all duration-500 cursor-pointer",
-                            item.iconClassName,
-                            glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
-                            pulsingIndex === idx && "animate-pulse-glow",
-                            glowIndex === idx && pulsingIndex === null && "animate-steady-glow"
-                          )}
+                          className={cn(item.iconClassName, " text-white neon")}
+                        // className={cn(
+                        //   "neon transition-all duration-500 cursor-pointer",
+                        //   item.iconClassName,
+                        //   glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
+                        //   pulsingIndex === idx && "animate-pulse-glow",
+                        //   glowIndex === idx && pulsingIndex === null && "animate-steady-glow"
+                        // )}
                         />
                       </button>
                     </ToolTipElement>

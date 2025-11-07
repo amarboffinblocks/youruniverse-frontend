@@ -84,9 +84,7 @@ export function buildZodSchema(fields: FormData[]) {
                 if (options.length > 0) {
                     schema = schema.refine(
                         (val: string) => {
-                            // For optional fields, undefined is valid
                             if (!field.required && !val) return true;
-                            // For required fields or when value exists, validate against options
                             return options.includes(val as string);
                         },
                         {
@@ -95,7 +93,6 @@ export function buildZodSchema(fields: FormData[]) {
                     );
                 }
 
-                // ✅ Set default value only if provided
                 if (field.defaultValue !== undefined) {
                     schema = schema.default(field.defaultValue);
                 }
