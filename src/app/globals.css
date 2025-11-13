@@ -370,8 +370,16 @@ body {
 
 
 
-.neon {
-  filter:
-    drop-shadow(0 0 0.1rem #fff) drop-shadow(0 0 0.2rem #fff) drop-shadow(0 0 0.2rem #552efb) drop-shadow(0 0 0.3rem #552efb) drop-shadow(0 0 0.4rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 3rem #552efb);
-  transition: filter 0.3s ease-in-out;
+
+
+@layer utilities {
+  .active-neon {
+    @apply text-white transition-[filter] duration-500;
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 3rem #552efb) !important;
+  }
+
+  .hover-neon:hover {
+    @apply text-white transition-[filter];
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 8rem #552efb) !important;
+  }
 }

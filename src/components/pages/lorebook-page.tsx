@@ -47,7 +47,7 @@ const LorebookPage = () => {
                                 <DropdownMenuContent className="w-72" align="end">
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-                                         <DropdownMenuSub>
+                                        <DropdownMenuSub>
                                             <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
@@ -77,7 +77,7 @@ const LorebookPage = () => {
                                         </DropdownMenuSub>
 
                                         <DropdownMenuItem >Duplicate Selected Lorebook</DropdownMenuItem>
-                                       
+
 
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
@@ -97,7 +97,7 @@ const LorebookPage = () => {
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
                                                     <DropdownMenuItem>Delete Selected Lorebook (s)</DropdownMenuItem>
-                                             
+
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
@@ -127,6 +127,8 @@ const LorebookPage = () => {
                     <TabsTrigger value="all">All Lorebook</TabsTrigger>
                     <TabsTrigger value="public">Public Lorebook</TabsTrigger>
                     <TabsTrigger value="private">Private Lorebook</TabsTrigger>
+                    <TabsTrigger value="saved">Saved Lorebook</TabsTrigger>
+
                 </TabsList>
                 <TabsContent value="all" >
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -142,6 +144,9 @@ const LorebookPage = () => {
                     <DataNotFound />
                 </TabsContent>
                 <TabsContent value="private">
+                    <DataNotFound />
+                </TabsContent>
+                <TabsContent value="saved">
                     <DataNotFound />
                 </TabsContent>
 

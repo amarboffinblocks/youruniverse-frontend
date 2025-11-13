@@ -141,7 +141,7 @@ interface Props {
     setPreviewModel: (value: boolean) => void;
 }
 
-const ChatMessages: React.FC<Props> = ({ setPreviewModel }) => {
+const ChatMessages: React.FC<Props> = ({ }) => {
     // const [messages, setMessages] = useState(dummyMessages)
 
     const lastUserMsg = [...dummyMessages].reverse().find(m => m.role === "user");
@@ -202,68 +202,68 @@ const ChatMessages: React.FC<Props> = ({ setPreviewModel }) => {
                                                             >
                                                                 <Trash className="size-3" />
                                                             </Action>
-                                                          { (message.role === 'user' && lastUserMsg?.id === message.id) &&
-                                                          <>
-                                                          <DropdownMenu>
-                                                                <DropdownMenuTrigger asChild>
-                                                                    <Button
-                                                                        suppressHydrationWarning
-                                                                        type='button'
-                                                                        onClick={() =>
-                                                                            navigator.clipboard.writeText(part.text)
-                                                                        }
-                                                                        size={"icon"}
-                                                                        className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
-                                                                    // label="Copyfdsss"
-                                                                    >
-                                                                        <Info className="size-3" />
-                                                                    </Button>
-                                                                </DropdownMenuTrigger>
-                                                                <DropdownMenuContent className="w-56" align="start">
-                                                                    <DropdownMenuItem>
-                                                                        Edit
-                                                                        {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
-                                                                    </DropdownMenuItem>
-                                                                    <DropdownMenuItem>
-                                                                        Impresonate
-                                                                    </DropdownMenuItem>
-                                                                    <DropdownMenuItem>
-                                                                        Persona Perview
-                                                                    </DropdownMenuItem>
-                                                                </DropdownMenuContent>
-                                                            </DropdownMenu>
-                                                            <DropdownMenu>
-                                                                <DropdownMenuTrigger asChild>
-                                                                    <Button
-                                                                        suppressHydrationWarning
-                                                                        type='button'
-                                                                        onClick={() =>
-                                                                            navigator.clipboard.writeText(part.text)
-                                                                        }
-                                                                        size={"icon"}
-                                                                        className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
-                                                                    // label="Copyfdsss"
-                                                                    >
-                                                                        <EllipsisVertical className="size-3" />
-                                                                    </Button>
-                                                                </DropdownMenuTrigger>
-                                                                <DropdownMenuContent className="w-56" align="start">
-                                                                    <DropdownMenuItem>
-                                                                        Save chat
-                                                                        {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
-                                                                    </DropdownMenuItem>
-                                                                    <DropdownMenuItem>
-                                                                        Manage saved chat
+                                                            {(message.role === 'user' && lastUserMsg?.id === message.id) &&
+                                                                <>
+                                                                    <DropdownMenu>
+                                                                        <DropdownMenuTrigger asChild>
+                                                                            <Button
+                                                                                suppressHydrationWarning
+                                                                                type='button'
+                                                                                onClick={() =>
+                                                                                    navigator.clipboard.writeText(part.text)
+                                                                                }
+                                                                                size={"icon"}
+                                                                                className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
+                                                                            // label="Copyfdsss"
+                                                                            >
+                                                                                <Info className="size-3" />
+                                                                            </Button>
+                                                                        </DropdownMenuTrigger>
+                                                                        <DropdownMenuContent className="w-56" align="start">
+                                                                            <DropdownMenuItem>
+                                                                                Edit
+                                                                                {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                            </DropdownMenuItem>
+                                                                            <DropdownMenuItem>
+                                                                                Impresonate
+                                                                            </DropdownMenuItem>
+                                                                            <DropdownMenuItem>
+                                                                                Persona Perview
+                                                                            </DropdownMenuItem>
+                                                                        </DropdownMenuContent>
+                                                                    </DropdownMenu>
+                                                                    <DropdownMenu>
+                                                                        <DropdownMenuTrigger asChild>
+                                                                            <Button
+                                                                                suppressHydrationWarning
+                                                                                type='button'
+                                                                                onClick={() =>
+                                                                                    navigator.clipboard.writeText(part.text)
+                                                                                }
+                                                                                size={"icon"}
+                                                                                className='size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg'
+                                                                            // label="Copyfdsss"
+                                                                            >
+                                                                                <EllipsisVertical className="size-3" />
+                                                                            </Button>
+                                                                        </DropdownMenuTrigger>
+                                                                        <DropdownMenuContent className="w-56" align="start">
+                                                                            <DropdownMenuItem>
+                                                                                Save chat
+                                                                                {/* <DropdownMenuShortcut><GitBranch /></DropdownMenuShortcut> */}
+                                                                            </DropdownMenuItem>
+                                                                            <DropdownMenuItem>
+                                                                                Manage saved chat
 
-                                                                    </DropdownMenuItem>
-                                                                    <DropdownMenuItem>
-                                                                        Exclude Message from Prompts
+                                                                            </DropdownMenuItem>
+                                                                            <DropdownMenuItem>
+                                                                                Exclude Message from Prompts
 
-                                                                    </DropdownMenuItem>
+                                                                            </DropdownMenuItem>
 
-                                                                </DropdownMenuContent>
-                                                            </DropdownMenu>
-                                                            </>
+                                                                        </DropdownMenuContent>
+                                                                    </DropdownMenu>
+                                                                </>
                                                             }
                                                         </Actions>
                                                     )

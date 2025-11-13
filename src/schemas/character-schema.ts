@@ -73,7 +73,7 @@ export const characterSchema: FormData[] = [
         label: 'Add To Favourites',
         cols: 4,
         row: 4,
-        defaultValue: false,
+        // defaultValue: false,
     },
     {
         name: "lorebook",
@@ -91,7 +91,6 @@ export const characterSchema: FormData[] = [
                 { label: "Zara Mentor", value: "zara-mentor" },
             ],
         },
-        // defaultValue: "luna-ai",
         rows: "3",
 
     }, {

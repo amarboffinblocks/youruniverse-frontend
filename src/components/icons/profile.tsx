@@ -6,7 +6,7 @@ interface IconProps {
 }
 const Profile: React.FC<IconProps> = ({ className = "text-primary" }) => {
     return (
-        <svg className={cn(className)} width="2000" height="2000" viewBox="0 0 2000 2000" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <svg className={cn("text-[#552EFB]", className)} width="2000" height="2000" viewBox="0 0 2000 2000" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <g clipPath="url(#clip0_8893_4197)">
                 <path d="M72.581 930.004L84.3894 979.414L130.809 957.706L99.099 997.646L145.162 1020.06L93.8565 1020.41L104.901 1070.02L72.581 1030.54L40.3115 1070.02L51.3564 1020.41L0 1020.06L46.1139 997.646L14.4042 957.706L60.8235 979.414L72.581 930.004Z" />
                 <path d="M1927.42 930.004L1939.23 979.414L1985.64 957.706L1953.93 997.646L2000 1020.06L1948.69 1020.41L1959.74 1070.02L1927.42 1030.54L1895.15 1070.02L1906.19 1020.41L1854.84 1020.06L1900.95 997.646L1869.24 957.706L1915.66 979.414L1927.42 930.004Z" />

@@ -8,8 +8,8 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        label:"Avatar"
-     
+        label: "Avatar"
+
     },
     {
         name: "username",
@@ -17,12 +17,12 @@ export const profileSchema: FormData[] = [
         label: "Username",
         required: false,
         placeholder: "john123",
-        disabled:true,
+        disabled: true,
         cols: 12,
         row: 4,
         rows: "3",
-        defaultValue:"Ben ten"
-        
+        defaultValue: "hello"
+
     },
     {
         name: "email",
@@ -31,11 +31,11 @@ export const profileSchema: FormData[] = [
         required: false,
         placeholder: "john@gmail.com",
         cols: 12,
-        disabled:true,
+        disabled: true,
         row: 4,
         rows: "3",
-        defaultValue:"ben10@gmail.com"
-        
+        defaultValue: "ben10@gmail.com"
+
     },
     {
         name: "visiable",
@@ -79,9 +79,9 @@ export const profileSchema: FormData[] = [
             ],
         },
         rows: "3",
-        
+
     },
-  {
+    {
         name: "tags",
         type: "multi-select",
         label: "Tags To follow",
@@ -93,7 +93,7 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
     {
         name: "tag-to-avoid",
@@ -107,9 +107,9 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
-  
+
     {
         name: "aboutme",
         type: "textarea",
@@ -118,37 +118,37 @@ export const profileSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        placeholder:"Write something about yourself",
+        placeholder: "Write something about yourself",
         tokens: false,
     },
     {
         name: "following",
         type: "text",
         label: "Following",
-        placeholder:"Enter topics or creators you’re currently following",
+        placeholder: "Enter topics or creators you’re currently following",
         required: true,
-        disabled:true,
+        disabled: true,
         cols: 12,
         row: 4,
         rows: "3",
         tokens: false,
     },
     {
-  name: "plan",
-  label: "Subscription Plan",
-  type: "select",
-  required: true,
-  placeholder: "Choose your subscription plan",
-  cols: 12,
-  row: 4,
-  rules: {
-    options: [
-      { label: "Basic (Free)", value: "basic" },
-      { label: "Pro (Monthly)", value: "pro-monthly" },
-      { label: "Pro (Yearly)", value: "pro-yearly" },
-      { label: "Enterprise", value: "enterprise" },
-    ],
-  },
-  rows: "3",
-}
+        name: "plan",
+        label: "Subscription Plan",
+        type: "select",
+        required: true,
+        placeholder: "Choose your subscription plan",
+        cols: 12,
+        row: 4,
+        rules: {
+            options: [
+                { label: "Basic (Free)", value: "basic" },
+                { label: "Pro (Monthly)", value: "pro-monthly" },
+                { label: "Pro (Yearly)", value: "pro-yearly" },
+                { label: "Enterprise", value: "enterprise" },
+            ],
+        },
+        rows: "3",
+    }
 ]

@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Menu, Trash2} from "lucide-react";
+import { Menu, Trash2 } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -28,12 +28,6 @@ const ProfileForm: React.FC<Props> = () => {
                 onSubmit={(values) => {
                     console.log("Form Submitted:", values);
                 }}
-            // initialValues={{
-            //     characterName: "Amarjeet Singh boffinblocks",
-            //     rating: "SFW",
-            //     visiable: "public",
-            //     lorebook: "lorebook-2"
-            // }}
             >
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

@@ -16,7 +16,7 @@ const FormTextarea: React.FC<FormTextareaProps> = ({
     name,
     label,
     tokens = true,
-    placeholder='',
+    placeholder = '',
     className,
     ...props
 }) => {

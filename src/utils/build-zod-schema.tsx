@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export function buildZodSchema(fields: FormData[]) {
     const shape: Record<string, any> = {};
-
+    console.log(fields)
     fields.forEach((field) => {
         let schema: any;
 
@@ -130,20 +130,18 @@ export function buildZodSchema(fields: FormData[]) {
             case "checkbox": {
                 schema = z.boolean();
 
-                if (field.required) {
-                    schema = schema.refine(
-                        (val: boolean) => val === true,
-                        {
-                            message: `${field.label || field.name} must be checked`,
-                        }
-                    );
-                }
+                // Apply default value (ensure boolean)
+                const defaultVal =
+                    typeof field.defaultValue === "boolean" ? field.defaultValue : false;
 
-                if (field.defaultValue !== undefined) {
-                    schema = schema.default(field.defaultValue);
-                } else {
-                    schema = schema.default(false);
-                }
+                schema = schema.default(defaultVal);
+
+                // If required, ensure it's true
+                if (field.required) {
+                    schema = schema.refine((val: boolean) => val === true, {
+                        message: `${field.label || field.name} must be checked`,
+                    });
+                }       
 
                 break;
             }

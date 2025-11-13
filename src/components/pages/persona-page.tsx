@@ -128,6 +128,8 @@ const PersonaPage = () => {
                     <TabsTrigger value="all">All Persona</TabsTrigger>
                     <TabsTrigger value="public">Public Persona</TabsTrigger>
                     <TabsTrigger value="private">Private Persona</TabsTrigger>
+                    <TabsTrigger value="saved">Saved Persona</TabsTrigger>
+
                 </TabsList>
                 <TabsContent value="all" >
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -145,6 +147,10 @@ const PersonaPage = () => {
 
                 </TabsContent>
                 <TabsContent value="private">
+                    <DataNotFound />
+
+                </TabsContent>
+                <TabsContent value="saved">
                     <DataNotFound />
 
                 </TabsContent>

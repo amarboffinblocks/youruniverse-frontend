@@ -16,9 +16,9 @@ interface FormFieldsProps extends FormData {
     cols?: FormData["cols"];
 }
 
-const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
+const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
 
-    switch (type) {
+    switch (props.type) {
         case "textarea":
             return <FormTextarea {...props} />;
         case "text":
@@ -30,7 +30,7 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ type, ...props }) => {
         case "multi-select":
             return <FormMultiSelect {...props} />
         case "file":
-            return <FormImageUpload {...props} />
+            return <FormImageUpload {...props} />   
         case "multiple-file":
             return <FormMultiFile {...props} />
         case "entries":

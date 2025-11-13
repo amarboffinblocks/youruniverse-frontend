@@ -26,6 +26,9 @@ const CharacterForm: React.FC<Props> = () => {
                 onSubmit={(values) => {
                     console.log("Form Submitted:", values);
                 }}
+                initialValues={{
+                    tags: ["Funny"]
+                }}
             >
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

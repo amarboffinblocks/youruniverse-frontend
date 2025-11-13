@@ -2,13 +2,14 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation"; // Add this import
 import { motion, AnimatePresence } from "framer-motion";
 import Container from "../elements/container";
 import ToolTipElement from "../elements/tooltip-element";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 // ------- Icons -------
+// ... your icon imports ...
 import Chat from "@/components/icons/chat";
 import Models from "@/components/icons/models";
 import Settings from "@/components/icons/settings";
@@ -26,91 +27,131 @@ import Download from "@/components/icons/download";
 import Subscriptions from "@/components/icons/subscriptions";
 import YourUniverse from "../icons/your-universe";
 import Folders from "../icons/folders";
-import { Search } from "lucide-react";
+import ChatHistoryDropdown from "../elements/chat-history-dropdown";
 
 
-interface HeaderItem { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; iconClassName?: string; dropdown?: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; type?: string; createdAt?: string; children?: { id: string; title: string, createdAt: string }[]; }[]; }
-// ------- Data -------
-const folderData = [
-  { id: "chat-001", title: "Character A", createdAt: "31-01-1998" },
-  { id: "chat-002", title: "Character B", createdAt: "01-03-2000" },
-  { id: "chat-003", title: "Character C", createdAt: "15-08-2005" },
-];
-
-const headerItems: HeaderItem[] = [
-  {
-    icon: Chat,
-    title: "Chat",
-    iconClassName: "h-16 w-16 text-primary",
-    dropdown: [
-      { icon: ModelSelection, type: "button", title: "Search Saved Chat" },
-      { icon: LlmSettings, type: "button", title: "Saved Chat Menu" },
-      {
-        icon: Lorebook,
-        title: "Folder Name 1",
-        createdAt: "23-02-2002",
-        children: folderData,
-      },
-      {
-        icon: Lorebook,
-        title: "Folder Name 2",
-        createdAt: "12-05-2010",
-        children: folderData,
-      },
-    ],
-  },
-  {
-    icon: Models,
-    title: "All Models",
-    href: "/models",
-    iconClassName: "h-24 w-24 text-primary",
-    dropdown: [
-      { icon: ModelSelection, title: "Model Selection", href: "/models-selection" },
-      { icon: LlmSettings, title: "Model Tuning", href: "/models-tuning" },
-    ],
-  },
-  {
-    icon: YourUniverse,
-    title: "Your Universe",
-    href: "/universe",
-    iconClassName: "h-24 w-24 text-primary",
-    dropdown: [
-      { icon: CharacterV1, title: "Characters", href: "/characters" },
-      { icon: PersonaV1, title: "Personas", href: "/personas" },
-      { icon: Lorebook, title: "Lorebook", href: "/lorebooks" },
-      { icon: Folders, title: "Folders", href: "/folders" },
-    ],
-  },
-  {
-    icon: Community,
-    title: "Community",
-    href: "/community",
-    iconClassName: "h-18 w-18 text-primary",
-    dropdown: [
-      { icon: Forum, title: "Forum", href: "/community/forum" },
-      { icon: BugReport, title: "Bug & Feature Request", href: "/community/feature-request" },
-    ],
-  },
-  {
-    icon: Settings,
-    title: "Settings",
-    href: "/settings",
-    iconClassName: "h-16 w-16 text-primary",
-    dropdown: [
-      { icon: Profile, title: "Profile", href: "/profile" },
-      { icon: Background, title: "Background", href: "/background" },
-      { icon: Download, title: "Download", href: "/download" },
-      { icon: Subscriptions, title: "Subscriptions", href: "/subscriptions" },
-    ],
-  },
-];
 
 const Header: React.FC = () => {
+  const pathname = usePathname(); // Get current route
   const [openDropdown, setOpenDropdown] = useState<number | null>(null);
   const [openSubDropdown, setOpenSubDropdown] = useState<number | null>(null);
-  const [glowIndex, setGlowIndex] = useState<number | null>(null);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [pulsingIndex, setPulsingIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+  // --- Sync active index with current route ---
+  interface HeaderItem { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; iconClassName?: string; dropdown?: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; type?: string; createdAt?: string; children?: { id: string; title: string, createdAt: string }[]; }[]; }
+  // ------- Data -------
+  const folderData = [
+    { id: "chat-001", title: "Character A", createdAt: "31-01-1998" },
+    { id: "chat-002", title: "Character B", createdAt: "01-03-2000" },
+    { id: "chat-003", title: "Character C", createdAt: "15-08-2005" },
+  ];
+
+  console.log(openDropdown)
+  const headerItems: HeaderItem[] = [
+    {
+      icon: Chat,
+      title: "Chat",
+      iconClassName: "h-16 w-16 text-primary",
+      dropdown: [
+        { icon: ModelSelection, type: "button", title: "Search Saved Chat" },
+        { icon: LlmSettings, type: "button", title: "Saved Chat Menu" },
+        {
+          icon: Lorebook,
+          title: "Folder Name 1",
+          createdAt: "23-02-2002",
+          children: folderData,
+        },
+        {
+          icon: Lorebook,
+          title: "Folder Name 2",
+          createdAt: "12-05-2010",
+          children: folderData,
+        },
+      ],
+    },
+    {
+      icon: Models,
+      title: "All Models",
+      href: "/models",
+      iconClassName: "h-24 w-24 text-primary",
+      dropdown: [
+        { icon: ModelSelection, title: "Model Selection", href: "/models-selection" },
+        { icon: LlmSettings, title: "Model Tuning", href: "/models-tuning" },
+      ],
+    },
+    {
+      icon: YourUniverse,
+      title: "Your Universe",
+      href: "/universe",
+      iconClassName: "h-24 w-24 text-primary",
+      dropdown: [
+        { icon: CharacterV1, title: "Characters", href: "/characters" },
+        { icon: PersonaV1, title: "Personas", href: "/personas" },
+        { icon: Lorebook, title: "Lorebook", href: "/lorebooks" },
+        { icon: Folders, title: "Folders", href: "/folders" },
+      ],
+    },
+    {
+      icon: Community,
+      title: "Community",
+      href: "/community",
+      iconClassName: "h-18 w-18 text-primary",
+      dropdown: [
+        { icon: Forum, title: "Forum", href: "/community/forum" },
+        { icon: BugReport, title: "Bug & Feature Request", href: "/community/feature-request/create" },
+      ],
+    },
+    {
+      icon: Settings,
+      title: "Settings",
+      href: "/settings",
+      iconClassName: "h-16 w-16 text-primary",
+      dropdown: [
+        { icon: Profile, title: "Profile", href: "/profile" },
+        { icon: Background, title: "Background", href: "/background" },
+        { icon: Download, title: "Download", href: "/download" },
+        { icon: Subscriptions, title: "Subscriptions", href: "/subscriptions" },
+      ],
+    },
+  ];
+
+  useEffect(() => {
+    // Find which header item matches the current route
+    const findActiveIndex = () => {
+      for (let i = 0; i < headerItems.length; i++) {
+        const item = headerItems[i];
+
+        // Check main href
+        if (item.href && pathname.startsWith(item.href)) {
+          return i;
+        }
+
+        // Check dropdown hrefs
+        if (item.dropdown) {
+          for (const drop of item.dropdown) {
+            if (drop.href && pathname.startsWith(drop.href)) {
+              return i;
+            }
+            // Check nested children (for chat routes)
+            if (drop.children) {
+              for (const child of drop.children) {
+                if (pathname.startsWith(`/chat/${child.id}`)) {
+                  return i;
+                }
+              }
+            }
+          }
+        }
+      }
+      return null;
+    };
+
+    const newActiveIndex = findActiveIndex();
+    setActiveIndex(newActiveIndex);
+  }, [pathname]); // Re-run when route changes
 
   // --- Close dropdowns on outside click ---
   useEffect(() => {
@@ -122,17 +163,17 @@ const Header: React.FC = () => {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  }, [dropdownRef]);
 
   const handleSelect = () => {
     setOpenDropdown(null);
     setOpenSubDropdown(null);
-    setGlowIndex(null);
+    // Don't clear activeIndex here - it will be handled by the route change
   };
 
   // --- Glow & Pulse Logic ---
   const handleIconClick = (idx: number) => {
-    setGlowIndex(idx);
+    setActiveIndex(idx);
     setPulsingIndex(idx);
     setOpenDropdown(openDropdown === idx ? null : idx);
 
@@ -140,15 +181,15 @@ const Header: React.FC = () => {
     setTimeout(() => setPulsingIndex(null), 2400);
   };
 
-  const toggleSubDropdown = (idx: number) => {
-    setOpenSubDropdown(openSubDropdown === idx ? null : idx);
-  };
+  // const toggleSubDropdown = (idx: number) => {
+  //   setOpenSubDropdown(openSubDropdown === idx ? null : idx);
+  // };
 
   return (
     <header className="sticky top-0 z-50">
       <Container className="flex justify-center items-center py-6">
         <div className="flex items-center gap-8">
-          {headerItems.map((item, idx) => {
+          {headerItems?.map((item, idx: number) => {
             const Icon = item.icon;
             const hasDropdown = !!item.dropdown;
 
@@ -159,22 +200,21 @@ const Header: React.FC = () => {
                     <ToolTipElement discription={item.title}>
                       <button
                         type="button"
-                        onMouseEnter={() => setGlowIndex(idx)}
-                        onMouseLeave={() => {
-                          if (glowIndex !== idx) setGlowIndex(null);
-                        }}
+                        onMouseEnter={() => setHoverIndex(idx)}
+                        onMouseLeave={() => setHoverIndex(null)}
                         onClick={() => handleIconClick(idx)}
                         className="focus:outline-none"
                       >
                         <Icon
-                          className={cn(item.iconClassName, " text-white neon")}
-                        // className={cn(
-                        //   "neon transition-all duration-500 cursor-pointer",
-                        //   item.iconClassName,
-                        //   glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
-                        //   pulsingIndex === idx && "animate-pulse-glow",
-                        //   glowIndex === idx && pulsingIndex === null && "animate-steady-glow"
-                        // )}
+                          className={cn(
+                            "hover-neon transition-all duration-500 cursor-pointer",
+                            item.iconClassName,
+                            // Hover effects - only apply when this item is being hovered AND not active
+                            hoverIndex === idx && activeIndex !== idx && "animate-soft-glow",
+                            // Active effects - apply when this item is active, regardless of hover
+                            activeIndex === idx && pulsingIndex !== idx && "animate-steady-glow active-neon",
+                            activeIndex === idx && pulsingIndex === idx && "animate-pulse-glow active-neon"
+                          )}
                         />
                       </button>
                     </ToolTipElement>
@@ -188,60 +228,15 @@ const Header: React.FC = () => {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
                         >
-                          <ul className="flex flex-col gap-2 items-center min-w-[200px]">
-                            {item.dropdown?.map((drop, dIdx) => {
+                          <ul className="flex flex-col gap-2 items-center min-w-[300px]">
+
+                            {
+                              item.title === "Chat" &&
+                              <ChatHistoryDropdown />
+                            }
+                            {item.dropdown?.map((drop, dIdx: number) => {
                               const DropIcon = drop.icon;
 
-                              // Button dropdown
-                              if (drop?.type === "button") {
-                                return (
-                                  <Button
-                                    key={dIdx}
-                                    className="w-full bg-primary hover:bg-primary/90 text-white flex justify-start rounded-lg"
-                                  >
-                                    {drop.title}
-                                  </Button>
-                                );
-                              }
-
-                              // Folder dropdown
-                              if (drop.children) {
-                                return (
-                                  <div key={dIdx} className="relative w-full">
-                                    <Button
-                                      onClick={() => toggleSubDropdown(dIdx)}
-                                      className="w-full bg-primary hover:bg-primary/90 text-white rounded-lg flex justify-between"
-                                    >
-                                      {drop.title}
-                                      <span className="ml-2 text-xs opacity-70">{drop.createdAt}</span>
-                                    </Button>
-
-                                    <AnimatePresence>
-                                      {openSubDropdown === dIdx && (
-                                        <motion.ul
-                                          initial={{ opacity: 0, y: -5 }}
-                                          animate={{ opacity: 1, y: 0 }}
-                                          exit={{ opacity: 0, y: -5 }}
-                                          className="absolute left-full top-0 ml-2 mt-1 bg-background border border-primary/30 rounded-lg shadow-lg p-2 flex flex-col gap-2 z-50"
-                                        >
-                                          {drop.children.map((folder) => (
-                                            <Link
-                                              key={folder.id}
-                                              href={`/chat/${folder.id}`}
-                                              onClick={handleSelect}
-                                              className="px-3 py-2 text-sm rounded-md bg-primary hover:bg-primary/80 text-white whitespace-nowrap"
-                                            >
-                                              {folder.title} ({folder.createdAt})
-                                            </Link>
-                                          ))}
-                                        </motion.ul>
-                                      )}
-                                    </AnimatePresence>
-                                  </div>
-                                );
-                              }
-
-                              // Regular dropdown link
                               return (
                                 <motion.li
                                   key={dIdx}
@@ -252,7 +247,7 @@ const Header: React.FC = () => {
                                   <ToolTipElement discription={drop.title}>
                                     {drop.href && (
                                       <Link href={drop.href} onClick={handleSelect}>
-                                        <DropIcon className="w-16 h-16 text-primary hover-glow" />
+                                        <DropIcon className="w-16 h-16 hover-neon" />
                                       </Link>
                                     )}
                                   </ToolTipElement>
@@ -268,22 +263,28 @@ const Header: React.FC = () => {
                   <ToolTipElement discription={item.title}>
                     <Link
                       href={item.href || "#"}
-                      onMouseEnter={() => setGlowIndex(idx)}
-                      onMouseLeave={() => setGlowIndex(null)}
+                      onMouseEnter={() => setHoverIndex(idx)}
+                      onMouseLeave={() => setHoverIndex(null)}
                       onClick={() => handleIconClick(idx)}
                     >
                       <Icon
                         className={cn(
                           "transition-all duration-500 cursor-pointer",
                           item.iconClassName,
-                          glowIndex === idx && pulsingIndex !== idx && "animate-soft-glow",
-                          pulsingIndex === idx && "animate-pulse-glow",
-                          glowIndex === idx && pulsingIndex === null && "animate-steady-glow"
+                          // Hover effects
+                          hoverIndex === idx && activeIndex !== idx && "animate-soft-glow",
+                          // Active effects
+                          activeIndex === idx && pulsingIndex !== idx && "animate-steady-glow active-neon",
+                          activeIndex === idx && pulsingIndex === idx && "animate-pulse-glow active-neon"
                         )}
                       />
                     </Link>
                   </ToolTipElement>
-                )}
+                )
+
+
+
+                }
               </div>
             );
           })}

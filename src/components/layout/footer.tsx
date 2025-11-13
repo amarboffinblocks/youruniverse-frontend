@@ -44,9 +44,8 @@ const Footer = () => {
         <span >-</span>
         <Link href="/attributes" className=" hover:underline">Attribution Page</Link>
         <span >-</span>
-        <Link href="/privacy" className=" hover:underline">Privacy</Link>
-        <span >-</span>
-        <Link href="/terms-of-service" className="hover:underline">Terms of Services</Link>
+        <Link href="/legal" className=" hover:underline">legal</Link>
+
       </div>
     </div>
   );

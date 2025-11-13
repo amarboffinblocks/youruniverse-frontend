@@ -16,20 +16,19 @@ interface FormCheckboxProps {
 
 const FormCheckbox: React.FC<FormCheckboxProps> = ({
   name,
-  defaultValue = false,
   label,
   className = "",
+  ...props
 }) => {
-  const [field, , helpers] = useField({ name, type: "checkbox" });
+  const [field, , helpers] = useField(name);
   const { value } = field;
   const { setValue } = helpers;
 
-  // Ensure the initial value is set if not already
   React.useEffect(() => {
-    if (value === undefined && defaultValue !== undefined) {
-      setValue(defaultValue);
+    if (value === undefined && props.defaultValue !== undefined) {
+      setValue(props.defaultValue);
     }
-  }, [defaultValue, setValue, value]);
+  }, [props.defaultValue, setValue, value]);
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>

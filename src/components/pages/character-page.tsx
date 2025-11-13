@@ -122,6 +122,8 @@ const CharacterPage = () => {
           <TabsTrigger value="all">All Characters</TabsTrigger>
           <TabsTrigger value="public">Public Characters</TabsTrigger>
           <TabsTrigger value="private">Private Characters</TabsTrigger>
+          <TabsTrigger value="saved">Saved Characters</TabsTrigger>
+
         </TabsList>
         <TabsContent value="all" >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -139,6 +141,9 @@ const CharacterPage = () => {
 
         </TabsContent>
         <TabsContent value="private" >
+          <DataNotFound />
+        </TabsContent>
+        <TabsContent value="saved" >
           <DataNotFound />
         </TabsContent>
 
