@@ -14,6 +14,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Input } from "../ui/input";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const chatFolders = [
     {
@@ -165,7 +166,7 @@ const ChatHistoryDropdown = () => {
                                                 key={chat.id}
                                                 onPointerDown={(e) => e.preventDefault()}
                                                 onClick={(e) => e.preventDefault()}
-                                                className="flex items-center border border-primary cursor-pointer gap-2 rounded-xl py-2 px-3 hover:bg-primary/20 focus:bg-primary/20"
+                                                className="flex items-center border border-primary cursor-pointer gap-2 rounded-xl py-0 px-3 hover:bg-primary/20 focus:bg-primary/20"
                                             >
                                                 <Checkbox
                                                     id={`chat-${chat.id}`}
@@ -173,7 +174,9 @@ const ChatHistoryDropdown = () => {
                                                     onCheckedChange={() => toggleChecked(chat.id)}
                                                     className="bg-black/30 border-primary data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
                                                 />
-                                                <span className="flex-1 text-left" onPointerDown={(e) => e.stopPropagation()}>{chat.name}</span>
+                                                <Link href={`/chat/${chat.id}`} className="flex-1 flex items-center py-2 h-full">
+                                                    <span className="flex-1 text-left" onPointerDown={(e) => e.stopPropagation()}>{chat.name}</span>
+                                                </Link>
                                             </DropdownMenuItem>
                                         ))}
                                     </DropdownMenuGroup>
