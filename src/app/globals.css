@@ -379,7 +379,7 @@ body {
   }
 
   .hover-neon:hover {
-    @apply text-white transition-[filter];
-    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 8rem #552efb) !important;
+    @apply text-white/50 transition-[filter];
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.2rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.5rem #552efb) drop-shadow(0 0 12rem #552efb) !important;
   }
 }
