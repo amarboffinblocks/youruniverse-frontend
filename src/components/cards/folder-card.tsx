@@ -41,7 +41,7 @@ const FolderCard: React.FC<FolderCardProps> = ({
                     id="terms"
                     className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
                 />
-                    character folder
+                    <span className="w-[100px]"></span>
                 </span>
 
                 {/* Folder Name & Tags */}

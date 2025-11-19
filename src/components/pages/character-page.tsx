@@ -121,10 +121,11 @@ const CharacterPage = () => {
       </div>
       <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >
         <TabsList className="w-full">
-          <TabsTrigger value="all">All Characters</TabsTrigger>
-          <TabsTrigger value="public">Public Characters</TabsTrigger>
-          <TabsTrigger value="private">Private Characters</TabsTrigger>
-          <TabsTrigger value="saved">Saved Characters</TabsTrigger>
+          <TabsTrigger value="all">All </TabsTrigger>
+          <TabsTrigger value="public">Public </TabsTrigger>
+          <TabsTrigger value="private">Private </TabsTrigger>
+          <TabsTrigger value="saved">Saved </TabsTrigger>
+          <TabsTrigger value="favourite">Favourites </TabsTrigger>
 
         </TabsList>
         <TabsContent value="all" >
@@ -146,6 +147,9 @@ const CharacterPage = () => {
           <DataNotFound />
         </TabsContent>
         <TabsContent value="saved" >
+          <DataNotFound />
+        </TabsContent>
+        <TabsContent value="favourite" >
           <DataNotFound />
         </TabsContent>
 

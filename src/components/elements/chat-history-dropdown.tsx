@@ -145,7 +145,7 @@ const ChatHistoryDropdown = () => {
                             >
                                 <DropdownMenuTrigger asChild>
                                     <button className="flex items-center justify-between w-full text-start text-white group ">
-                                        <span className="flex-1">{folder.name}</span>
+                                        <span className="flex-1 whitespace-nowrap">{folder.name}</span>
                                         <ChevronRight
                                             className={`ml-2 h-4 w-4 transition-transform duration-300 ${openFolder === folder.id ? "rotate-90" : ""
                                                 }`}

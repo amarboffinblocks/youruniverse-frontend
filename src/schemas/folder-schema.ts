@@ -4,9 +4,9 @@
   {
         name: "folderName",
         type: "text",
-        label: "Folder Name",
+        label: "Realm Name",
         required: true,
-        placeholder: "Enter your Folder's name",
+        placeholder: "Enter your Realm's name",
         rules: {
             min: 4,
             max: 20
@@ -21,7 +21,7 @@
         type: "multi-select",
         label: "Tags",
         required: true,
-        placeholder: "Single words describing your Character or Scenario. Multiple Tags can be entered by separating them with a comma.",
+        placeholder: "Single words describing your Realm, the Characters or Universe.",
         rules: {
             model: "tags"
         },
@@ -35,7 +35,7 @@
         type: "textarea",
         label: "Description",
         required: true,
-        placeholder: " Describe your Characters, Scenario, or Universe here. For Characters please describe their physical and mental characteristics. For Scenario’s, Worlds, or Universe, use this place to establish the foundation. Link Lorebooks to Character Cards to further enhance the experience.",
+        placeholder: " Describe your Realm, the characters or Universe here. This will help the AI to understand more about the group. ",
         cols: 12,
         row: 4,
         rows: "3",

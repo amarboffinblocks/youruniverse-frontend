@@ -125,10 +125,11 @@ const LorebookPage = () => {
             </div>
             <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >
                 <TabsList className="w-full">
-                    <TabsTrigger value="all">All Lorebook</TabsTrigger>
-                    <TabsTrigger value="public">Public Lorebook</TabsTrigger>
-                    <TabsTrigger value="private">Private Lorebook</TabsTrigger>
-                    <TabsTrigger value="saved">Saved Lorebook</TabsTrigger>
+                    <TabsTrigger value="all">All </TabsTrigger>
+                    <TabsTrigger value="public">Public </TabsTrigger>
+                    <TabsTrigger value="private">Private </TabsTrigger>
+                    <TabsTrigger value="saved">Saved </TabsTrigger>
+                    <TabsTrigger value="favourite">Favourites </TabsTrigger>
 
                 </TabsList>
                 <TabsContent value="all" >
@@ -148,6 +149,9 @@ const LorebookPage = () => {
                     <DataNotFound />
                 </TabsContent>
                 <TabsContent value="saved">
+                    <DataNotFound />
+                </TabsContent>
+                <TabsContent value="favourite">
                     <DataNotFound />
                 </TabsContent>
 

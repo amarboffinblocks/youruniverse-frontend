@@ -30,9 +30,9 @@ export const personaSchema: FormData[] = [
  {
         name: "tags",
         type: "multi-select",
-        label: "Choose Persona Tags",
+        label: "Persona Tags",
         required: true,
-        placeholder: "Single words describing your personas or Scenario.",
+        placeholder: "Single words that describe your persona",
         rules: {
             model: "tags"
         },

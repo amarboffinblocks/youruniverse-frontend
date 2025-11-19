@@ -18,6 +18,8 @@ import FolderCard from '../cards/folder-card';
 import { MasonryGrid } from '../elements/masonry-grid'
 import Link from 'next/link'
 import SearchField from '../elements/search-field'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import DataNotFound from '../elements/data-not-found'
 interface Character {
     id: number;
     name: string;
@@ -148,26 +150,26 @@ const FolderPage = () => {
         <div className='flex flex-col h-full pt-10' >
             <div className='space-y-4 w-full max-w-3xl mx-auto'>
                 <div className='flex flex-1 items-center gap-x-4 '>
-                    <SearchField placeholder='Search for Folder, Character name, or description' />
+                    <SearchField placeholder='Search for Realm, Character name, or description' />
                     <div>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button className="rounded-full">
-                                    Folder Menu <Menu className="ml-2 h-4 w-4" />
+                                    Realm Menu <Menu className="ml-2 h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
 
                             <DropdownMenuContent className="w-72" align="end">
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem>Show Favorites Only</DropdownMenuItem>
-                                      <DropdownMenuSub>
+                                    <DropdownMenuSub>
                                         <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
                                                 <DropdownMenuItem>Favourites</DropdownMenuItem>
-                                                <DropdownMenuItem>Private Folders only</DropdownMenuItem>
-                                                <DropdownMenuItem>Public Folders only</DropdownMenuItem>
-                                                <DropdownMenuItem>Private and Public Folders</DropdownMenuItem>
+                                                <DropdownMenuItem>Private Realms only</DropdownMenuItem>
+                                                <DropdownMenuItem>Public Realms only</DropdownMenuItem>
+                                                <DropdownMenuItem>Private and Public Realms</DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
@@ -191,34 +193,50 @@ const FolderPage = () => {
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
 
-                                    <Link href={"/folders/create"}><DropdownMenuItem>Create Folder</DropdownMenuItem></Link>
+                                    <Link href={"/folders/create"}><DropdownMenuItem>Create Realm</DropdownMenuItem></Link>
 
 
-                                    <DropdownMenuItem variant='destructive'>Delete Folder</DropdownMenuItem>
+                                    <DropdownMenuItem variant='destructive'>Delete Realm</DropdownMenuItem>
                                 </DropdownMenuGroup>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
                 </div>
                 <div className='grid grid-cols-2 gap-x-4'>
-                    <SearchField placeholder='Search by Folder or Character Tag' />
+                    <SearchField placeholder='Search by Realm or Character Tag' />
                     <SearchField placeholder='Tags to exclude from search' />
 
                 </div>
             </div>
-            <div className='flex-1   mt-14'>
-                <div className='h-full w-full'>
-                    <MasonryGrid
-                        items={folderItems}
-                        className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 "
-                        renderItem={(folder) => (
-                            <FolderCard
-                                folder={folder}
+            <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >
+                <TabsList className="w-full">
+                    <TabsTrigger value="all">All </TabsTrigger>
+                    <TabsTrigger value="favourite">Favourites </TabsTrigger>
+
+
+                </TabsList>
+                <TabsContent value="all" >
+                    <div className='flex-1 mt-8'>
+                        <div className='h-full w-full'>
+                            <MasonryGrid
+                                items={folderItems}
+                                className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 "
+                                renderItem={(folder) => (
+                                    <FolderCard
+                                        folder={folder}
+                                    />
+                                )}
                             />
-                        )}
-                    />
-                </div>
-            </div>
+                        </div>
+                    </div>
+                </TabsContent>
+                <TabsContent value="favourite" >
+                    <DataNotFound />
+
+                </TabsContent>
+
+            </Tabs>
+
             <div className="mt-6">
                 <PaginationComponent
                     currentPage={page}

@@ -17,7 +17,7 @@ const EntriesField = () => {
             <div className=''>
                 <FormInputField label='Keywords or Terms' placeholder="Please enter the Keyword or Term here. You can add multiple by separating them with a comma."  name='keyword' />
             </div>
-            <FormTextarea name='context' placeholder='Enter the relavent context about the character' label='Context' />
+            <FormTextarea name='context' placeholder='Enter a short description about the keyword or term here. Please keep in mind the shorter the better. ' label='Context' />
         </div>
 
          <div className='border  border-primary rounded-2xl p-4 relative    '>
@@ -30,7 +30,7 @@ const EntriesField = () => {
               <div className=''>
                 <FormInputField label='Keywords or Terms' placeholder="Enter the keywords or Terms"  name='keyword' />
             </div>
-            <FormTextarea name='context' placeholder='Enter the relavent context about the character' label='Context' />
+            <FormTextarea name='context' placeholder='Enter a short description about the keyword or term here. Please keep in mind the shorter the better. ' label='Context' />
         </div>
         </div>
     )

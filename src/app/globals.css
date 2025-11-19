@@ -375,11 +375,33 @@ body {
 @layer utilities {
   .active-neon {
     @apply text-white transition-[filter] duration-500;
-    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 3rem #552efb) !important;
+    animation: neonTwinkle 2.2s ease-in-out infinite !important;
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 6rem #552efb) !important;
+
   }
 
   .hover-neon:hover {
     @apply text-white/50 transition-[filter];
     filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.2rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.5rem #552efb) drop-shadow(0 0 12rem #552efb) !important;
+  }
+}
+
+@keyframes neonTwinkle {
+  0% {
+    color: white;
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 3rem #552efb) !important;
+
+  }
+
+  50% {
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 6rem #552efb) !important;
+
+    color: rgba(255, 255, 255, 0.483)
+  }
+
+  100% {
+    filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 3rem #552efb) !important;
+
+    color: white;
   }
 }
