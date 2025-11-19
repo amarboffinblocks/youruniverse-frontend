@@ -7,7 +7,6 @@ import Footer from "../layout/footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
     // Auto-expand textarea on input
     const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const textarea = e.target;
