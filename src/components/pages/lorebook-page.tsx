@@ -75,7 +75,8 @@ const LorebookPage = () => {
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
-
+                                        <DropdownMenuItem >By Rating</DropdownMenuItem>
+        
                                         <DropdownMenuItem >Duplicate Selected Lorebook</DropdownMenuItem>
 
 

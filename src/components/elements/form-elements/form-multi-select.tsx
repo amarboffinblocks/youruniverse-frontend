@@ -55,13 +55,15 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
 
     // Use Formik value -> defaultValue -> empty array
     const selectedValue = value || defaultValue;
-
+    const sortedOptions = [...options].sort((a, b) =>
+        a.label.localeCompare(b.label)
+    );
     return (
         <div className={cn("w-full space-y-1", className)}>
             {label && <Label className={cn("block text-sm font-medium", meta.touched && meta.error && "text-destructive")}>{label}</Label>}
 
             <MultiSelect
-                options={options}
+                options={sortedOptions}
                 value={selectedValue}
                 onValueChange={setValue}
                 placeholder={placeholder}

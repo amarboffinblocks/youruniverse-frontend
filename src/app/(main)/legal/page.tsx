@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
 export const policyLinks = [
-    { name: "Blocked Content", href: "/" },
+    { name: "Blocked Content Policy", href: "/" },
     { name: "Community Guidelines", href: "/" },
     { name: "Complaint Policy", href: "/" },
     { name: "Content Removal Policy", href: "/" },

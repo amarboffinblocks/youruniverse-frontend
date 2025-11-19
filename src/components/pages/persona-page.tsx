@@ -68,6 +68,7 @@ const PersonaPage = () => {
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
+                                        <DropdownMenuItem >By Rating</DropdownMenuItem>
 
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>

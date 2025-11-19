@@ -71,7 +71,9 @@ const CharacterPage = () => {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
+                    <DropdownMenuItem >By Rating</DropdownMenuItem>
                     <DropdownMenuItem >Duplicate Selected Character (s)</DropdownMenuItem>
+
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>

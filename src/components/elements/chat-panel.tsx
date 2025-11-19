@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useRef } from "react";
+import { toast } from "sonner"
 import { Button } from "../ui/button";
-import {  Send, Trash, Upload } from "lucide-react";
+import { Send, Trash, Upload } from "lucide-react";
 import Footer from "../layout/footer";
 const ChatPanel = () => {
     const [message, setMessage] = useState("");
@@ -93,8 +94,16 @@ const ChatPanel = () => {
                             <Upload className="h-8 w-8 text-white" />
                         </Button>
                         <Button
-                            type="submit"
+                            type="button"
                             size="icon"
+                            // onClick={() => toast.success("Event created successfully 🎉")}
+                            // onClick={() => toast.error("Unable to create the event. Please try again.")}
+                            onClick={() => toast.warning("Some details are missing. Please review the form.")}
+
+
+
+
+
                         >
                             <Send className="h-8 w-8 text-white" />
                         </Button>
