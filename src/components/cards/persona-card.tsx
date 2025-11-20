@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 // import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
+import Favourite from "../icons/favourite";
+import Bookmark from "../icons/bookmark";
 
 interface PersonaCardProps {
     item?: number
@@ -26,10 +28,14 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
         >
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
-                    <Checkbox
-                        id="terms"
-                        className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
-                    />
+                    <div className="flex items-center gap-2">
+                        <Checkbox
+                            id="terms"
+                            className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
+                        />
+                        <Favourite active={false} />
+
+                    </div>
                     <div className="flex items-center gap-1">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -77,7 +83,9 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-
+                <div className="absolute bottom-3 right-3 z-10">
+                    <Bookmark active={false} />
+                </div>
 
             </CardHeader>
 

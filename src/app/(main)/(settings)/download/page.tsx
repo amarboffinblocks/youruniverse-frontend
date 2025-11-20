@@ -43,9 +43,9 @@ export default function page() {
     return (
         <div className="flex-1 flex flex-col relative">
             <div className="flex-1 ">
-                <Container>
-                    <div className="mt-10 text-center px-4">
-                        <h1 className="text-3xl text-white font-bold mb-10">Download Your App</h1>
+                <Container className="h-full flex justify-center  items-center">
+                    <div className=" text-center px-4">
+                        <h1 className="text-5xl text-white font-bold mb-20">Download Your App</h1>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                             {downloads.map((item) => {
