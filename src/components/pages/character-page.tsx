@@ -22,6 +22,8 @@ import CharacterCard from "@/components/cards/character-card";
 import DataNotFound from '../elements/data-not-found';
 import SearchField from '../elements/search-field';
 import { ToggleSwitch } from '../elements/toggle-switch';
+import Rating from '../elements/rating';
+
 const CharacterPage = () => {
   const [page, setPage] = useState(1)
 
@@ -71,7 +73,21 @@ const CharacterPage = () => {
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
-                    <DropdownMenuItem >By Rating</DropdownMenuItem>
+                    <DropdownMenuSub >
+                      <DropdownMenuSubTrigger>By Rating</DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent className="text-white">
+                          {[5, 4, 3, 2, 1].map((star: number) => (
+                            <DropdownMenuItem key={star}>
+                              <div className="flex items-center gap-2">
+                                <Rating value={star} size={14} readOnly />
+                                <span className="text-xs">({star} Star)</span>
+                              </div>
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
                     <DropdownMenuItem >Duplicate Selected Character (s)</DropdownMenuItem>
 
                     <DropdownMenuSub>
@@ -127,7 +143,9 @@ const CharacterPage = () => {
           <TabsTrigger value="saved">Saved </TabsTrigger>
           <TabsTrigger value="favourite">Favourites </TabsTrigger>
 
+
         </TabsList>
+
         <TabsContent value="all" >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {
@@ -154,6 +172,7 @@ const CharacterPage = () => {
         </TabsContent>
 
       </Tabs>
+
       <div className="mt-6">
         <PaginationComponent
           currentPage={page}

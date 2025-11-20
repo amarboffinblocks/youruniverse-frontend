@@ -21,6 +21,7 @@ import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
 import PersonaCard from '../cards/persona-card';
+import Rating from '../elements/rating';
 
 const PersonaPage = () => {
     const [page, setPage] = useState(1)
@@ -67,7 +68,21 @@ const PersonaPage = () => {
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
-                                        <DropdownMenuItem >By Rating</DropdownMenuItem>
+                                        <DropdownMenuSub >
+                                            <DropdownMenuSubTrigger>By Rating</DropdownMenuSubTrigger>
+                                            <DropdownMenuPortal>
+                                                <DropdownMenuSubContent className="text-white">
+                                                    {[5, 4, 3, 2, 1].map((star: number) => (
+                                                        <DropdownMenuItem key={star}>
+                                                            <div className="flex items-center gap-2">
+                                                                <Rating value={star} size={14} readOnly />
+                                                                <span className="text-xs">({star} Star)</span>
+                                                            </div>
+                                                        </DropdownMenuItem>
+                                                    ))}
+                                                </DropdownMenuSubContent>
+                                            </DropdownMenuPortal>
+                                        </DropdownMenuSub>
 
                                         <DropdownMenuSub>
                                             <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
@@ -155,9 +170,9 @@ const PersonaPage = () => {
                     <DataNotFound />
 
                 </TabsContent>
-                  <TabsContent value="favourite" >
-          <DataNotFound />
-        </TabsContent>
+                <TabsContent value="favourite" >
+                    <DataNotFound />
+                </TabsContent>
 
 
             </Tabs>
