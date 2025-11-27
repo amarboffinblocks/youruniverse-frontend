@@ -4,16 +4,16 @@ import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
 export const policyLinks = [
-    { name: "Blocked Content Policy", href: "/" },
-    { name: "Community Guidelines", href: "/" },
-    { name: "Complaint Policy", href: "/" },
-    { name: "Content Removal Policy", href: "/" },
-    { name: "Cookie Policy", href: "/" },
-    { name: "DMCA Policy", href: "/" },
-    { name: "Forum Community Guidelines", href: "/" },
-    { name: "Privacy Policy", href: "/legal/privacy" },
+    { name: "Blocked Content Policy", href: "/legal/blocked-content-policy" },
+    { name: "Community Guidelines", href: "/legal/community-guidelines" },
+    { name: "Complaint Policy", href: "/legal/complaint-policy" },
+    { name: "Content Removal Policy", href: "/legal/content-removal-policy" },
+    { name: "Cookie Policy", href: "/legal/cookie-policy" },
+    { name: "DMCA Policy", href: "/legal/dmca-policy" },
+    { name: "Forum Community Guidelines", href: "/legal/forum-community-guidelines" },
+    { name: "Privacy Policy", href: "/legal/privacy-policy" },
     { name: "Terms of Service", href: "/legal/terms-of-service" },
-    { name: "Underage Policy", href: "/" },
+    { name: "Underage Policy", href: "/legal/underage-policy" },
 ];
 
 

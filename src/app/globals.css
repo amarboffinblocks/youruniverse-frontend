@@ -405,3 +405,75 @@ body {
     color: white;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* globals.css or your CSS file */
+/* Add to your globals.css */
+.markdown-content {
+  @apply max-w-none text-white text-start;
+}
+
+.markdown-content h1 {
+  @apply text-4xl font-bold text-white border-b-2 border-gray-700;
+}
+
+.markdown-content h2 {
+  @apply text-3xl font-semibold text-white mt-10 mb-4;
+}
+
+.markdown-content h3 {
+  @apply text-2xl font-semibold text-white mb-4 mt-6;
+}
+
+.markdown-content p {
+  @apply mb-8 leading-7 text-gray-300 text-xl;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  @apply mb-6 ml-6 text-lg text-gray-300;
+}
+
+.markdown-content ul li {
+  @apply list-disc mb-2 text-gray-300;
+}
+
+.markdown-content ol li {
+  @apply list-decimal mb-2 text-gray-300;
+}
+
+.markdown-content strong {
+  @apply font-bold text-white;
+}
+
+.markdown-content em {
+  @apply italic text-gray-300;
+}
+
+.markdown-content blockquote {
+  @apply border-l-4 border-blue-500 pl-6 italic my-8 text-gray-400 bg-gray-800/50 py-4 rounded-r-lg;
+}
+
+.markdown-content a {
+  @apply text-blue-400 hover:text-blue-300 underline transition-colors duration-200;
+}
+
+.markdown-content h1:first-child {
+  @apply text-center mb-12;
+}
+
+.markdown-content h2:first-of-type {
+  @apply mt-12;
+}
