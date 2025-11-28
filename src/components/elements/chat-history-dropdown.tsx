@@ -22,7 +22,6 @@ import {
     NavigationMenuItem,
     NavigationMenuTrigger,
     NavigationMenuContent,
-    NavigationMenuLink,
 } from "@/components/ui/navigation-menu";
 import { Card } from "../ui/card";
 

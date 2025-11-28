@@ -5,7 +5,6 @@ import { z } from "zod";
 
 export function buildZodSchema(fields: FormData[]) {
     const shape: Record<string, any> = {};
-    console.log(fields)
     fields.forEach((field) => {
         let schema: any;
 

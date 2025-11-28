@@ -7,14 +7,7 @@ import {
     ZoomableImageModalTrigger,
     ZoomableImageModalContent,
 } from "./zoomable-image-modal";
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogDescription,
-    DialogTrigger,
-} from "@/components/ui/dialog";
+
 
 
 import {
@@ -40,7 +33,9 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { ZoomableDialog, ZoomableDialogContent, ZoomableDialogTrigger } from './zoomable-dialog';
-import PreviewForm from '../ui/PreviewForm';
+import DynamicForm from './form-elements/dynamic-form';
+import { characterPreviewSchema } from '@/schemas/character-preview-schema';
+import { personaPreviewSchema } from '@/schemas/persona-preview-schema';
 
 export type MessagePart = {
     type: "text";
@@ -211,26 +206,26 @@ const CommonActions = ({ onCopy, onDelete }: { onCopy: () => void; onDelete: () 
     </>
 );
 
-const InfoDropdown = ({ items }: { items: { label: string }[] }) => (
-    <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-            <Button
-                type="button"
-                size="icon"
-                className="size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg"
-            >
-                <Info className="size-3" />
-            </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="start">
-            {items.map((item, index) => (
-                <DropdownMenuItem key={index}>
-                    {item.label}
-                </DropdownMenuItem>
-            ))}
-        </DropdownMenuContent>
-    </DropdownMenu>
-);
+// const InfoDropdown = ({ items }: { items: { label: string }[] }) => (
+//     <DropdownMenu>
+//         <DropdownMenuTrigger asChild>
+//             <Button
+//                 type="button"
+//                 size="icon"
+//                 className="size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg"
+//             >
+//                 <Info className="size-3" />
+//             </Button>
+//         </DropdownMenuTrigger>
+//         <DropdownMenuContent className="w-56" align="start">
+//             {items.map((item, index) => (
+//                 <DropdownMenuItem key={index}>
+//                     {item.label}
+//                 </DropdownMenuItem>
+//             ))}
+//         </DropdownMenuContent>
+//     </DropdownMenu>
+// );
 
 const MoreDropdown = ({ items }: { items: { label: string }[] }) => (
     <DropdownMenu>
@@ -289,7 +284,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
 
     const renderUserActions = (message: ChatMessage, text: string, index: number) => {
         const isLastUserMessage = lastUserMsg?.id === message.id;
-
+   console.log(index)
         return (
             <Actions className="float-end">
                 <CommonActions
@@ -298,8 +293,55 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
                 />
                 {isLastUserMessage && (
                     <>
-                        <InfoDropdown items={CommonDropdownItems.user} />
+                        {/* <InfoDropdown items={CommonDropdownItems.user} /> */}
                         <MoreDropdown items={CommonDropdownItems.more} />
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    suppressHydrationWarning
+                                    type="button"
+                                    size={"icon"}
+                                    className="size-7 p-1.5 bg-primary/30 ckdrop-blur-3xl rounded-lg"
+                                >
+                                    <Info className="size-3" />
+                                </Button>
+                            </DropdownMenuTrigger>
+
+                            <DropdownMenuContent className="w-56" align="start">
+                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                                <DropdownMenuItem>Impresonate</DropdownMenuItem>
+
+
+                                <ZoomableDialog >
+                                    <ZoomableDialogTrigger asChild>
+                                        <DropdownMenuItem
+                                            onSelect={(e) => e.preventDefault()}
+                                        >
+                                            Persona Preview
+                                        </DropdownMenuItem>
+                                    </ZoomableDialogTrigger>
+
+                                    <ZoomableDialogContent className='!max-w-4xl'>
+                                            <DynamicForm
+                                                button={false}
+                                                schema={personaPreviewSchema}
+                                                onSubmit={(values) => {
+                                                    console.log("Form Submitted:", values);
+                                                }}
+                                                initialValues={{
+
+                                                    name: "Luna AI",
+                                                    tags: ["ai", "assistant", "friendly"],
+                                                    lorebook: "luna-ai",
+                                                    details:
+                                                        "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
+
+                                                }}
+                                            />
+                                    </ZoomableDialogContent>
+                                </ZoomableDialog>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </>
                 )}
             </Actions>
@@ -343,7 +385,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
                                 <DropdownMenuItem>Character Notes</DropdownMenuItem>
 
 
-                                <ZoomableDialog>
+                                <ZoomableDialog >
                                     <ZoomableDialogTrigger asChild>
                                         <DropdownMenuItem
                                             onSelect={(e) => e.preventDefault()}
@@ -352,8 +394,40 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
                                         </DropdownMenuItem>
                                     </ZoomableDialogTrigger>
 
-                                    <ZoomableDialogContent   >
-                                        <PreviewForm />
+                                    <ZoomableDialogContent className='!max-w-4xl'>
+                                            <DynamicForm
+                                                button={false}
+                                                schema={characterPreviewSchema}
+                                                onSubmit={(values) => {
+                                                    console.log("Form Submitted:", values);
+                                                }}
+                                                initialValues={{
+                                                    characterName: "Luna AI",
+                                                    visiable: "private",
+                                                    rating: "SFW",
+                                                    linkToLorebook: "luna-ai",
+                                                    linkToPersona: "astro-bot",
+                                                    tags: ["ai", "assistant", "friendly"],
+                                                    description:
+                                                        "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
+                                                    scenario:
+                                                        "You are chatting with Luna AI in a cozy futuristic workspace.",
+                                                    personalitySummary:
+                                                        "Curious, kind, and intelligent with a playful tone.",
+                                                    firstMessage:
+                                                        "Hello! I’m Luna. How can I brighten your day today?",
+                                                    alternateMessages: [
+                                                        "Hey there! How are you doing today?",
+                                                        "Hi! Ready to explore something fun?",
+                                                    ],
+                                                    exampleDialogue:
+                                                        "<START>\nUser: What's your favorite color?\nLuna: I’d say blue — calm and thoughtful, like a clear sky!",
+                                                    authorNotes:
+                                                        "Created for testing AI personality behavior and tone.",
+                                                    characterNotes:
+                                                        "Luna AI adapts tone and depth based on user engagement.",
+                                                }}
+                                            />
                                     </ZoomableDialogContent>
                                 </ZoomableDialog>
                             </DropdownMenuContent>
@@ -374,7 +448,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [dummyMessages]);
+    }, []);
     return (
         <div className="flex flex-1 p-6 flex-col h-full relative ">
             <Conversation className='h-full'>

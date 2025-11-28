@@ -97,14 +97,14 @@ export const ZoomableDialogContent = ({
         <AnimatePresence>
             {open && startPos && (
                 <motion.div
-                    className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-[9999]"
+                    className="fixed inset-0 backdrop-blur-lg flex items-center justify-center z-[9999]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     onClick={() => closeOnOutsideClick && setOpen(false)}
                 >
                     <motion.div
-                        className={`relative rounded-xl shadow-2xl p-5 h-full max-h-[90vh] overflow-y-auto ${className}`}
+                        className={`absolute rounded-xl shadow-2xl p-5 w-full max-w-[90vw] max-h-[90vh] overflow-y-auto ${className}`}
                         initial={{
                             x: startPos.x - window.innerWidth / 2,
                             y: startPos.y - window.innerHeight / 2,
@@ -122,16 +122,11 @@ export const ZoomableDialogContent = ({
                                 damping: 18,
                             },
                         }}
-                        exit={{
-                            x: startPos.x - window.innerWidth / 2,
-                            y: startPos.y - window.innerHeight / 2,
-                            scale: 0.4,
-                            opacity: 0,
-                        }}
                         onClick={(e) => e.stopPropagation()}
                     >
                         {children}
                     </motion.div>
+
                 </motion.div>
             )}
         </AnimatePresence>,
