@@ -11,12 +11,14 @@ interface FormCheckboxProps {
   defaultValue?: boolean | string | string[];
   className?: string;
   label?: string;
+  disabled?: boolean;
   rules?: FieldRules;
 }
 
 const FormCheckbox: React.FC<FormCheckboxProps> = ({
   name,
   label,
+  disabled,
   className = "",
   ...props
 }) => {
@@ -35,6 +37,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
       <Checkbox
         id={name}
         checked={!!value}
+        disabled={disabled}
         onCheckedChange={(checked) => setValue(checked)}
         className="bg-primary/30 backdrop-blur-sm  border-primary/80  font-bold cursor-pointer 
                    data-[state=checked]:text-white text-primary rounded-lg size-8"

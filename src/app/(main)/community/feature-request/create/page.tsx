@@ -9,9 +9,10 @@ export default function page() {
         <div className="flex-1 flex flex-col relative">
             <div className="flex-1">
 
-                <Container className="max-w-4xl h-full">
-                    <p className="text-primary text-[3rem] text-bold p-0 m-0">Create a Feature Request</p>
-                    <p className="text-muted-foreground p-0 m-0">Help us to continue to improve YourUniverse by submitting your Feature Request</p>
+                <Container className="max-w-4xl h-full py-6">
+                    
+                    <p className="text-primary text-3xl text-bold p-0 m-0">Create a Feature Request or Submit a Bug Report</p>
+                    <p className="text-muted-foreground text-sm p-0 m-0">Help us to continue to improve YourUniverse by submitting your Feature Request</p>
                     <FeatureForm />
                 </Container>
             </div>

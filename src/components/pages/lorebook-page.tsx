@@ -52,8 +52,11 @@ const LorebookPage = () => {
                                             <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
-                                                    <DropdownMenuItem>Public Lorebooks</DropdownMenuItem>
+                                                 <DropdownMenuItem>ALl Lorebooks</DropdownMenuItem>
+                                                                         <DropdownMenuItem>Public Lorebooks</DropdownMenuItem>
+                                                                         <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
+                                                                         <DropdownMenuItem>Private Lorebooks</DropdownMenuItem>
+                                                                         <DropdownMenuItem>Favourite Lorebooks</DropdownMenuItem>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>
@@ -142,8 +145,8 @@ const LorebookPage = () => {
                 <TabsList className="w-full">
                     <TabsTrigger value="all">All </TabsTrigger>
                     <TabsTrigger value="public">Public </TabsTrigger>
-                    <TabsTrigger value="private">Private </TabsTrigger>
                     <TabsTrigger value="saved">Saved </TabsTrigger>
+                    <TabsTrigger value="private">Private </TabsTrigger>
                     <TabsTrigger value="favourite">Favourites </TabsTrigger>
 
                 </TabsList>

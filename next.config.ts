@@ -1,7 +1,7 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    domains: ["github.com", "avatars.githubusercontent.com"], 
   },
 
   // Enable MDX using MDX-RS (native compiler)

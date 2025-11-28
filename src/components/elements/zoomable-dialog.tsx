@@ -1,7 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
+import { Slot } from "@radix-ui/react-slot";
 
 interface ZoomableDialogContextProps {
     open: boolean;
@@ -23,29 +25,44 @@ export const ZoomableDialog = ({ children }: { children: React.ReactNode }) => {
     );
 };
 
-export const ZoomableDialogTrigger = ({ children }: { children: React.ReactNode }) => {
+export const ZoomableDialogTrigger = ({
+    children,
+    asChild = false,
+}: {
+    children: React.ReactNode;
+    asChild?: boolean;
+}) => {
     const ctx = useContext(ZoomableDialogContext);
     if (!ctx) throw new Error("ZoomableDialogTrigger must be inside ZoomableDialog");
 
     const { setOpen, setStartPos } = ctx;
 
-    const handleClick = (e: React.MouseEvent) => {
-        const rect = (e.target as HTMLElement).getBoundingClientRect();
-        setStartPos({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    const Comp = asChild ? Slot : "div";
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        setStartPos({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+        });
+
         setOpen(true);
     };
 
-    return <div onClick={handleClick}>{children}</div>;
+    return (
+        <Comp onClick={handleClick}>
+            {children}
+        </Comp>
+    );
 };
 
 export const ZoomableDialogContent = ({
     children,
-    draggable = true,
     className = "",
     closeOnOutsideClick = true,
 }: {
     children: React.ReactNode;
-    draggable?: boolean;
     className?: string;
     closeOnOutsideClick?: boolean;
 }) => {
@@ -53,21 +70,41 @@ export const ZoomableDialogContent = ({
     if (!ctx) throw new Error("ZoomableDialogContent must be inside ZoomableDialog");
 
     const { open, setOpen, startPos } = ctx;
+    const portalRef = useRef<HTMLElement | null>(null);
 
-    const handleClose = () => closeOnOutsideClick && setOpen(false);
+    useEffect(() => {
+        portalRef.current = document.getElementById("zoom-dialog-root") as HTMLElement;
+        if (!portalRef.current) {
+            const el = document.createElement("div");
+            el.id = "zoom-dialog-root";
+            document.body.appendChild(el);
+            portalRef.current = el;
+        }
+    }, []);
 
-    return (
+    // ESC close
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === "Escape") setOpen(false);
+        };
+        window.addEventListener("keydown", handleEsc);
+        return () => window.removeEventListener("keydown", handleEsc);
+    }, [setOpen]);
+
+    if (!portalRef.current) return null;
+
+    return createPortal(
         <AnimatePresence>
             {open && startPos && (
                 <motion.div
-                    className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+                    className="fixed inset-0 backdrop-blur-md flex items-center justify-center z-[9999]"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    onClick={handleClose}
+                    onClick={() => closeOnOutsideClick && setOpen(false)}
                 >
                     <motion.div
-                        className={`p-6 backdrop-blur-lg ${className}`}
+                        className={`relative rounded-xl shadow-2xl p-5 h-full max-h-[90vh] overflow-y-auto ${className}`}
                         initial={{
                             x: startPos.x - window.innerWidth / 2,
                             y: startPos.y - window.innerHeight / 2,
@@ -79,7 +116,11 @@ export const ZoomableDialogContent = ({
                             y: 0,
                             scale: 1,
                             opacity: 1,
-                            transition: { type: "spring", stiffness: 160, damping: 22 },
+                            transition: {
+                                type: "spring",
+                                stiffness: 140,
+                                damping: 18,
+                            },
                         }}
                         exit={{
                             x: startPos.x - window.innerWidth / 2,
@@ -87,19 +128,13 @@ export const ZoomableDialogContent = ({
                             scale: 0.4,
                             opacity: 0,
                         }}
-                        drag={draggable}
-                        dragMomentum={false}
                         onClick={(e) => e.stopPropagation()}
-                        style={{
-                            maxWidth: "90%",
-                            maxHeight: "90%",
-                            overflow: "auto",
-                        }}
                     >
                         {children}
                     </motion.div>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        portalRef.current
     );
 };

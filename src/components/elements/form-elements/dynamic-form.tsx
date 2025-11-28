@@ -14,6 +14,7 @@ interface DynamicFormProps {
     initialValues?: Record<string, any>;
     onSubmit: (values: any) => void;
     children?: React.ReactNode;
+    button?:boolean
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({
@@ -21,6 +22,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
     initialValues,
     onSubmit,
     children,
+    button=true
 }) => {
     const validationSchema = buildZodSchema(schema);
     const defaultValues = buildInitialValues(schema);
@@ -60,13 +62,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({
                             )}
                         </div>
 
-                        <div className="col-span-12 flex justify-end">
+                        {button && <div className="col-span-12 flex justify-end">
                             <Button
                                 type="submit"
                             >
-                                Submit
+                                Save
                             </Button>
-                        </div>
+                        </div>}
                     </Form>
                 )
             }

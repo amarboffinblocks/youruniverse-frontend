@@ -1,20 +1,30 @@
 "use client";
 
-import { ChevronRight, Edit3, FolderPlus, Menu, Save, Trash2, XCircle } from "lucide-react";
-import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Input } from "../ui/input";
 import React, { useState } from "react";
 import Link from "next/link";
+import {
+    ChevronRight,
+    Edit3,
+    FolderPlus,
+    Menu,
+    Save,
+    Trash2,
+    XCircle,
+} from "lucide-react";
+
+import { Button } from "../ui/button";
+import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
+
+import {
+    NavigationMenu,
+    NavigationMenuList,
+    NavigationMenuItem,
+    NavigationMenuTrigger,
+    NavigationMenuContent,
+    NavigationMenuLink,
+} from "@/components/ui/navigation-menu";
+import { Card } from "../ui/card";
 
 const chatFolders = [
     {
@@ -26,6 +36,7 @@ const chatFolders = [
             { id: "chat_002", name: "API Integration Notes", date: "2025-11-11" },
         ],
     },
+
     {
         id: "folder_002",
         name: "Personal Ideas",
@@ -35,6 +46,7 @@ const chatFolders = [
             { id: "chat_004", name: "UI Theme Exploration", date: "2025-11-09" },
         ],
     },
+
     {
         id: "folder_003",
         name: "Bug Reports",
@@ -55,136 +67,150 @@ const ChatHistoryDropdown = () => {
     };
 
     return (
-        <div className="border rounded-2xl border-primary bg-primary/30 backdrop-blur-sm w-full p-4">
+        <div className="border min-w-[250px] rounded-2xl border-primary bg-primary/30 backdrop-blur-sm w-full p-4">
             <div className="space-y-1">
-                {/* Search Bar */}
-                <div className="flex gap-x-2 items-center" >
+                <div className="flex gap-x-2 items-center">
                     <Input
                         type="text"
                         placeholder="Search"
                         className="rounded-xl !bg-transparent w-full"
                     />
-                    <DropdownMenu
 
-                    >
-                        <DropdownMenuTrigger asChild  >
-                            <Button
-                                size="icon"
-                                className="rounded-xl "
-                            >
-                                <Menu className="h-5 w-5" />
-                            </Button>
-                        </DropdownMenuTrigger>
+                    {/* MAIN MENU BUTTON */}
+                    <NavigationMenu delayDuration={999999}>
+                        <NavigationMenuList>
+                            <NavigationMenuItem className="">
+                                <NavigationMenuTrigger className="!p-0 !bg-transparent rounded-xl">
+                                    <Button className="rounded-xl">
+                                        <Menu className="h-5 w-5" />
+                                    </Button>
+                                </NavigationMenuTrigger>
 
-                        <DropdownMenuContent
-                            className="w-64 rounded-xl p-1 shadow-lg"
-                            align="end"
-                            sideOffset={6}
-                            onPointerDown={(e) => e.preventDefault()}
-                            onClick={(e) => e.preventDefault()}
-                        >
-                            <DropdownMenuLabel className="px-3 py-1.5 text-sm font-semibold text-muted-foreground">
-                                Chat Options
-                            </DropdownMenuLabel>
-                            <DropdownMenuSeparator className="bg-primary" />
+                                <NavigationMenuContent className="h-fit absolute bg-primary/30 border-primary left-50 whitespace-nowrap backdrop-blur-3xl ">
+                                    <Card className="  border w-fit rounded-2xl border-primary text-muted-foreground  p-1">
 
-                            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                                <Save className="w-4 h-4 " />
-                                <span>Save Current Chat</span>
-                            </DropdownMenuItem>
+                                        <div className="px-3 py-1.5 text-sm font-semibold text-muted-foreground">
+                                            Chat Menu
+                                        </div>
 
-                            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                                <FolderPlus className="w-4 h-4 " />
-                                <span>Create Chat Folder</span>
-                            </DropdownMenuItem>
+                                        <div className="border-t border-primary mt-1" />
 
-                            <DropdownMenuItem className="flex items-center gap-2 cursor-pointer">
-                                <Edit3 className="w-4 h-4 " />
-                                <span>Rename Selected Chat or Folder</span>
-                            </DropdownMenuItem>
+                                        <div className="flex flex-col text-white gap-2 p-2">
+                                            <button className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-primary">
+                                                <Save className="w-4 h-4" />
+                                                <span>Save Current Chat</span>
+                                            </button>
 
-                            <DropdownMenuSeparator className="bg-primary" />
+                                            <button className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-primary">
+                                                <FolderPlus className="w-4 h-4" />
+                                                <span>Create Chat Folder</span>
+                                            </button>
 
-                            <DropdownMenuItem variant="destructive" className="flex items-center gap-2 text-destructive cursor-pointer">
-                                <Trash2 className="w-4 h-4" />
-                                <span>Delete Current Chat</span>
-                            </DropdownMenuItem>
+                                            <button className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-primary">
+                                                <Edit3 className="w-4 h-4" />
+                                                <span>Rename Selected Chat or Folder</span>
+                                            </button>
 
-                            <DropdownMenuItem variant="destructive" className="flex items-center gap-2 text-destructive cursor-pointer">
-                                <XCircle className="w-4 h-4" />
-                                <span>Delete Selected Chats & Folders</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                                            <div className="border-t border-primary" />
 
+                                            <button className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-primary text-destructive">
+                                                <Trash2 className="w-4 h-4" />
+                                                <span>Delete Current Chat</span>
+                                            </button>
+
+                                            <button className="flex items-center gap-2 rounded-md px-2 py-2 hover:bg-primary text-destructive">
+                                                <XCircle className="w-4 h-4" />
+                                                <span>Delete Selected Chats & Folders</span>
+                                            </button>
+                                        </div>
+                                    </Card>
+
+                                </NavigationMenuContent>
+
+                            </NavigationMenuItem>
+                        </NavigationMenuList>
+                    </NavigationMenu>
                 </div>
 
-                {/* Folder List */}
                 <div className="mt-4">
                     <h2 className="text-white">Folders</h2>
                 </div>
-                <div className=" border border-primary rounded-xl">
-                    {chatFolders.map((folder) => (
-                        <div
-                            key={folder.id}
-                            className="flex items-center gap-2 w-full border-b border-primary last:border-none py-2 px-4 hover:bg-primary/20 cursor-pointer"
-                        >
-                            {/* Folder checkbox */}
-                            <Checkbox
-                                id={`folder-${folder.id}`}
-                                className="bg-black/30 border-primary data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
-                            />
 
-                            {/* Dropdown per folder */}
-                            <DropdownMenu
-                                open={openFolder === folder.id}
-                                modal={false}
-                                onOpenChange={(isOpen) =>
-                                    setOpenFolder(isOpen ? folder.id : null)
+                {/* FOLDER LIST */}
+                <div className="relative border border-primary text-white rounded-xl">
+                    {chatFolders.map((folder) => {
+                        const isOpen = openFolder === folder.id;
+
+                        return (
+                            <div
+                                key={folder.id}
+                                className="relative flex items-center gap-2 w-full border-b border-primary last:border-none py-2 px-4 hover:bg-primary/20 cursor-pointer"
+                                onClick={() =>
+                                    setOpenFolder((prev) => (prev === folder.id ? null : folder.id))
                                 }
                             >
-                                <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center justify-between w-full text-start text-white group ">
-                                        <span className="flex-1 whitespace-nowrap">{folder.name}</span>
-                                        <ChevronRight
-                                            className={`ml-2 h-4 w-4 transition-transform duration-300 ${openFolder === folder.id ? "rotate-90" : ""
-                                                }`}
-                                        />
-                                    </button>
-                                </DropdownMenuTrigger>
+                                {/* Folder Checkbox */}
+                                <Checkbox
+                                    id={`folder-${folder.id}`}
+                                    className="bg-black/30 border-primary data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
+                                />
 
-                                <DropdownMenuContent
-                                    className="w-72"
-                                    side="right"
-                                    align="start"
-                                    sideOffset={4}
-                                    onCloseAutoFocus={(e) => e.preventDefault()}
-                                >
-                                    <DropdownMenuGroup className="p-2 space-y-1">
-                                        {folder.chats.map((chat) => (
-                                            <DropdownMenuItem
-                                                key={chat.id}
-                                                onPointerDown={(e) => e.preventDefault()}
-                                                onClick={(e) => e.preventDefault()}
-                                                className="flex items-center border border-primary cursor-pointer gap-2 rounded-xl py-0 px-3 hover:bg-primary/20 focus:bg-primary/20"
-                                            >
-                                                <Checkbox
-                                                    id={`chat-${chat.id}`}
-                                                    checked={!!checked[chat.id]}
-                                                    onCheckedChange={() => toggleChecked(chat.id)}
-                                                    className="bg-black/30 border-primary data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
-                                                />
-                                                <Link href={`/chat/${chat.id}`} className="flex-1 flex items-center py-2 h-full">
-                                                    <span className="flex-1 text-left" onPointerDown={(e) => e.stopPropagation()}>{chat.name}</span>
-                                                </Link>
-                                            </DropdownMenuItem>
-                                        ))}
-                                    </DropdownMenuGroup>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
-                    ))}
+                                {/* Folder Name */}
+                                <span className="flex-1 whitespace-nowrap">{folder.name}</span>
+
+                                {/* Arrow */}
+                                <ChevronRight
+                                    className={`ml-2 h-4 w-4 transition-transform duration-300 ${isOpen ? "rotate-90" : ""
+                                        }`}
+                                />
+
+                                {/* RIGHT-SIDE POP OUT PANEL */}
+                                {isOpen && (
+                                    <div
+                                        className="
+                                            absolute top-0 left-full ml-6 
+                                            w-72 max-h-[300px] 
+                                            overflow-y-auto
+                                            rounded-xl border border-primary 
+                                            bg-primary/30 backdrop-blur-xl 
+                                            shadow-xl p-2 
+                                            z-20
+                                            animate-in fade-in slide-in-from-left-4 duration-300
+                                        "
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
+                                        <div className="space-y-2">
+                                            {folder.chats.map((chat) => (
+                                                <div
+                                                    key={chat.id}
+                                                    className="flex items-center gap-2 border border-primary rounded-xl py-1 px-3 hover:bg-primary/20"
+                                                >
+                                                    {/* Chat Checkbox */}
+                                                    <Checkbox
+                                                        id={`chat-${chat.id}`}
+                                                        checked={!!checked[chat.id]}
+                                                        onCheckedChange={() => toggleChecked(chat.id)}
+                                                        className="bg-black/30 border-primary data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
+                                                    />
+
+                                                    {/* Link */}
+                                                    <Link
+                                                        href={`/chat/${chat.id}`}
+                                                        className="flex-1 py-1 text-white"
+                                                    >
+                                                        {chat.name}
+                                                    </Link>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
                 </div>
+
+
             </div>
         </div>
     );

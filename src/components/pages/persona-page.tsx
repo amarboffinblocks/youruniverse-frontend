@@ -88,11 +88,11 @@ const PersonaPage = () => {
                                             <DropdownMenuSubTrigger>Set Default View</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                    <DropdownMenuItem>Saved Personas</DropdownMenuItem>
+                                                    <DropdownMenuItem>ALl Personas</DropdownMenuItem>
                                                     <DropdownMenuItem>Public Personas</DropdownMenuItem>
-                                                    <Link href={"/folders"}>
-                                                        <DropdownMenuItem>Folders</DropdownMenuItem>
-                                                    </Link>
+                                                    <DropdownMenuItem>Saved Personas</DropdownMenuItem>
+                                                    <DropdownMenuItem>Private Personas</DropdownMenuItem>
+                                                    <DropdownMenuItem>Favourite Personas</DropdownMenuItem>
                                                 </DropdownMenuSubContent>
                                             </DropdownMenuPortal>
                                         </DropdownMenuSub>

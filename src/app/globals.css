@@ -375,7 +375,7 @@ body {
 @layer utilities {
   .active-neon {
     @apply text-white transition-[filter] duration-500;
-    animation: neonTwinkle 2.2s ease-in-out infinite !important;
+  animation: neonTwinkle 1.2s ease-in-out 0s 3 forwards !important;
     filter: drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.1rem #552efb) drop-shadow(0 0 0.5rem #552efb) drop-shadow(0 0 1.4rem #552efb) drop-shadow(0 0 6rem #552efb) !important;
 
   }

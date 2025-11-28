@@ -191,7 +191,7 @@ export const characterSchema: FormData[] = [
         type: "textarea",
         label: "Example Dialogue",
         required: true,
-        placeholder: "Example Dialogues helps the model to speak and act as your character, scenario, world, universe would. PLEASE NOTE, each Example Dialogue will start with <START>, then on the next line the dialogue. Multiple Example Dialogues can be added.",
+        placeholder: "Example Dialogues helps the model to speak and act as your character, scenario, world or universe would. PLEASE NOTE, each Example Dialogue will start with <START>, then on the next line the dialogue. Multiple Example Dialogues can be added.",
         cols: 12,
         row: 4,
         rows: "3",

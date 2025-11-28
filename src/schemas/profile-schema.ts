@@ -81,6 +81,55 @@ export const profileSchema: FormData[] = [
         rows: "3",
 
     },
+ {
+    name: "fontStyle",
+    type: "select",
+    required: true,
+    placeholder: "Font Style",
+    cols: 4,
+    row: 4,
+    rules: {
+        options: [
+            { label: "Serif", value: "serif" },
+            { label: "Sans Serif", value: "sans-serif" },
+            { label: "Monospace", value: "monospace" },
+        ],
+    },
+    rows: "3",
+},
+{
+    name: "fontSize",
+    type: "select",
+    required: true,
+    placeholder: "Font Size",
+    cols: 4,
+    row: 4,
+    rules: {
+        options: [
+            { label: "Small (12px)", value: "12" },
+            { label: "Medium (16px)", value: "16" },
+            { label: "Large (20px)", value: "20" },
+        ],
+    },
+    rows: "3",
+},
+{
+    name: "language",
+    type: "select",
+    required: true,
+    placeholder: "Language",
+    cols: 4,
+    row: 4,
+    rules: {
+        options: [
+            { label: "English", value: "en" },
+            { label: "Hindi", value: "hi" },
+            { label: "Spanish", value: "es" },
+        ],
+    },
+    rows: "3",
+},
+    
     {
         name: "tags",
         type: "multi-select",

@@ -29,7 +29,7 @@ const Favourite: React.FC<FavouriteProps> = ({
             className={cn(
                 "cursor-pointer  ",
                 activeState
-                    ? "stroke-red-500 fill-red-500"
+                    ? "stroke-red-500 fill-red-500 stroke-0"
                     : " stroke-1 stroke-primary fill-gray-900 hover:fill-primary/20",
                 className
             )}

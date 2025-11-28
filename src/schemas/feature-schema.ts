@@ -60,6 +60,22 @@ export const FeatureSchema: FormData[] = [
         { label: "Web", value: "web" },
         { label: "Mobile", value: "mobile" },
         { label: "Desktop", value: "desktop" },
+      ],
+    },
+    cols: 6,
+    row: 4,
+  },
+  {
+    name: "platform",
+    type: "select",
+    label: "Operating System",
+    required: true,
+    placeholder: "Select target OS",
+    rules: {
+      options: [
+        { label: "Web", value: "web" },
+        { label: "Mobile", value: "mobile" },
+        { label: "Desktop", value: "desktop" },
         { label: "API", value: "api" },
       ],
     },

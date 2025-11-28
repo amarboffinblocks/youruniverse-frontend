@@ -48,9 +48,11 @@ const CharacterPage = () => {
                       <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          <DropdownMenuItem>Private Characters</DropdownMenuItem>
+                          <DropdownMenuItem>ALl Characters</DropdownMenuItem>
                           <DropdownMenuItem>Public Characters</DropdownMenuItem>
-                          <DropdownMenuItem>Public & Private Characters</DropdownMenuItem>
+                          <DropdownMenuItem>Saved Characters</DropdownMenuItem>
+                          <DropdownMenuItem>Private Characters</DropdownMenuItem>
+                          <DropdownMenuItem>Favourite Characters</DropdownMenuItem>
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
@@ -139,8 +141,8 @@ const CharacterPage = () => {
         <TabsList className="w-full">
           <TabsTrigger value="all">All </TabsTrigger>
           <TabsTrigger value="public">Public </TabsTrigger>
-          <TabsTrigger value="private">Private </TabsTrigger>
           <TabsTrigger value="saved">Saved </TabsTrigger>
+          <TabsTrigger value="private">Private </TabsTrigger>
           <TabsTrigger value="favourite">Favourites </TabsTrigger>
 
 
@@ -161,10 +163,10 @@ const CharacterPage = () => {
           <DataNotFound />
 
         </TabsContent>
-        <TabsContent value="private" >
+        <TabsContent value="saved" >
           <DataNotFound />
         </TabsContent>
-        <TabsContent value="saved" >
+        <TabsContent value="private" >
           <DataNotFound />
         </TabsContent>
         <TabsContent value="favourite" >

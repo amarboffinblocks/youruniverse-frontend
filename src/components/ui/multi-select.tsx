@@ -857,7 +857,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                         <Command>
                             {searchable && (
                                 <CommandInput
-                                    placeholder="Search options..."
+                                    placeholder="Begin typing to search..."
                                     onKeyDown={handleInputKeyDown}
                                     value={searchValue}
                                     onValueChange={setSearchValue}

@@ -130,10 +130,10 @@ const Header2 = () => {
                             >
                                 <NavigationMenuList className="">
                                     <NavigationMenuItem className="">
+                                        <ToolTipElement discription={item.title}>
 
-                                        {/* TRIGGER */}
-                                        {/* <ToolTipElement discription={item.title}> */}
-                                            <NavigationMenuTrigger className="!bg-transparent  items-center flex p-0 shadow-none">
+                                            {/* TRIGGER */}
+                                            <NavigationMenuTrigger className="!bg-transparent items-center flex p-0 shadow-none">
                                                 <Icon
                                                     className={cn(
                                                         "cursor-pointer transition-all duration-300 hover-neon",
@@ -142,7 +142,7 @@ const Header2 = () => {
                                                     )}
                                                 />
                                             </NavigationMenuTrigger>
-                                        {/* </ToolTipElement> */}
+                                        </ToolTipElement>
 
                                         {/* DROPDOWN CONTENT */}
                                         {item.dropdown && (
@@ -161,19 +161,19 @@ const Header2 = () => {
                                                             <li key={dIdx} className="py-1">
                                                                 <ToolTipElement discription={drop.title}>
 
-                                                                <NavigationMenuLink className="" asChild>
-                                                                    <Link href={drop.href || "#"} className=" ">
-                                                                        <DropIcon
-                                                                            className={cn(
-                                                                                "cursor-pointer transition-all hover-neon ",
-                                                                                "h-16 w-16",
-                                                                                dropActive &&
-                                                                                "active-neon"
-                                                                            )}
+                                                                    <NavigationMenuLink className="" asChild>
+                                                                        <Link href={drop.href || "#"} className=" ">
+                                                                            <DropIcon
+                                                                                className={cn(
+                                                                                    "cursor-pointer transition-all hover-neon ",
+                                                                                    "h-16 w-16",
+                                                                                    dropActive &&
+                                                                                    "active-neon"
+                                                                                )}
 
-                                                                        />
-                                                                    </Link>
-                                                                </NavigationMenuLink>
+                                                                            />
+                                                                        </Link>
+                                                                    </NavigationMenuLink>
                                                                 </ToolTipElement>
 
                                                             </li>
@@ -193,5 +193,5 @@ const Header2 = () => {
         </header>
     );
 };
- 
+
 export default Header2;

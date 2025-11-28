@@ -27,13 +27,15 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative", saved && "border-2 border-primary")}
         >
             <CardHeader className="p-0 m-0 relative">
-                <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
-                    <div className="flex items-center gap-2">
+                <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">
+                    <div className="flex flex-col items-center gap-1 justify-center">
                         <Checkbox
                             id="terms"
                             className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                         />
                         <Favourite active={false} />
+
+                        <Bookmark active={false} />
 
                     </div>
 
@@ -92,9 +94,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-                <div className="absolute bottom-3 right-3 z-10">
-                    <Bookmark active={false} />
-                </div>
+
 
             </CardHeader>
 
