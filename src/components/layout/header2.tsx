@@ -34,6 +34,7 @@ import {
 
 import { cn } from "@/lib/utils";
 import ChatHistoryDropdown from "../elements/chat-history-dropdown";
+import ToolTipElement from "../elements/tooltip-element";
 type SvgIcon = React.FC<React.SVGProps<SVGSVGElement>>;
 interface HeaderItem {
     icon: SvgIcon;
@@ -131,17 +132,17 @@ const Header2 = () => {
                                     <NavigationMenuItem className="">
 
                                         {/* TRIGGER */}
-                                        <NavigationMenuTrigger className="!bg-transparent  items-center flex p-0 shadow-none">
-
-                                            <Icon
-                                                className={cn(
-                                                    "cursor-pointer transition-all duration-300 hover-neon",
-                                                    item.iconClassName,
-                                                    active && "active-neon"
-                                                )}
-                                            />
-
-                                        </NavigationMenuTrigger>
+                                        {/* <ToolTipElement discription={item.title}> */}
+                                            <NavigationMenuTrigger className="!bg-transparent  items-center flex p-0 shadow-none">
+                                                <Icon
+                                                    className={cn(
+                                                        "cursor-pointer transition-all duration-300 hover-neon",
+                                                        item.iconClassName,
+                                                        active && "active-neon"
+                                                    )}
+                                                />
+                                            </NavigationMenuTrigger>
+                                        {/* </ToolTipElement> */}
 
                                         {/* DROPDOWN CONTENT */}
                                         {item.dropdown && (
@@ -158,6 +159,8 @@ const Header2 = () => {
 
                                                         return (
                                                             <li key={dIdx} className="py-1">
+                                                                <ToolTipElement discription={drop.title}>
+
                                                                 <NavigationMenuLink className="" asChild>
                                                                     <Link href={drop.href || "#"} className=" ">
                                                                         <DropIcon
@@ -171,6 +174,8 @@ const Header2 = () => {
                                                                         />
                                                                     </Link>
                                                                 </NavigationMenuLink>
+                                                                </ToolTipElement>
+
                                                             </li>
                                                         );
                                                     })}
@@ -188,5 +193,5 @@ const Header2 = () => {
         </header>
     );
 };
-
+ 
 export default Header2;

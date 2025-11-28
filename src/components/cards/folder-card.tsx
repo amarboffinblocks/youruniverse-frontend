@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "../ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import Favourite from "../icons/favourite";
 
 
 interface Character {
@@ -36,16 +37,17 @@ const FolderCard: React.FC<FolderCardProps> = ({
         <div {...props} className="rounded-4xl">
             <Card className="p-4 relative rounded-none rounded-b-3xl h-auto rounded-tr-3xl border-t-8 border-t-primary bg-primary/30 space-y-3">
                 {/* Folder type label */}
-                <span className="absolute flex items-center gap-2 bg-primary -left-[1px] -top-8 w-fit rounded-tl-3xl rounded-tr-3xl px-4 py-1.5 text-sm">
+                <div className="absolute flex items-center gap-2 bg-primary -left-[1px] -top-8 w-fit rounded-tl-3xl rounded-tr-3xl px-4 py-1.5 text-sm">
                      <Checkbox
                     id="terms"
                     className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
                 />
                     <span className="w-[100px]"></span>
-                </span>
+                </div>
 
                 {/* Folder Name & Tags */}
                 <div className="space-y-1">
+                     <Favourite className="absolute top-2 right-3" active={false} />
                     <h2 className="text-lg text-white/80">{folder.name}</h2>
                     <div className="flex gap-2 flex-wrap">
                         {folder.tags.map((tag: string, idx: number) => (
