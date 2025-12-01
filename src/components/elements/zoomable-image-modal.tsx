@@ -70,11 +70,11 @@ export const ZoomableImageModalContent = ({
     <AnimatePresence>
       {open && startPos && (
         <motion.div
-          className="fixed inset-0 z-[9999] pointer-events-none "
+          className="fixed inset-0 z-[9999] pointer-events-none  "
         >
           {/* Wrapper for image + close button */}
           <motion.div
-            className="absolute"
+            className="absolute "
             style={{ width: width, height: height }}
             initial={{
               x: startPos.x - width / 2,

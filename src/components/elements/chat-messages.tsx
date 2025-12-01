@@ -34,7 +34,6 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { ZoomableDialog, ZoomableDialogContent, ZoomableDialogTrigger } from './zoomable-dialog';
 import DynamicForm from './form-elements/dynamic-form';
-import { characterPreviewSchema } from '@/schemas/character-preview-schema';
 import { personaPreviewSchema } from '@/schemas/persona-preview-schema';
 
 export type MessagePart = {
@@ -206,26 +205,6 @@ const CommonActions = ({ onCopy, onDelete }: { onCopy: () => void; onDelete: () 
     </>
 );
 
-// const InfoDropdown = ({ items }: { items: { label: string }[] }) => (
-//     <DropdownMenu>
-//         <DropdownMenuTrigger asChild>
-//             <Button
-//                 type="button"
-//                 size="icon"
-//                 className="size-7 p-1.5 bg-primary/30 backdrop-blur-3xl rounded-lg"
-//             >
-//                 <Info className="size-3" />
-//             </Button>
-//         </DropdownMenuTrigger>
-//         <DropdownMenuContent className="w-56" align="start">
-//             {items.map((item, index) => (
-//                 <DropdownMenuItem key={index}>
-//                     {item.label}
-//                 </DropdownMenuItem>
-//             ))}
-//         </DropdownMenuContent>
-//     </DropdownMenu>
-// );
 
 const MoreDropdown = ({ items }: { items: { label: string }[] }) => (
     <DropdownMenu>
@@ -250,8 +229,7 @@ const MoreDropdown = ({ items }: { items: { label: string }[] }) => (
 
 
 
-const ChatMessages: React.FC<ChatMessagesProps> = () => {
-    // Memoize the last messages to avoid recalculating on every render
+const ChatMessages: React.FC<ChatMessagesProps> = ({ setPreviewModel }) => {
     const { lastUserMsg, lastAssistantMsg } = useMemo(() => {
         const reversedMessages = [...dummyMessages].reverse();
         return {
@@ -284,7 +262,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
 
     const renderUserActions = (message: ChatMessage, text: string, index: number) => {
         const isLastUserMessage = lastUserMsg?.id === message.id;
-   console.log(index)
+        console.log(index)
         return (
             <Actions className="float-end">
                 <CommonActions
@@ -322,22 +300,22 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
                                     </ZoomableDialogTrigger>
 
                                     <ZoomableDialogContent className='!max-w-4xl'>
-                                            <DynamicForm
-                                                button={false}
-                                                schema={personaPreviewSchema}
-                                                onSubmit={(values) => {
-                                                    console.log("Form Submitted:", values);
-                                                }}
-                                                initialValues={{
+                                        <DynamicForm
+                                            button={false}
+                                            schema={personaPreviewSchema}
+                                            onSubmit={(values) => {
+                                                console.log("Form Submitted:", values);
+                                            }}
+                                            initialValues={{
 
-                                                    name: "Luna AI",
-                                                    tags: ["ai", "assistant", "friendly"],
-                                                    lorebook: "luna-ai",
-                                                    details:
-                                                        "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
+                                                name: "Luna AI",
+                                                tags: ["ai", "assistant", "friendly"],
+                                                lorebook: "luna-ai",
+                                                details:
+                                                    "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
 
-                                                }}
-                                            />
+                                            }}
+                                        />
                                     </ZoomableDialogContent>
                                 </ZoomableDialog>
                             </DropdownMenuContent>
@@ -385,51 +363,12 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
                                 <DropdownMenuItem>Character Notes</DropdownMenuItem>
 
 
-                                <ZoomableDialog >
-                                    <ZoomableDialogTrigger asChild>
-                                        <DropdownMenuItem
-                                            onSelect={(e) => e.preventDefault()}
-                                        >
-                                            Character Preview
-                                        </DropdownMenuItem>
-                                    </ZoomableDialogTrigger>
+                                <DropdownMenuItem
+                                    onClick={() => setPreviewModel(true)}
+                                >
+                                    Character Preview
+                                </DropdownMenuItem>
 
-                                    <ZoomableDialogContent className='!max-w-4xl'>
-                                            <DynamicForm
-                                                button={false}
-                                                schema={characterPreviewSchema}
-                                                onSubmit={(values) => {
-                                                    console.log("Form Submitted:", values);
-                                                }}
-                                                initialValues={{
-                                                    characterName: "Luna AI",
-                                                    visiable: "private",
-                                                    rating: "SFW",
-                                                    linkToLorebook: "luna-ai",
-                                                    linkToPersona: "astro-bot",
-                                                    tags: ["ai", "assistant", "friendly"],
-                                                    description:
-                                                        "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
-                                                    scenario:
-                                                        "You are chatting with Luna AI in a cozy futuristic workspace.",
-                                                    personalitySummary:
-                                                        "Curious, kind, and intelligent with a playful tone.",
-                                                    firstMessage:
-                                                        "Hello! I’m Luna. How can I brighten your day today?",
-                                                    alternateMessages: [
-                                                        "Hey there! How are you doing today?",
-                                                        "Hi! Ready to explore something fun?",
-                                                    ],
-                                                    exampleDialogue:
-                                                        "<START>\nUser: What's your favorite color?\nLuna: I’d say blue — calm and thoughtful, like a clear sky!",
-                                                    authorNotes:
-                                                        "Created for testing AI personality behavior and tone.",
-                                                    characterNotes:
-                                                        "Luna AI adapts tone and depth based on user engagement.",
-                                                }}
-                                            />
-                                    </ZoomableDialogContent>
-                                </ZoomableDialog>
                             </DropdownMenuContent>
                         </DropdownMenu>
 
@@ -449,38 +388,36 @@ const ChatMessages: React.FC<ChatMessagesProps> = () => {
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     }, []);
-    return (
-        <div className="flex flex-1 p-6 flex-col h-full relative ">
-            <Conversation className='h-full'>
-                <ConversationContent className='flex-1 overflow-auto' >
-                    {dummyMessages.map((message, index) => (
-                        <Fragment key={message.id}>
-                            {renderMessageHeader(message)}
-                            {message.parts.map((part, partIndex) => (
-                                <Fragment key={`${message.id}-${partIndex}`}>
-                                    {part.type === 'text' && (
-                                        <>
-                                            <Message from={message.role}>
-                                                <MessageContent>
-                                                    <Response>{part.text}</Response>
-                                                </MessageContent>
-                                            </Message>
-                                            {message.role === "user"
-                                                ? renderUserActions(message, part.text, index)
-                                                : renderAssistantActions(message, part.text, index)
-                                            }
-                                        </>
-                                    )}
-                                </Fragment>
-                            ))}
-                        </Fragment>
-                    ))}
-                    <div ref={bottomRef} />
-                </ConversationContent>
-                <ConversationScrollButton />
-            </Conversation>
 
-        </div>
+    return (
+        <Conversation className='flex flex-col flex-1 min-h-0 p-6 relative  '>
+            <ConversationContent className='flex-1  ' >
+                {dummyMessages.map((message, index) => (
+                    <Fragment key={message.id}>
+                        {renderMessageHeader(message)}
+                        {message.parts.map((part, partIndex) => (
+                            <Fragment key={`${message.id}-${partIndex}`}>
+                                {part.type === 'text' && (
+                                    <>
+                                        <Message from={message.role}>
+                                            <MessageContent>
+                                                <Response>{part.text}</Response>
+                                            </MessageContent>
+                                        </Message>
+                                        {message.role === "user"
+                                            ? renderUserActions(message, part.text, index)
+                                            : renderAssistantActions(message, part.text, index)
+                                        }
+                                    </>
+                                )}
+                            </Fragment>
+                        ))}
+                    </Fragment>
+                ))}
+                <div ref={bottomRef} />
+            </ConversationContent>
+            <ConversationScrollButton />
+        </Conversation>
     );
 };
 

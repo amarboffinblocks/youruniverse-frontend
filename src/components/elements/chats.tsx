@@ -8,13 +8,9 @@ interface Props {
 }
 const Chats: React.FC<Props> = ({ setPreviewModel = () => { } }) => {
     return (
-        <div className='flex h-full flex-1  relative '>
-            <div className='flex h-full flex-1 flex-col relative'>
-                <ChatMessages setPreviewModel={setPreviewModel} />
-                <ChatPanel />
-            </div>
-
-
+        <div className='flex h-full flex-1 flex-col relative  min-h-0 '>
+            <ChatMessages setPreviewModel={setPreviewModel} />
+            <ChatPanel />
         </div>
     )
 }
