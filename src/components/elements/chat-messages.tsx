@@ -32,9 +32,7 @@ import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, ArrowRightLeft
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
-import { ZoomableDialog, ZoomableDialogContent, ZoomableDialogTrigger } from './zoomable-dialog';
-import DynamicForm from './form-elements/dynamic-form';
-import { personaPreviewSchema } from '@/schemas/persona-preview-schema';
+
 
 export type MessagePart = {
     type: "text";
@@ -160,7 +158,7 @@ const dummyMessages: ChatMessages = [
 ];
 
 interface ChatMessagesProps {
-    setPreviewModel: (value: boolean) => void;
+    setActivePreview: (value: 'character' | 'persona' | null) => void;
 }
 
 const handleCopyText = (text: string) => {
@@ -229,7 +227,7 @@ const MoreDropdown = ({ items }: { items: { label: string }[] }) => (
 
 
 
-const ChatMessages: React.FC<ChatMessagesProps> = ({ setPreviewModel }) => {
+const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
     const { lastUserMsg, lastAssistantMsg } = useMemo(() => {
         const reversedMessages = [...dummyMessages].reverse();
         return {
@@ -289,35 +287,14 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setPreviewModel }) => {
                                 <DropdownMenuItem>Edit</DropdownMenuItem>
                                 <DropdownMenuItem>Impresonate</DropdownMenuItem>
 
+                                <DropdownMenuItem
+                                    onClick={() => setActivePreview('persona')}
 
-                                <ZoomableDialog >
-                                    <ZoomableDialogTrigger asChild>
-                                        <DropdownMenuItem
-                                            onSelect={(e) => e.preventDefault()}
-                                        >
-                                            Persona Preview
-                                        </DropdownMenuItem>
-                                    </ZoomableDialogTrigger>
+                                >
+                                    Persona Preview
+                                </DropdownMenuItem>
 
-                                    <ZoomableDialogContent className='!max-w-4xl'>
-                                        <DynamicForm
-                                            button={false}
-                                            schema={personaPreviewSchema}
-                                            onSubmit={(values) => {
-                                                console.log("Form Submitted:", values);
-                                            }}
-                                            initialValues={{
 
-                                                name: "Luna AI",
-                                                tags: ["ai", "assistant", "friendly"],
-                                                lorebook: "luna-ai",
-                                                details:
-                                                    "Luna AI is a friendly and adaptive conversational companion designed to assist users with creative and technical discussions.",
-
-                                            }}
-                                        />
-                                    </ZoomableDialogContent>
-                                </ZoomableDialog>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </>
@@ -364,7 +341,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setPreviewModel }) => {
 
 
                                 <DropdownMenuItem
-                                    onClick={() => setPreviewModel(true)}
+                                    onClick={() => setActivePreview('character')}
                                 >
                                     Character Preview
                                 </DropdownMenuItem>

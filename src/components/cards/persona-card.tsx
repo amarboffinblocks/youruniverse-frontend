@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, HeartPlus, Link2, MoreVertical, Save, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -33,8 +33,6 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                             id="terms"
                             className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                         />
-                        <Favourite active={false} />
-
                     </div>
                     <div className="flex items-center gap-1">
                         <DropdownMenu>
@@ -64,6 +62,12 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                                     <Upload className="w-4 h-4 mr-2 text-white" /> Export
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <HeartPlus className="w-4 h-4 mr-2 text-white" /> Favourite
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <Save className="w-4 h-4 mr-2 text-white" /> Save
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
                                 </DropdownMenuItem>
                                 {/* <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
@@ -83,10 +87,6 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                         CN
                     </AvatarFallback>
                 </Avatar>
-                <div className="absolute bottom-3 right-3 z-10">
-                    <Bookmark active={false} />
-                </div>
-
             </CardHeader>
 
             {/* Content */}

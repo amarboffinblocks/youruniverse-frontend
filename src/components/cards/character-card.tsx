@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {  FolderPlus, Link2, MoreVertical, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, HeartPlus, Link2, MoreVertical, Save, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -24,7 +24,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     return (
         <Card
             {...props}
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative", saved && "border-2 border-primary")}
+            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative")}
         >
             <CardHeader className="p-0 m-0 relative">
                 <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">
@@ -33,9 +33,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                             id="terms"
                             className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                         />
-                        <Favourite active={false} />
 
-                        <Bookmark active={false} />
 
                     </div>
 
@@ -72,6 +70,12 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Upload className="w-4 h-4 mr-2 text-white" /> Export
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <HeartPlus className="w-4 h-4 mr-2 text-white" /> Favourite
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <Save className="w-4 h-4 mr-2 text-white" /> Save
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
