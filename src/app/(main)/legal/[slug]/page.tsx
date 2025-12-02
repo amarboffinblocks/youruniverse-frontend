@@ -15,7 +15,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
   const { slug } = params;
 
   const filePath = path.join(process.cwd(), "src/content/legal", `${slug}.mdx`);
-  console.log("Loading MDX:", filePath);
 
   if (!fs.existsSync(filePath)) return notFound();
 

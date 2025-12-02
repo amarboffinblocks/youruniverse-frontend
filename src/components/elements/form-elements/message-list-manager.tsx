@@ -84,8 +84,6 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
       const oldIndex = messages.findIndex((_, index) => `message-${index}` === active.id);
       const newIndex = messages.findIndex((_, index) => `message-${index}` === over.id);
 
-      console.log("Drag event:", { active: active.id, over: over.id, oldIndex, newIndex });
-
       if (oldIndex !== -1 && newIndex !== -1) {
         const newMessages = arrayMove(messages, oldIndex, newIndex);
         setMessages(newMessages);

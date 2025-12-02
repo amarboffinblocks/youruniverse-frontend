@@ -1,21 +1,12 @@
 import { FormData } from "@/types/form-types";
 
 export const personaPreviewSchema: FormData[] = [
-    // {
-    //     name: "avatar",
-    //     type: "file",
-    //     required: true,
-    //     cols: 12,
-    //     row: 4,
-    //     rows: "3",
-    //     label:"Avatar"
-        
-    // },
+
     {
         name: "name",
         type: "text",
         label: "Persona Name",
-        required: true,
+        disabled: true,
         placeholder: "Enter the persona name",
         rules: {
             min: 4,
@@ -24,41 +15,32 @@ export const personaPreviewSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
-    
- {
+
+    {
         name: "tags",
-        type: "multi-select",
+        type: "text",
         label: "Persona Tags",
-        required: true,
         placeholder: "Single words that describe your persona",
-        rules: {
-            model: "tags"
-        },
         cols: 12,
         row: 4,
         rows: "3",
-        
+        disabled: true,
+
+
     },
-     {
+    {
         name: "lorebook",
-        type: "select",
-        required: true,
-        label:"Select Lorebook",
+        type: "text",
+        label: "Select Lorebook",
         placeholder: "Connect to Lorebook",
         cols: 12,
         row: 4,
-        rules: {
-            options: [
-                { label: "Luna AI", value: "luna-ai" },
-                { label: "Astro Bot", value: "astro-bot" },
-                { label: "Neo Guide", value: "neo-guide" },
-                { label: "Zara Mentor", value: "zara-mentor" },
-            ],
-        },
         rows: "3",
-        
+        disabled: true,
+
+
     },
     {
         name: "details",
@@ -66,14 +48,14 @@ export const personaPreviewSchema: FormData[] = [
         label: "Persona Details",
         placeholder: "Enter your Persona information here, or in other words, who would you like to be in Your Universe. The Character will use this to know more about you. ",
 
-        required: true,
         cols: 12,
         row: 4,
         rows: "3",
-        
+        disabled: true,
+
         tokens: true,
     },
 
-   
+
 
 ]

@@ -64,6 +64,7 @@ const Page = () => {
                                             "Created for testing AI personality behavior and tone.",
                                         characterNotes:
                                             "Luna AI adapts tone and depth based on user engagement.",
+                                        favourite: true
                                     }}
                                 />
                             </div>

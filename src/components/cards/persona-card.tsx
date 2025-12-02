@@ -8,11 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
-// import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
-import Favourite from "../icons/favourite";
-import Bookmark from "../icons/bookmark";
 
 interface PersonaCardProps {
     item?: number

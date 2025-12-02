@@ -30,7 +30,7 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
         case "multi-select":
             return <FormMultiSelect {...props} />
         case "file":
-            return <FormImageUpload {...props} />   
+            return <FormImageUpload {...props} />
         case "multiple-file":
             return <FormMultiFile {...props} />
         case "entries":
@@ -68,7 +68,6 @@ const colSpanClasses: Record<number, string> = {
 
 const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, required: _required, ...rest }) => {
     const colClass = colSpanClasses[cols] || "col-span-12";
-
     return (
         <div className={cn(colClass)}>
             <FieldRenderer {...rest} />

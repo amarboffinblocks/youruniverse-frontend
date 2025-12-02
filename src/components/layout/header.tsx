@@ -49,7 +49,6 @@ const Header: React.FC = () => {
     { id: "chat-003", title: "Character C", createdAt: "15-08-2005" },
   ];
 
-  console.log(openDropdown)
   const headerItems: HeaderItem[] = [
     {
       icon: Chat,

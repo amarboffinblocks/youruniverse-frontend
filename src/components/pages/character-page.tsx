@@ -153,7 +153,7 @@ const CharacterPage = () => {
             {
               [1, 2, 3, 4].map((item: number) => (
                 <Fragment key={item}>
-                  {item == 2 ? <CharacterCard key={item} saved={true} /> : <CharacterCard key={item} />}
+                  {item == 2 ? <CharacterCard key={item} /> : <CharacterCard key={item} />}
                 </Fragment>
               ))
             }

@@ -55,7 +55,6 @@ const FormImageUpload: React.FC<FormImageUploadProps> = ({
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        console.log("📁 File selected:", file);
 
         if (preview && preview.startsWith('blob:')) {
             URL.revokeObjectURL(preview);

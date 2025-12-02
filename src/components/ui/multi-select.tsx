@@ -26,6 +26,10 @@ import {
     CommandList,
     CommandSeparator,
 } from "@/components/ui/command";
+import {
+    ToggleGroup,
+    ToggleGroupItem,
+} from "@/components/ui/toggle-group"
 
 
 export interface AnimationConfig {
@@ -158,7 +162,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             maxCount = 3,
             modalPopover = false,
             className,
-            hideSelectAll = false,
+            hideSelectAll = true,
             searchable = true,
             emptyIndicator,
             autoSize = false,
@@ -950,6 +954,29 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
 
                                 {!hideSelectAll && !searchValue && (
                                     <CommandGroup>
+                                        <div className="py-2">
+                                            <ToggleGroup
+                                                type="single"
+                                                className="w-full h-8 !rounded-2xl overflow-hidden  "
+                                                defaultValue="sfw"
+                                            >
+                                                <ToggleGroupItem
+                                                    value="sfw"
+                                                    aria-label="sfw"
+                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
+                                                >
+                                                    SFW
+                                                </ToggleGroupItem>
+
+                                                <ToggleGroupItem
+                                                    value="nsfw"
+                                                    aria-label="nsfw"
+                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
+                                                >
+                                                    NSFW
+                                                </ToggleGroupItem>
+                                            </ToggleGroup>
+                                        </div>
                                         <CommandItem
                                             key="all"
                                             onSelect={toggleAll}
@@ -986,6 +1013,8 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                 {isGroupedOptions(filteredOptions) ? (
                                     filteredOptions.map((group) => (
                                         <CommandGroup key={group.heading} heading={group.heading}>
+
+
                                             {group.options.map((option) => {
                                                 const isSelected = selectedValues.includes(
                                                     option.value
@@ -1028,6 +1057,29 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                     ))
                                 ) : (
                                     <CommandGroup>
+                                        <div className="py-2">
+                                            <ToggleGroup
+                                                type="single"
+                                                className="w-full h-8 !rounded-2xl overflow-hidden  "
+                                                defaultValue="sfw"
+                                            >
+                                                <ToggleGroupItem
+                                                    value="sfw"
+                                                    aria-label="sfw"
+                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
+                                                >
+                                                    SFW
+                                                </ToggleGroupItem>
+
+                                                <ToggleGroupItem
+                                                    value="nsfw"
+                                                    aria-label="nsfw"
+                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
+                                                >
+                                                    NSFW
+                                                </ToggleGroupItem>
+                                            </ToggleGroup>
+                                        </div>
                                         {filteredOptions.map((option) => {
                                             const isSelected = selectedValues.includes(option.value);
                                             return (
@@ -1044,6 +1096,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                         option.disabled && "opacity-50 cursor-not-allowed"
                                                     )}
                                                     disabled={option.disabled}>
+
                                                     <div
                                                         className={cn(
                                                             "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border ",

@@ -10,16 +10,12 @@ import { cn } from "@/lib/utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
-import Favourite from "../icons/favourite";
-import Bookmark from "../icons/bookmark";
 
 interface CharacterCardProps {
     item?: number
-    saved?: boolean
 }
 
-const CharacterCard: React.FC<CharacterCardProps> = ({
-    saved, ...props
+const CharacterCard: React.FC<CharacterCardProps> = ({ ...props
 }) => {
     return (
         <Card
