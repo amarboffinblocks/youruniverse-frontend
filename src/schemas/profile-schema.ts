@@ -192,10 +192,10 @@ export const profileSchema: FormData[] = [
         row: 4,
         rules: {
             options: [
-                { label: "Basic (Free)", value: "basic" },
-                { label: "Pro (Monthly)", value: "pro-monthly" },
-                { label: "Pro (Yearly)", value: "pro-yearly" },
-                { label: "Enterprise", value: "enterprise" },
+                { label: "Adventurer (Free)", value: "adventurer" },
+                { label: "Explorer (Monthly)", value: "explorer" },
+                { label: "Voyager (Yearly)", value: "voyager" },
+                { label: "Pioneer", value: "pioneer" },
             ],
         },
         rows: "3",

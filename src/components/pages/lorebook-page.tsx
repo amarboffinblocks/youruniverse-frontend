@@ -22,6 +22,8 @@ import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
 import CharacterCard from '../cards/character-card';
 import Rating from '../elements/rating';
+import SearchField from '../elements/search-field';
+import { ToggleSwitch } from '../elements/toggle-switch';
 
 const LorebookPage = () => {
     const [page, setPage] = useState(1)
@@ -52,7 +54,7 @@ const LorebookPage = () => {
                                             <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                                             <DropdownMenuPortal>
                                                 <DropdownMenuSubContent>
-                                                 <DropdownMenuItem>ALl Lorebooks</DropdownMenuItem>
+                                                 <DropdownMenuItem>All Lorebooks</DropdownMenuItem>
                                                                          <DropdownMenuItem>Public Lorebooks</DropdownMenuItem>
                                                                          <DropdownMenuItem>Saved Lorebooks</DropdownMenuItem>
                                                                          <DropdownMenuItem>Private Lorebooks</DropdownMenuItem>
@@ -127,17 +129,18 @@ const LorebookPage = () => {
 
 
                     </div>
-                    <div className='flex items-center justify-center gap-6 w-full '>
-                        <div className='flex w-full  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full   pl-4 py-2 border-primary/70'>
-                            <Search className='text-muted' />
-                            <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Search for Lorebook by Tags`} />
-                        </div>
-                        <div className='flex w-full  items-center bg-primary/20 backdrop-blur-2xl   border rounded-full   pl-4 py-2 border-primary/70'>
-                            <Search className='text-muted' />
-                            <Input className='border-none bg-transparent backdrop-blur-none focus-visible:ring-0 focus-visible:border-none ' placeholder={`Tags to exclude from search`} />
-                        </div>
-
-                    </div>
+                   
+                     <div className='flex items-center justify-center gap-4 w-full '>
+                    <SearchField placeholder='Search for Lorebook by Tags' />
+                    <SearchField placeholder='Tags to exclude from search' />
+                    <ToggleSwitch
+                        options={[
+                            { label: "NSFW", value: "NSFW" },
+                            { label: "SFW", value: "SFW" },
+                        ]}
+                        defaultValue='SFW'
+                    />
+                </div>
 
                 </div>
             </div>

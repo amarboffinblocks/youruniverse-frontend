@@ -48,7 +48,7 @@ const CharacterPage = () => {
                       <DropdownMenuSubTrigger >Set Default View</DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
-                          <DropdownMenuItem>ALl Characters</DropdownMenuItem>
+                          <DropdownMenuItem>All Characters</DropdownMenuItem>
                           <DropdownMenuItem>Public Characters</DropdownMenuItem>
                           <DropdownMenuItem>Saved Characters</DropdownMenuItem>
                           <DropdownMenuItem>Private Characters</DropdownMenuItem>
@@ -99,9 +99,7 @@ const CharacterPage = () => {
                           <Link href={"/characters/create"} passHref>
                             <DropdownMenuItem>Create Character</DropdownMenuItem>
                           </Link>
-                          <Link href={"/folders/create"} passHref>
-                            <DropdownMenuItem>Create Folder</DropdownMenuItem>
-                          </Link>
+                        
                           <DropdownMenuItem>Import Character</DropdownMenuItem>
                           <DropdownMenuItem>Bulk Import Characters</DropdownMenuItem>
                         </DropdownMenuSubContent>

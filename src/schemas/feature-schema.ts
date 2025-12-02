@@ -66,7 +66,7 @@ export const FeatureSchema: FormData[] = [
     row: 4,
   },
   {
-    name: "platform",
+    name: "operating system",
     type: "select",
     label: "Operating System",
     required: true,
@@ -83,11 +83,11 @@ export const FeatureSchema: FormData[] = [
     row: 4,
   },
   {
-    name: "description",
+    name: "Feature Description or Description of Bug/Issue",
     type: "textarea",
-    label: "Feature Description",
+    label: "Feature ",
     required: true,
-    placeholder: "Please describe the feature you would like to add",
+    placeholder: "Please describe the feature you would like to add or the Bug you would like to report",
     cols: 12,
     row: 4,
     rows: "4",

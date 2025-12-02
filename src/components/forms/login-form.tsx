@@ -42,11 +42,11 @@ const LoginForm = () => {
                     <p className='text-sm text-muted'>Login in to Your Universe</p>
                 </div>
                 <div className=' space-y-2'>
-                    <Label htmlFor='username'>Email or Username *</Label>
+                    <Label htmlFor='username'>Email or Username </Label>
                     <Input placeholder=' Enter your Email or Username' />
                 </div>
                 <div className='space-y-2'>
-                    <Label htmlFor='password'>Password *</Label>
+                    <Label htmlFor='password'>Password </Label>
                     <PasswordField placeholder="Enter Your Password" />
                 </div>
                 <div>

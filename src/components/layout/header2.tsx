@@ -65,7 +65,7 @@ const Header2 = () => {
         },
         {
             icon: Models,
-            title: "All Models",
+            title: "Models",
             href: "/models",
             iconClassName: "h-24 w-24",
             dropdown: [

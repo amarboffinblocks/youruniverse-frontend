@@ -17,6 +17,7 @@ import { Button } from '../ui/button'
 import BackgroundCard from '../cards/background-card';
 import { PaginationComponent } from '../elements/pagination-element';
 import SearchField from '../elements/search-field'
+import { ToggleSwitch } from '../elements/toggle-switch'
 const BackgroundPage = () => {
     const [page, setPage] = useState(1)
 
@@ -49,7 +50,7 @@ const BackgroundPage = () => {
                                                 <DropdownMenuItem>Character</DropdownMenuItem>
                                                 <DropdownMenuItem>Persona</DropdownMenuItem>
                                                 <DropdownMenuItem>LoreBook</DropdownMenuItem>
-                                                <DropdownMenuItem>Folder</DropdownMenuItem>
+                                                <DropdownMenuItem>Realm</DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
@@ -81,10 +82,16 @@ const BackgroundPage = () => {
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-x-4'>
+                <div className='flex items-center justify-center gap-4 w-full '>
                     <SearchField placeholder='Search by background tag' />
                     <SearchField placeholder='Tags to exclude from search' />
-
+                    <ToggleSwitch
+                        options={[
+                            { label: "NSFW", value: "NSFW" },
+                            { label: "SFW", value: "SFW" },
+                        ]}
+                        defaultValue='SFW'
+                    />
                 </div>
 
             </div>

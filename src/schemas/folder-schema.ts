@@ -15,6 +15,28 @@
         row: 4,
         rows: "3",
     },
+        {
+        name: "rating",
+        type: "toggle",
+        required: true,
+        rules: {
+            options: [
+                { label: "NSFW", value: "NSFW" },
+                { label: "SFW", value: "SFW" },],
+        },
+        cols: 6,
+        row: 4,
+        defaultValue: "SFW",
+    },
+     {
+        name: "favourite",
+        type: "checkbox",
+        required: true,
+        label: 'Add To Favourites',
+        cols: 4,
+        row: 4,
+        // defaultValue: false,
+    },
 
         {
         name: "tags",

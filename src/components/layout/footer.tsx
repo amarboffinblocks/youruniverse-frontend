@@ -27,9 +27,9 @@ const Footer = () => {
           </AlertDialogTrigger>
           <AlertDialogContent className="border-primary bg-primary/30 backdrop-blur-sm ">
             <AlertDialogHeader>
-              <AlertDialogTitle className="text-white">Open Gmail?</AlertDialogTitle>
+              <AlertDialogTitle className="text-white">Open Preferred Email ?</AlertDialogTitle>
               <AlertDialogDescription>
-                Do you want to open Email to contact support?
+                Do you want to open your preferred email to contact YourUniverse.AI
               </AlertDialogDescription>
             </AlertDialogHeader>
             <div className="flex justify-end gap-2 mt-4">

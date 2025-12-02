@@ -26,6 +26,42 @@ export const personaSchema: FormData[] = [
         rows: "3",
         
     },
+       {
+        name: "visiable",
+        type: "toggle",
+        required: true,
+        rules: {
+            options: [
+                { label: "Public", value: "public" },
+                { label: "Private", value: "private" },],
+        },
+        cols: 4,
+        row: 4,
+        defaultValue: "private",
+    },
+
+    {
+        name: "rating",
+        type: "toggle",
+        required: true,
+        rules: {
+            options: [
+                { label: "NSFW", value: "NSFW" },
+                { label: "SFW", value: "SFW" },],
+        },
+        cols: 4,
+        row: 4,
+        defaultValue: "SFW",
+    },
+    {
+        name: "favourite",
+        type: "checkbox",
+        required: true,
+        label: 'Add To Favourites',
+        cols: 4,
+        row: 4,
+        // defaultValue: false,
+    },
     
  {
         name: "tags",

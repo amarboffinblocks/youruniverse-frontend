@@ -20,6 +20,7 @@ import Link from 'next/link'
 import SearchField from '../elements/search-field'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import DataNotFound from '../elements/data-not-found'
+import { ToggleSwitch } from '../elements/toggle-switch'
 interface Character {
     id: number;
     name: string;
@@ -202,11 +203,17 @@ const FolderPage = () => {
                         </DropdownMenu>
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-x-4'>
-                    <SearchField placeholder='Search by Realm or Character Tag' />
-                    <SearchField placeholder='Tags to exclude from search' />
-
-                </div>
+                   <div className='flex items-center justify-center gap-4 w-full '>
+                        <SearchField placeholder='Search by Realm or Character Tag' />
+                        <SearchField placeholder='Tags to exclude from search' />
+                        <ToggleSwitch
+                            options={[
+                                { label: "NSFW", value: "NSFW" },
+                                { label: "SFW", value: "SFW" },
+                            ]}
+                            defaultValue='SFW'
+                        />
+                    </div>
             </div>
             <Tabs defaultValue="all" className="mt-4 space-y-2 flex-1" >
                 <TabsList className="w-full">
