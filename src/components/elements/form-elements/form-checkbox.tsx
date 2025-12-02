@@ -33,7 +33,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   }, [props.defaultValue, setValue, value]);
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-end pt-1 gap-2 ${className}`}>
       <Checkbox
         id={name}
         checked={!!value}
@@ -45,7 +45,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
       {label && (
         <Label
           htmlFor={name}
-          className="text-white text-sm font-medium cursor-pointer select-none"
+          className="text-muted-foreground text-md font-medium cursor-pointer select-none"
         >
           {label}
         </Label>

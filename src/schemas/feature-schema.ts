@@ -83,9 +83,9 @@ export const FeatureSchema: FormData[] = [
     row: 4,
   },
   {
-    name: "Feature Description or Description of Bug/Issue",
+    label: "Feature Description or Description of Bug/Issue",
     type: "textarea",
-    label: "Feature ",
+    name: "Feature ",
     required: true,
     placeholder: "Please describe the feature you would like to add or the Bug you would like to report",
     cols: 12,

@@ -24,7 +24,7 @@
                 { label: "NSFW", value: "NSFW" },
                 { label: "SFW", value: "SFW" },],
         },
-        cols: 6,
+        cols: 3,
         row: 4,
         defaultValue: "SFW",
     },
