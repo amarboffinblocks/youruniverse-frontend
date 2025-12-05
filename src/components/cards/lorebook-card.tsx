@@ -32,7 +32,7 @@ const LorebookCard: React.FC = ({ ...props }) => {
                                 <Link2 className="w-4 h-4 mr-2" /> Link
                             </DropdownMenuItem>
                             <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <FolderPlus className="w-4 h-4 mr-2" /> Add to Folder
+                                <FolderPlus className="w-4 h-4 mr-2" /> Add to Realm
                             </DropdownMenuItem>
                             <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                 <Share2 className="w-4 h-4 mr-2" /> Share

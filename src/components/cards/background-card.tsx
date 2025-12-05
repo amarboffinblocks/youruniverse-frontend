@@ -54,7 +54,7 @@ const BackgroundCard: React.FC = ({ ...props }) => {
                             <Users className="w-4 h-4 mr-2" /> Link to Persona
                         </DropdownMenuItem>
                         <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                            <FolderSymlink className="w-4 h-4 mr-2" /> Link to Folder
+                            <FolderSymlink className="w-4 h-4 mr-2" /> Link to Realm
                         </DropdownMenuItem>
                         <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                             <Download className="w-4 h-4 mr-2" /> Download

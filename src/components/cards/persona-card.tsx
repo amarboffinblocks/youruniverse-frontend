@@ -50,7 +50,7 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                                     <Link2 className="w-4 h-4 mr-2 text-white" /> Link
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Folder
+                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to realm
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Share2 className="w-4 h-4 mr-2 text-white" /> Share

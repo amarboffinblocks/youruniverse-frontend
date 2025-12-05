@@ -67,7 +67,7 @@ const PersonaForm: React.FC<Props> = () => {
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                Link to Folder
+                Link to Realm
                 <DropdownMenuShortcut><Folder className="size-4" /></DropdownMenuShortcut>
               </DropdownMenuItem>
 
