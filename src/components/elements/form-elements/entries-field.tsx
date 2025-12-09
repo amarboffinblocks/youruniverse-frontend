@@ -28,7 +28,7 @@ const EntriesField = () => {
                 <Trash2 className='size-10' />
             </button>
               <div className=''>
-                <FormInputField label='Keywords or Terms' placeholder="Enter the keywords or Terms"  name='keyword' />
+                <FormInputField label='Please enter the Keyword or Term here. You can add multiple by separating them with a comma.' placeholder="Enter the keywords or Terms"  name='keyword' />
             </div>
             <FormTextarea name='context' placeholder='Enter a short description about the keyword or term here. Please keep in mind the shorter the better. ' label='Context' />
         </div>

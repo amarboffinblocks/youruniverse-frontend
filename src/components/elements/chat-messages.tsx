@@ -29,7 +29,7 @@ import {
 
 import { Response } from '@/components/ai-elements/response';
 import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, ArrowRightLeft } from 'lucide-react';
-import { Fragment, useEffect, useMemo, useRef } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 
@@ -157,6 +157,15 @@ const dummyMessages: ChatMessages = [
     },
 ];
 
+const alternateMessages = [
+    "Hey! What can I help you with today?",
+    "Hi there — how can I support you?",
+    "Hello! What would you like to do next?",
+    "Hi! Tell me what you need and I’ll assist.",
+    "Hey, how can I make things easier for you today?"
+];
+
+
 interface ChatMessagesProps {
     setActivePreview: (value: 'character' | 'persona' | null) => void;
 }
@@ -228,13 +237,32 @@ const MoreDropdown = ({ items }: { items: { label: string }[] }) => (
 
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
+    const [messages, setMessages] = useState<ChatMessages>(dummyMessages);
+    const [currentAlternateIndex, setCurrentAlternateIndex] = useState(0);
+
     const { lastUserMsg, lastAssistantMsg } = useMemo(() => {
-        const reversedMessages = [...dummyMessages].reverse();
+        const reversedMessages = [...messages].reverse();
         return {
             lastUserMsg: reversedMessages.find(m => m.role === "user"),
             lastAssistantMsg: reversedMessages.find(m => m.role === "assistant"),
         };
-    }, []);
+    }, [messages]);
+
+    const handleChangeFirstMessage = () => {
+        const nextIndex = (currentAlternateIndex + 1) % alternateMessages.length;
+        setCurrentAlternateIndex(nextIndex);
+
+        setMessages(prevMessages => {
+            const newMessages = [...prevMessages];
+            if (newMessages.length > 0 && newMessages[0].role === 'assistant') {
+                newMessages[0] = {
+                    ...newMessages[0],
+                    parts: [{ type: 'text', text: alternateMessages[nextIndex] }]
+                };
+            }
+            return newMessages;
+        });
+    };
 
     const renderMessageHeader = (message: ChatMessage) => {
         if (message.role !== "assistant") return null;
@@ -260,12 +288,11 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
 
     const renderUserActions = (message: ChatMessage, text: string, index: number) => {
         const isLastUserMessage = lastUserMsg?.id === message.id;
-        console.log(index)
         return (
             <Actions className="float-end">
                 <CommonActions
                     onCopy={() => handleCopyText(text)}
-                    onDelete={() => handleCopyText(text)} // TODO: Replace with actual delete handler
+                    onDelete={() => handleCopyText(text)}
                 />
                 {isLastUserMessage && (
                     <>
@@ -353,7 +380,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
                 )}
 
                 {isFirstMessage && (
-                    <Action label="change message">
+                    <Action label="change message" onClick={handleChangeFirstMessage}>
                         <ArrowRightLeft className="size-3" />
                     </Action>
                 )}
@@ -369,7 +396,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
     return (
         <Conversation className='flex flex-col flex-1 min-h-0 p-6 relative  '>
             <ConversationContent className='flex-1  ' >
-                {dummyMessages.map((message, index) => (
+                {messages.map((message, index) => (
                     <Fragment key={message.id}>
                         {renderMessageHeader(message)}
                         {message.parts.map((part, partIndex) => (

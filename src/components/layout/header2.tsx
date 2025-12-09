@@ -82,7 +82,7 @@ const Header2 = () => {
                 { icon: CharacterV1, title: "Characters", href: "/characters" },
                 { icon: PersonaV1, title: "Personas", href: "/personas" },
                 { icon: Lorebook, title: "Lorebook", href: "/lorebooks" },
-                { icon: Folders, title: "Realm", href: "/folders" },
+                { icon: Folders, title: "Realms", href: "/folders" },
             ],
         },
         {
