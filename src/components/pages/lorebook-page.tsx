@@ -24,6 +24,7 @@ import CharacterCard from '../cards/character-card';
 import Rating from '../elements/rating';
 import SearchField from '../elements/search-field';
 import { ToggleSwitch } from '../elements/toggle-switch';
+import PersonaCard from '../cards/persona-card';
 
 const LorebookPage = () => {
     const [page, setPage] = useState(1)
@@ -157,7 +158,7 @@ const LorebookPage = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                         {
                             [1, 2, 3, 4].map((item) => (
-                                <CharacterCard key={item} />
+                                <PersonaCard key={item} />
                             ))
                         }
                     </div>

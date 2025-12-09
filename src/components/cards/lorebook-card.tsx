@@ -50,9 +50,9 @@ const LorebookCard: React.FC = ({ ...props }) => {
                             <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                 <SquarePen className="w-4 h-4 mr-2" /> Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                            {/* <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                 <MessageCircleMore className="w-4 h-4 mr-2" /> Chat With Me
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
