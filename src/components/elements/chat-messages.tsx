@@ -286,7 +286,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
         );
     };
 
-    const renderUserActions = (message: ChatMessage, text: string, index: number) => {
+    const renderUserActions = (message: ChatMessage, text: string) => {
         const isLastUserMessage = lastUserMsg?.id === message.id;
         return (
             <Actions className="float-end">
@@ -409,7 +409,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
                                             </MessageContent>
                                         </Message>
                                         {message.role === "user"
-                                            ? renderUserActions(message, part.text, index)
+                                            ? renderUserActions(message, part.text)
                                             : renderAssistantActions(message, part.text, index)
                                         }
                                     </>

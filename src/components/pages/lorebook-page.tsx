@@ -20,7 +20,6 @@ import {
 import { Button } from '@/components/ui/button'
 import { Menu, Search } from 'lucide-react'
 import Link from 'next/link'
-import CharacterCard from '../cards/character-card';
 import Rating from '../elements/rating';
 import SearchField from '../elements/search-field';
 import { ToggleSwitch } from '../elements/toggle-switch';

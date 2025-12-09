@@ -39,7 +39,7 @@ const Header: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [pulsingIndex, setPulsingIndex] = useState<number | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
-
+console.warn(openSubDropdown)
   // --- Sync active index with current route ---
   interface HeaderItem { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; iconClassName?: string; dropdown?: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; href?: string; type?: string; createdAt?: string; children?: { id: string; title: string, createdAt: string }[]; }[]; }
   // ------- Data -------

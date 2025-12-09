@@ -66,7 +66,7 @@ const colSpanClasses: Record<number, string> = {
     12: "col-span-12",
 };
 
-const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, required: _required, ...rest }) => {
+const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, ...rest }) => {
     const colClass = colSpanClasses[cols] || "col-span-12";
     return (
         <div className={cn(colClass)}>

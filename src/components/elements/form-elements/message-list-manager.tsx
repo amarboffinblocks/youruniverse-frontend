@@ -61,14 +61,14 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
     if (value && JSON.stringify(value) !== JSON.stringify(messages)) {
       setMessages(value);
     }
-  }, [value]);
+  }, [value, messages]);
 
   useEffect(() => {
     if (JSON.stringify(messages) !== JSON.stringify(value)) {
       setValue(messages);
       onChange?.(messages);
     }
-  }, [messages]);
+  }, [messages, value]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
