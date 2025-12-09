@@ -120,7 +120,6 @@ const Header2 = () => {
         <header className="sticky top-0 z-50">
             <Container className="flex justify-center items-center py-4">
                 <div className="flex items-center gap-x-10">
-
                     {headerItems.map((item, idx) => {
                         const Icon = item.icon;
                         const active = isActive(item);
