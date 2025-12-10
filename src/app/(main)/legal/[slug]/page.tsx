@@ -11,8 +11,10 @@ const components = {
   // You can add custom components here if needed
 };
 
-const page = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
+
+const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params;
+
 
   const filePath = path.join(process.cwd(), "src/content/legal", `${slug}.mdx`);
 
