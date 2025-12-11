@@ -28,7 +28,7 @@ import {
 } from '@/components/ai-elements/conversation';
 
 import { Response } from '@/components/ai-elements/response';
-import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, ArrowRightLeft } from 'lucide-react';
+import { RefreshCcwIcon, CopyIcon, Trash, Info, EllipsisVertical, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
@@ -248,21 +248,40 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
         };
     }, [messages]);
 
-    const handleChangeFirstMessage = () => {
-        const nextIndex = (currentAlternateIndex + 1) % alternateMessages.length;
-        setCurrentAlternateIndex(nextIndex);
+const handleChangeFirstMessageBack = () => {
+    // stop at 0
+    const nextIndex = Math.max(currentAlternateIndex - 1, 0);
+    setCurrentAlternateIndex(nextIndex);
 
-        setMessages(prevMessages => {
-            const newMessages = [...prevMessages];
-            if (newMessages.length > 0 && newMessages[0].role === 'assistant') {
-                newMessages[0] = {
-                    ...newMessages[0],
-                    parts: [{ type: 'text', text: alternateMessages[nextIndex] }]
-                };
-            }
-            return newMessages;
-        });
-    };
+    setMessages(prevMessages => {
+        const newMessages = [...prevMessages];
+        if (newMessages.length > 0 && newMessages[0].role === 'assistant') {
+            newMessages[0] = {
+                ...newMessages[0],
+                parts: [{ type: 'text', text: alternateMessages[nextIndex] }]
+            };
+        }
+        return newMessages;
+    });
+};
+
+const handleChangeFirstMessageForth = () => {
+    // stop at last index
+    const nextIndex = Math.min(currentAlternateIndex + 1, alternateMessages.length - 1);
+    setCurrentAlternateIndex(nextIndex);
+
+    setMessages(prevMessages => {
+        const newMessages = [...prevMessages];
+        if (newMessages.length > 0 && newMessages[0].role === 'assistant') {
+            newMessages[0] = {
+                ...newMessages[0],
+                parts: [{ type: 'text', text: alternateMessages[nextIndex] }]
+            };
+        }
+        return newMessages;
+    });
+};
+
 
     const renderMessageHeader = (message: ChatMessage) => {
         if (message.role !== "assistant") return null;
@@ -380,9 +399,14 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ setActivePreview }) => {
                 )}
 
                 {isFirstMessage && (
-                    <Action label="change message" onClick={handleChangeFirstMessage}>
-                        <ArrowRightLeft className="size-3" />
+                    <>
+                    <Action label="change message left" onClick={handleChangeFirstMessageBack}>
+                        <ChevronLeft className="size-4" />
                     </Action>
+                    <Action label="change message right" onClick={handleChangeFirstMessageForth}>
+                        <ChevronRight className="size-4" />
+                    </Action>
+                    </>
                 )}
             </Actions>
         );
