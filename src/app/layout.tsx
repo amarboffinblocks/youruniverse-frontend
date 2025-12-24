@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
 import { ShootingStars } from "@/components/elements/shooting-stars";
 import { StarsBackground } from "@/components/elements/stars-background";
+import { QueryProvider } from "@/components/providers/query-provider";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
@@ -24,10 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={atkinson.variable}>
       <body className={`${atkinson.className} relative antialiased bg-background w-screen h-screen flex flex-col`}>
-        <ShootingStars />
-        <StarsBackground />
-        {children}
-        <Toaster position="top-center" offset={140} />
+        <QueryProvider>
+          <ShootingStars />
+          <StarsBackground />
+          {children}
+          <Toaster position="top-center" offset={140} />
+        </QueryProvider>
       </body>
     </html>
   );

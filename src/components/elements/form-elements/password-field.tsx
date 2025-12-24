@@ -3,13 +3,15 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface PasswordFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     error?: string;
+    className?: string;
 }
 
-const PasswordField: React.FC<PasswordFieldProps> = ({ ...props }) => {
+const PasswordField: React.FC<PasswordFieldProps> = ({ className, ...props }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
@@ -18,7 +20,7 @@ const PasswordField: React.FC<PasswordFieldProps> = ({ ...props }) => {
             <Input
                 type={showPassword ? "text" : "password"}
                 {...props}
-                className={`pr-10`}
+                className={cn("pr-10", className)}
             />
             <button
                 type="button"

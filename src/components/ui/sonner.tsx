@@ -24,15 +24,15 @@ const Toaster = ({ ...props }: ToasterProps) => {
       }}
       toastOptions={{
         classNames: {
-          toast: "!bg-primary/30 backdrop-blur border !border-primary !text-white",         // default toast
-          success: "!bg-primary/30 backdrop-blur border !border-primary !text-white",     // success toast
+          toast: "!bg-green-500/30 backdrop-blur border !border-green-500 !text-white",         // default toast
+          success: "!bg-green-500/30 backdrop-blur border !border-green-500 !text-white",     // success toast
           error: "!bg-red-600/30 backdrop-blur border !border-red-600 !text-white",         // error toast
           warning: "!bg-yellow-500/30 backdrop-blur border !border-yellow-500 !text-black",    // warning toast
           info: "!bg-primary-600/30 backdrop-blur border !border-primary !text-white",         // info toast
           loading: "!bg-gray-900/30 backdrop-blur border !border-gray-700 !text-white",      // loading toast
         },
       }}
-  
+
       style={
         {
           "--normal-bg": "var(--popover)",

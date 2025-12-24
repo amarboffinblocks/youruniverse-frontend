@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import { Menu, Trash2 } from "lucide-react";
+import { LogOut, Menu, Trash2 } from "lucide-react";
 
 import {
     DropdownMenu,
@@ -14,12 +14,13 @@ import {
 import { Button } from "../ui/button";
 import DynamicForm from "../elements/form-elements/dynamic-form";
 import { profileSchema } from "@/schemas/profile-schema";
+import { useLogout } from "@/hooks";
 interface Props {
     characterId?: string;
 }
 
 const ProfileForm: React.FC<Props> = () => {
-
+    const { logout, isLoading } = useLogout();
 
     return (
         <div className="py-10">
@@ -31,7 +32,7 @@ const ProfileForm: React.FC<Props> = () => {
             >
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button >
+                        <Button>
                             Account Menu <Menu />
                         </Button>
                     </DropdownMenuTrigger>
@@ -55,18 +56,21 @@ const ProfileForm: React.FC<Props> = () => {
                             <DropdownMenuItem>
                                 Bulk Export Your Universe
                             </DropdownMenuItem>
-                            <DropdownMenuItem variant="destructive" >
+                            <DropdownMenuItem onSelect={(e) => {
+                                e.preventDefault();
+                                if (!isLoading) logout();
+                            }}>
+                                Logout
+                                <DropdownMenuShortcut><LogOut className="size-4" /></DropdownMenuShortcut>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem variant="destructive"  >
                                 Delete
                                 <DropdownMenuShortcut><Trash2 className="size-4 text-destructive" /></DropdownMenuShortcut>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
-
-
                     </DropdownMenuContent>
                 </DropdownMenu>
-
             </DynamicForm>
-
         </div>
     );
 };
