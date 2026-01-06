@@ -10,13 +10,14 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-    { name: "About", href: "#about" },
-    { name: "Blog", href: "#blog" },
-    { name: "Forum", href: "#forum" },
-    { name: "Character Market", href: "#market" },
+    { name: "About", href: "/#about" },
+    { name: "Blog", href: "/#blog" },
+    { name: "Forum", href: "/#forum" },
+    { name: "Character Market", href: "/#market" },
 ];
 
 import EnquiryModal from "@/components/modals/enquiry-modal";
+import { usePathname, useRouter } from "next/navigation";
 
 interface LandingHeaderProps {
     simple?: boolean;
@@ -25,6 +26,21 @@ interface LandingHeaderProps {
 export default function LandingHeader({ simple = false }: LandingHeaderProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [isEnquiryOpen, setIsEnquiryOpen] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
+
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        // Only handle smooth scroll if we are on the home page and the link is an anchor link
+        if (pathname === "/" && href.startsWith("/#")) {
+            e.preventDefault();
+            const targetId = href.replace("/#", "");
+            const element = document.getElementById(targetId);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+                setIsOpen(false);
+            }
+        }
+    };
 
     return (
         <header className="absolute top-0 left-0 right-0 z-50 px-4 py-6 md:px-8 bg-transparent backdrop-blur-none">
@@ -48,6 +64,7 @@ export default function LandingHeader({ simple = false }: LandingHeaderProps) {
                             <Link
                                 key={link.name}
                                 href={link.href}
+                                onClick={(e) => handleNavClick(e, link.href)}
                                 className="text-sm font-medium text-gray-300 transition-colors hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                             >
                                 {link.name}
@@ -125,7 +142,10 @@ export default function LandingHeader({ simple = false }: LandingHeaderProps) {
                                     <Link
                                         key={link.name}
                                         href={link.href}
-                                        onClick={() => setIsOpen(false)}
+                                        onClick={(e) => {
+                                            setIsOpen(false);
+                                            handleNavClick(e, link.href);
+                                        }}
                                         className="text-lg font-medium text-gray-300 transition-colors hover:text-white"
                                     >
                                         {link.name}

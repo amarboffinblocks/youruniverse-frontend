@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Atkinson_Hyperlegible } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css";
-import { ShootingStars } from "@/components/elements/shooting-stars";
-import { StarsBackground } from "@/components/elements/stars-background";
+import StarsWrapper from "@/components/layout/stars-wrapper";
 
 const atkinson = Atkinson_Hyperlegible({
   subsets: ["latin"],
@@ -24,8 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${atkinson.variable} scroll-smooth`}>
       <body className={`${atkinson.className} relative antialiased bg-background w-screen h-screen flex flex-col`}>
-        <ShootingStars />
-        <StarsBackground />
+        <StarsWrapper />
         {children}
         <Toaster position="top-center" offset={140} />
       </body>

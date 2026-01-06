@@ -20,7 +20,7 @@ const Footer = () => {
 
   return (
     <div className="flex flex-col relative ">
-      <div className="flex py-5 justify-center items-center gap-2 text-white    backdrop-blur-sm ">
+      <div className="flex py-5 justify-center items-center gap-2 text-white     ">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <button className="hover:underline">Contact</button>
@@ -42,9 +42,9 @@ const Footer = () => {
         </AlertDialog>
 
         <span >-</span>
-        <Link href="/attributes" className=" hover:underline">Attribution Page</Link>
+        <Link href="/attributes" className=" hover:underline">Attribute</Link>
         <span >-</span>
-        <Link href="/legal" className=" hover:underline">Legal</Link>
+        <Link href="/legal" className=" hover:underline">Privacy</Link>
 
       </div>
     </div>

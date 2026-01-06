@@ -29,7 +29,7 @@ export default function Home() {
   if (loading) return null;
 
   return (
-    <div className={`flex-1 flex flex-col relative min-h-screen bg-[#0a0a0a] text-white overflow-y-auto overflow-x-hidden ${!isVerified ? 'h-screen overflow-hidden' : ''}`}>
+    <div className={`flex-1 flex flex-col relative min-h-screen bg-[#0a0a0a] text-white overflow-y-auto overflow-x-hidden scroll-smooth ${!isVerified ? 'h-screen overflow-hidden' : ''}`}>
       {!isVerified && (
         <AgeVerificationModal
           onVerified={() => {

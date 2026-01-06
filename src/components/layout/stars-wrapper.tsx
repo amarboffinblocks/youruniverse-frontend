@@ -7,13 +7,11 @@ import { StarsBackground } from "@/components/elements/stars-background";
 
 export default function StarsWrapper() {
     const pathname = usePathname();
+
     const hiddenPaths = ["/about", "/blog"];
+    const isHidden = hiddenPaths.some((path) => pathname === path || pathname?.startsWith(`${path}/`));
 
-    // Normalize path to handle trailing slashes if any, though nextjs usually handles it.
-    // Checking if the current path starts with /about or /blog might be safer if there are subpages.
-    // But strict check is fine for now based on request.
-
-    if (hiddenPaths.includes(pathname)) {
+    if (isHidden) {
         return null;
     }
 
