@@ -1,5 +1,5 @@
 
-import Footer from "@/components/layout/footer";
+
 import Container from "@/components/elements/container";
 import SubscriptionPages from "@/components/pages/subscription-page";
 
@@ -11,7 +11,7 @@ export default function page() {
                     <SubscriptionPages />
                 </Container>
             </div>
-            <Footer />
+
         </div>
     );
 }

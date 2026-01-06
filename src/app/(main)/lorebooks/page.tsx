@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/layout/footer";
+
 import LorebookPage from "@/components/pages/lorebook-page";
 
 export default function page() {
@@ -9,7 +9,7 @@ export default function page() {
             <div className="flex-1">
                 <LorebookPage />
             </div>
-            <Footer />
+
         </div>
     );
 }

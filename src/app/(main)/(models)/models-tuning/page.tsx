@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/footer";
+
 import Container from "@/components/elements/container";
 import SliderElement from "@/components/elements/slider-element";
 
@@ -77,7 +77,7 @@ export default function page() {
                     </div>
                 </Container>
             </div>
-            <Footer />
+
         </div>
     );
 }

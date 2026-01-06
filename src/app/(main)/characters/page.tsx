@@ -1,5 +1,5 @@
 
-import Footer from "@/components/layout/footer";
+
 import CharacterPage from "@/components/pages/character-page";
 
 
@@ -9,7 +9,7 @@ export default function page() {
             <div className="flex-1 ">
                 <CharacterPage />
             </div>
-            <Footer />
+
         </div>
     );
 }

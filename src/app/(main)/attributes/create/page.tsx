@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/footer";
+
 import Container from "@/components/elements/container";
 import AttributeForm from "@/components/forms/attribute-form";
 export default function page() {
@@ -9,7 +9,7 @@ export default function page() {
                     <AttributeForm />
                 </Container>
             </div>
-            <Footer />
+
         </div>
     );
 }

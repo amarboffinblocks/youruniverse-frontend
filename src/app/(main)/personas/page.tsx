@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/layout/footer";
+
 import PersonaPage from "@/components/pages/persona-page";
 
 export default function page() {
@@ -9,7 +9,7 @@ export default function page() {
             <div className="flex-1">
                 <PersonaPage />
             </div>
-            <Footer />
+
         </div>
     );
 }

@@ -1,6 +1,6 @@
 
 
-import Footer from "@/components/layout/footer";
+
 import ComingSoon from "@/components/elements/coming-soon";
 import Container from "@/components/elements/container";
 
@@ -12,7 +12,7 @@ export default function page() {
                     <ComingSoon />
                 </Container>
             </div>
-            <Footer />
+
         </div>
     );
 }

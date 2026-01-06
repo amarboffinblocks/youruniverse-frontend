@@ -1,5 +1,5 @@
 import Container from "@/components/elements/container"
-import Footer from "@/components/layout/footer"
+
 import SearchField from "@/components/elements/search-field";
 
 
@@ -45,13 +45,13 @@ const page = () => {
             <div className="flex gap-3 items-center">
 
               <SearchField placeholder={`Search by Resources used`} />
-             
+
             </div>
             {
               resources.map((item: Resource, index) => (
                 <div key={index} className="flex flex-col md:flex-row gap-4 ">
                   <div className="bg-primary/50  backdrop-blur-2xl rounded-2xl p-4 px-6 flex-1 relative ">
-                 
+
                     <h4 className="font-semibold text-md text-white">Resourse used : {item.resourceUsed}</h4>
 
                     <h4 className="font-semibold text-md text-white">Used For : {item.usedFor}</h4>
@@ -74,7 +74,7 @@ const page = () => {
 
         </Container>
       </div >
-      <Footer />
+
     </div >
   )
 }

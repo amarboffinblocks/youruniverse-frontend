@@ -109,7 +109,7 @@ const ChatPanel = () => {
                     </div>
                 </div>
             </form>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };

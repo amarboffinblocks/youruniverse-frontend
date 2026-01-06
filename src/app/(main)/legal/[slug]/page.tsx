@@ -5,7 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import remarkGfm from 'remark-gfm';
 import { notFound } from "next/navigation";
 import Container from "@/components/elements/container";
-import Footer from "@/components/layout/footer";
+
 
 const components = {
   // You can add custom components here if needed
@@ -52,7 +52,7 @@ const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           </div>
         </Container>
       </div>
-      <Footer />
+
     </div>
   );
 }

@@ -40,7 +40,6 @@ export default function Home() {
       )}
 
       <LandingHeader />
-
       <main className="flex-1 w-full flex flex-col items-center">
         <LandingHero />
         <section id="about" className="w-full">

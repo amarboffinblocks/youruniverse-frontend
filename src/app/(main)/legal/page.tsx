@@ -1,5 +1,5 @@
 import Container from "@/components/elements/container";
-import Footer from "@/components/layout/footer";
+
 import { Card } from "@/components/ui/card";
 import Link from "next/link";
 
@@ -34,7 +34,7 @@ export default function page() {
 
                 </Container>
             </div>
-            <Footer />
+
         </div>
     );
 }

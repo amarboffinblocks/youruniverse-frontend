@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/footer";
+
 import Container from "@/components/elements/container";
 import { Button } from "@/components/ui/button";
 import { ArrowBigDownDash } from "lucide-react";
@@ -39,7 +39,7 @@ export default function page() {
 
                 </Container>
             </div >
-            <Footer />
+
         </div >
     );
 }   
