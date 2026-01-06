@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={atkinson.variable}>
+    <html lang="en" className={`${atkinson.variable} scroll-smooth`}>
       <body className={`${atkinson.className} relative antialiased bg-background w-screen h-screen flex flex-col`}>
         <ShootingStars />
         <StarsBackground />
