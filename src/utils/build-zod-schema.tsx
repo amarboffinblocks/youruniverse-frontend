@@ -135,12 +135,17 @@ export function buildZodSchema(fields: FormData[]) {
 
                 schema = schema.default(defaultVal);
 
-                // If required, ensure it's true
-                if (field.required) {
+                // If required is true AND defaultValue is true, enforce that it must be checked
+                // If defaultValue is false, allow both true and false as valid values
+                if (field.required && defaultVal === true) {
                     schema = schema.refine((val: boolean) => val === true, {
                         message: `${field.label || field.name} must be checked`,
                     });
-                }       
+                } else if (field.required && defaultVal === false) {
+                    // When defaultValue is false, required just means the field must have a boolean value
+                    // (which is already enforced by z.boolean()), so no additional validation needed
+                    // This allows the form to submit with false value
+                }
 
                 break;
             }
@@ -155,6 +160,38 @@ export function buildZodSchema(fields: FormData[]) {
                         { message: "All Alternate Messages entries must contain text" }
                     )
                     .default([""]);
+                break;
+            }
+            case "example-dialogues": {
+                // Validate that each dialogue starts with <START> and has content
+                const validateDialogue = (dialogue: string): boolean => {
+                    if (!dialogue.trim()) return false;
+                    const lines = dialogue.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+                    if (lines.length < 2) return false;
+                    return lines[0].toUpperCase() === '<START>';
+                };
+
+                schema = z.array(z.string())
+                    .refine(
+                        (arr) => {
+                            if (field.required && arr.length === 0) return false;
+                            if (arr.length === 0) return true;
+                            return arr.some(item => item.trim().length > 0);
+                        },
+                        { message: `${field.label || field.name} must have at least one dialogue` }
+                    )
+                    .refine(
+                        (arr) => arr.every(item => {
+                            if (!item.trim()) return true; // Allow empty items if not required
+                            return validateDialogue(item);
+                        }),
+                        { message: `Each Example Dialogue must start with <START> followed by dialogue content on the next line` }
+                    )
+                    .default(field.required ? [""] : []);
+
+                if (!field.required) {
+                    schema = schema.optional();
+                }
                 break;
             }
             default: {
@@ -175,24 +212,34 @@ export function buildInitialValues(fields: FormData[]) {
         switch (field.type) {
             case "text":
             case "textarea":
-                initialValues[field.name] = "";
+                initialValues[field.name] = field.defaultValue !== undefined ? String(field.defaultValue) : "";
                 break;
             case "file":
                 initialValues[field.name] = null;
                 break;
             case "checkbox":
-                initialValues[field.name] = false;
+                // Use defaultValue if provided, otherwise default to false
+                if (field.defaultValue !== undefined) {
+                    initialValues[field.name] = typeof field.defaultValue === "boolean"
+                        ? field.defaultValue
+                        : Boolean(field.defaultValue);
+                } else {
+                    initialValues[field.name] = false;
+                }
                 break;
             case "multi-select":
             case "multi-entries":
-                initialValues[field.name] = [];
+            case "example-dialogues":
+                initialValues[field.name] = field.defaultValue !== undefined && Array.isArray(field.defaultValue)
+                    ? field.defaultValue
+                    : [];
                 break;
             case "toggle":
             case "select":
-                initialValues[field.name] = "";
+                initialValues[field.name] = field.defaultValue !== undefined ? String(field.defaultValue) : "";
                 break;
             default:
-                initialValues[field.name] = "";
+                initialValues[field.name] = field.defaultValue !== undefined ? field.defaultValue : "";
                 break;
         }
     });

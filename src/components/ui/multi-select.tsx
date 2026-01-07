@@ -52,7 +52,7 @@ const multiSelectVariants = cva("m-1 transition-all duration-300 ease-in-out", {
             inverted: "inverted",
         },
         badgeAnimation: {
-            bounce: "hover:-translate-y-1 hover:scale-110",
+            bounce: "hover:-translate-y-1 ",
             pulse: "hover:animate-pulse",
             wiggle: "hover:animate-wiggle",
             fade: "hover:opacity-80",
@@ -106,7 +106,12 @@ interface MultiSelectProps
     hideSelectAll?: boolean;
     searchable?: boolean;
     emptyIndicator?: React.ReactNode;
-    onAddNewOption?: (option: { label: string; value: string }) => void;
+    onAddNewOption?: (option: { label: string; value: string }, category?: "SFW" | "NSFW") => void;
+    /**
+     * Enable tag creation functionality (Add SFW/NSFW buttons)
+     * When false, the add buttons will not be shown
+     */
+    addFunctionality?: boolean;
     autoSize?: boolean;
     singleLine?: boolean;
     popoverClassName?: string;
@@ -137,6 +142,12 @@ interface MultiSelectProps
     deduplicateOptions?: boolean;
     resetOnDefaultValueChange?: boolean;
     closeOnSelect?: boolean;
+    setSelectedCategory?: (category: "SFW" | "NSFW") => void;
+    /**
+     * Current selected category for filtering (SFW or NSFW)
+     * Used to control the ToggleGroup state
+     */
+    selectedCategory?: "SFW" | "NSFW";
 }
 export interface MultiSelectRef {
 
@@ -165,6 +176,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             hideSelectAll = true,
             searchable = true,
             emptyIndicator,
+            addFunctionality = false,
             autoSize = false,
             singleLine = false,
             popoverClassName,
@@ -175,6 +187,8 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
             deduplicateOptions = false,
             resetOnDefaultValueChange = true,
             closeOnSelect = false,
+            setSelectedCategory,
+            selectedCategory,
             ...props
         },
         ref
@@ -886,7 +900,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                         {emptyIndicator || "No result found"}
                                     </p>
 
-                                    {searchValue?.trim() && (
+                                    {searchValue?.trim() && addFunctionality && onAddNewOption && (
 
                                         <div className="w-full flex gap-x-2 items-center px-2">
                                             <div className="w-full">
@@ -900,7 +914,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
 
                                                         // 1️⃣ If parent provided callback, call it to handle adding
                                                         if (typeof onAddNewOption === "function") {
-                                                            onAddNewOption({ label: newLabel, value: newValue });
+                                                            onAddNewOption({ label: newLabel, value: newValue }, "SFW");
                                                         }
 
                                                         // 2️⃣ Select the new option immediately if needed
@@ -909,7 +923,6 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                         // 3️⃣ Close popover after adding
                                                         setIsPopoverOpen(false);
                                                     }}
-                                                // className="py-[3px] whitespace-nowrap text-md hover:bg-primary w-[95%] rounded-xl   text-muted-foreground hover:text-white/80 h-full"
                                                 >
                                                     Add SFW
                                                 </Button>
@@ -929,7 +942,7 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
 
                                                         // 1️⃣ If parent provided callback, call it to handle adding
                                                         if (typeof onAddNewOption === "function") {
-                                                            onAddNewOption({ label: newLabel, value: newValue });
+                                                            onAddNewOption({ label: newLabel, value: newValue }, "NSFW");
                                                         }
 
                                                         // 2️⃣ Select the new option immediately if needed
@@ -938,7 +951,6 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                                         // 3️⃣ Close popover after adding
                                                         setIsPopoverOpen(false);
                                                     }}
-                                                // className="py-[3px] whitespace-nowrap text-md hover:bg-primary w-[95%] rounded-xl   text-muted-foreground hover:text-white/80 h-full"
                                                 >
                                                     Add NSFW
                                                 </Button>
@@ -952,26 +964,31 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
 
 
 
-                                {!hideSelectAll && !searchValue && (
+                                {!hideSelectAll && !searchValue && setSelectedCategory && (
                                     <CommandGroup>
                                         <div className="py-2">
                                             <ToggleGroup
                                                 type="single"
-                                                className="w-full h-8 !rounded-2xl overflow-hidden  "
-                                                defaultValue="sfw"
+                                                className="w-full h-8 !rounded-2xl overflow-hidden"
+                                                value={selectedCategory || "SFW"}
+                                                onValueChange={(value) => {
+                                                    if (value && setSelectedCategory) {
+                                                        setSelectedCategory(value as "SFW" | "NSFW");
+                                                    }
+                                                }}
                                             >
                                                 <ToggleGroupItem
-                                                    value="sfw"
-                                                    aria-label="sfw"
-                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
+                                                    value="SFW"
+                                                    aria-label="SFW"
+                                                    className="w-1/2 bg-primary/30 cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
                                                 >
                                                     SFW
                                                 </ToggleGroupItem>
 
                                                 <ToggleGroupItem
-                                                    value="nsfw"
-                                                    aria-label="nsfw"
-                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
+                                                    value="NSFW"
+                                                    aria-label="NSFW"
+                                                    className="w-1/2 bg-primary/30 cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/30 hover:text-white"
                                                 >
                                                     NSFW
                                                 </ToggleGroupItem>
@@ -1057,29 +1074,36 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                     ))
                                 ) : (
                                     <CommandGroup>
-                                        <div className="py-2">
-                                            <ToggleGroup
-                                                type="single"
-                                                className="w-full h-8 !rounded-2xl overflow-hidden  "
-                                                defaultValue="sfw"
-                                            >
-                                                <ToggleGroupItem
-                                                    value="sfw"
-                                                    aria-label="sfw"
-                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
+                                        {setSelectedCategory && (
+                                            <div className="py-2">
+                                                <ToggleGroup
+                                                    type="single"
+                                                    className="w-full h-8 !rounded-2xl overflow-hidden"
+                                                    value={selectedCategory || "SFW"}
+                                                    onValueChange={(value) => {
+                                                        if (value && setSelectedCategory) {
+                                                            setSelectedCategory(value as "SFW" | "NSFW");
+                                                        }
+                                                    }}
                                                 >
-                                                    SFW
-                                                </ToggleGroupItem>
+                                                    <ToggleGroupItem
+                                                        value="SFW"
+                                                        aria-label="SFW"
+                                                        className="w-1/2 bg-primary/30 cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
+                                                    >
+                                                        SFW
+                                                    </ToggleGroupItem>
 
-                                                <ToggleGroupItem
-                                                    value="nsfw"
-                                                    aria-label="nsfw"
-                                                    className="w-1/2 bg-primary/30  cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
-                                                >
-                                                    NSFW
-                                                </ToggleGroupItem>
-                                            </ToggleGroup>
-                                        </div>
+                                                    <ToggleGroupItem
+                                                        value="NSFW"
+                                                        aria-label="NSFW"
+                                                        className="w-1/2 bg-primary/30 cursor-pointer text-white data-[state=on]:bg-primary data-[state=on]:text-white hover:bg-primary/60 hover:text-white"
+                                                    >
+                                                        NSFW
+                                                    </ToggleGroupItem>
+                                                </ToggleGroup>
+                                            </div>
+                                        )}
                                         {filteredOptions.map((option) => {
                                             const isSelected = selectedValues.includes(option.value);
                                             return (

@@ -1,12 +1,19 @@
 
+"use client";
+
+import React from "react";
 import Container from "@/components/elements/container"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Edit } from "lucide-react"
+import { useRouter, useParams } from "next/navigation"
 
-const page = () => {
+const CharacterDetailPage = () => {
+    const router = useRouter();
+    const params = useParams();
+    const id = params?.id as string;
     const defaultTags = [
         { label: "Warrior", value: "warrior" },
         { label: "Mage", value: "mage" },
@@ -74,7 +81,10 @@ const page = () => {
 
             <div className="flex flex-col h-screen">
                 <div className="flex py-4 px-4 items-center  justify-end">
-                    <Button className="text-lg !px-4 flex items-center ">
+                    <Button
+                        className="text-lg !px-4 flex items-center"
+                        onClick={() => router.push(`/characters/${id}/edit`)}
+                    >
                         <Edit />Edit
                     </Button>
                 </div>
@@ -184,4 +194,4 @@ const page = () => {
     )
 }
 
-export default page
+export default CharacterDetailPage

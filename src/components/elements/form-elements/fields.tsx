@@ -11,6 +11,7 @@ import MessageListManager from "./message-list-manager";
 import FormCheckbox from "./form-checkbox";
 import EntriesField from "./entries-field";
 import FormMultiFile from "./form-multi-file";
+import FormExampleDialogues from "./form-example-dialogues";
 
 interface FormFieldsProps extends FormData {
     cols?: FormData["cols"];
@@ -45,6 +46,12 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
                     {...props}
                 />
             );
+        case "example-dialogues":
+            return (
+                <FormExampleDialogues
+                    {...props}
+                />
+            );
 
         default:
             return null;
@@ -66,7 +73,7 @@ const colSpanClasses: Record<number, string> = {
     12: "col-span-12",
 };
 
-const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, ...rest }) => {
+const FormFields: React.FC<FormFieldsProps> = ({ cols = 12, required, ...rest }) => {
     const colClass = colSpanClasses[cols] || "col-span-12";
     return (
         <div className={cn(colClass)}>

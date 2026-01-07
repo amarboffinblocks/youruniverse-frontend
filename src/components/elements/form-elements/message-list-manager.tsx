@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
@@ -40,6 +40,10 @@ interface MessageListManagerProps {
   onChange?: (messages: string[]) => void;
 }
 
+// Helper: Prevent duplicate messages unless allowed
+const isDuplicate = (messages: string[], newMessage: string) =>
+  messages.some((msg) => msg.trim() === newMessage.trim());
+
 const MessageListManager: React.FC<MessageListManagerProps> = ({
   initialMessages = [],
   label = "",
@@ -48,27 +52,42 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
   placeholder = "",
   onChange,
 }) => {
+  // field can contain undefined at init if not set by Formik yet
   const [field, meta, helpers] = useField<string[]>(name);
   const { value } = field;
   const { setValue, setTouched } = helpers;
 
-  const [messages, setMessages] = useState<string[]>(value || initialMessages || ['']);
+  // Always fallback to initialMessages (if provided) or ['']
+  const getInitial = useCallback(
+    () =>
+      (Array.isArray(value) && value.length > 0
+        ? value
+        : Array.isArray(initialMessages) && initialMessages.length > 0
+        ? initialMessages
+        : ['']),
+    [value, initialMessages]
+  );
+
+  const [messages, setMessages] = useState<string[]>(getInitial);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newMessage, setNewMessage] = useState('');
 
-
+  // Ensure messages always in sync with outside field changes (Formik/parent)
   useEffect(() => {
-    if (value && JSON.stringify(value) !== JSON.stringify(messages)) {
-      setMessages(value);
+    if (Array.isArray(value) && JSON.stringify(value) !== JSON.stringify(messages)) {
+      setMessages(value.length > 0 ? value : ['']);
     }
-  }, [value, messages]);
+    // eslint-disable-next-line
+  }, [value]);
 
+  // Push changes out to Formik/parent when messages mutate
   useEffect(() => {
     if (JSON.stringify(messages) !== JSON.stringify(value)) {
       setValue(messages);
       onChange?.(messages);
     }
-  }, [messages, value]);
+    // eslint-disable-next-line
+  }, [messages]);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -77,60 +96,68 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
     })
   );
 
+  // ---- Event Handlers ----
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    if (!over || active.id === over.id) return;
 
-    if (over && active.id !== over.id) {
-      const oldIndex = messages.findIndex((_, index) => `message-${index}` === active.id);
-      const newIndex = messages.findIndex((_, index) => `message-${index}` === over.id);
+    const oldIndex = messages.findIndex((_, idx) => `message-${idx}` === active.id);
+    const newIndex = messages.findIndex((_, idx) => `message-${idx}` === over.id);
 
-      if (oldIndex !== -1 && newIndex !== -1) {
-        const newMessages = arrayMove(messages, oldIndex, newIndex);
-        setMessages(newMessages);
-        setTouched(true);
-      }
-    }
-  };
-
-  const handleAddMessage = () => {
-    if (newMessage.trim()) {
-      const updatedMessages = [...messages, newMessage.trim()];
-      setMessages(updatedMessages);
-      setNewMessage('');
+    if (oldIndex !== -1 && newIndex !== -1 && oldIndex !== newIndex) {
+      setMessages((msgs) => arrayMove(msgs, oldIndex, newIndex));
       setTouched(true);
     }
   };
 
+  const handleAddMessage = () => {
+    if (!newMessage.trim()) return;
+    if (isDuplicate(messages, newMessage)) {
+      setNewMessage(''); // Ignore duplicates
+      return;
+    }
+    setMessages((prev) => [...prev, newMessage.trim()]);
+    setNewMessage('');
+    setTouched(true);
+  };
+
+  // On delete, always keep at least one blank message for required fields
   const handleDeleteMessage = (index: number) => {
-    const updatedMessages = messages.filter((_, i) => i !== index);
-    // ✅ Ensure at least one empty message remains for required fields
-    const finalMessages = updatedMessages.length === 0 ? [''] : updatedMessages;
-    setMessages(finalMessages);
+    setMessages((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      return updated.length === 0 ? [''] : updated;
+    });
     setTouched(true);
   };
 
   const handleUpdateMessage = (index: number, updatedMessage: string) => {
-    const updatedMessages = [...messages];
-    updatedMessages[index] = updatedMessage;
-    setMessages(updatedMessages);
+    if (!updatedMessage.trim()) return;
+    setMessages((prev) => {
+      const updated = [...prev];
+      updated[index] = updatedMessage.trim();
+      return updated;
+    });
     setTouched(true);
   };
 
+  // First textarea (main) message field (message 0)
   const handleFirstMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const updatedMessages = [...messages];
-    if (updatedMessages.length > 0) {
-      updatedMessages[0] = e.target.value;
-    } else {
-      updatedMessages.push(e.target.value);
-    }
-    setMessages(updatedMessages);
+    setMessages((prev) => {
+      const updated = [...prev];
+      if (updated.length > 0) updated[0] = e.target.value;
+      else updated.push(e.target.value);
+      // Ensure empty if completely deleted
+      return updated.length === 0 ? [''] : updated;
+    });
     setTouched(true);
   };
 
+  // Token can be improved to use real tokenizer if needed
   const tokenCount = messages.reduce((acc, msg) => acc + (msg?.length || 0), 0);
 
-  const sortableItems = messages.map((_, index) => `message-${index}`);
+  const sortableItems = messages.map((_, idx) => `message-${idx}`);
 
+  // Improved: prevent duplicate keys, clamp empty string messages, better edge handling
   return (
     <div className='relative space-y-2'>
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -147,6 +174,8 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
             type='button'
             className='text-primary absolute top-[44%] -translate-y-[34%] -left-16 cursor-pointer'
             onClick={() => setIsDialogOpen(true)}
+            tabIndex={0}
+            aria-label="Add/manage messages"
           >
             <Plus className='size-14' />
           </button>
@@ -155,7 +184,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
           <DialogHeader className='p-4'>
             <DialogTitle>Manage Messages</DialogTitle>
             <DialogDescription>
-              Add, edit, delete, or reorder your messages below.
+              Add, edit, delete, or reorder your messages below.<br />
               These messages can be used as alternative starting prompts.
             </DialogDescription>
           </DialogHeader>
@@ -167,6 +196,9 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Enter new message"
                   className="flex-grow bg-transparent backdrop-blur-none"
+                  // minRows={2}
+                  // maxRows={5}
+                  aria-label="New message"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' && !e.shiftKey) {
                       e.preventDefault();
@@ -179,7 +211,7 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                 </p>
               </div>
 
-              <div className=''>
+              <div>
                 <DndContext
                   sensors={sensors}
                   collisionDetection={closestCenter}
@@ -188,14 +220,14 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                 >
                   <SortableContext items={sortableItems} strategy={verticalListSortingStrategy}>
                     <div className="space-y-4 mt-4 max-h-[500px] h-full overflow-y-auto">
-                      {messages.map((message, index) => (
+                      {messages.map((message, idx) => (
                         <SortableMessage
-                          key={`message-${index}`}
-                          id={`message-${index}`} // ✅ Unique ID based on index
+                          key={`message-${idx}`}
+                          id={`message-${idx}`}
                           message={message}
-                          index={index}
-                          onDelete={() => handleDeleteMessage(index)}
-                          onUpdate={(updatedMessage) => handleUpdateMessage(index, updatedMessage)}
+                          index={idx}
+                          onDelete={() => handleDeleteMessage(idx)}
+                          onUpdate={(updatedMessage) => handleUpdateMessage(idx, updatedMessage)}
                         />
                       ))}
                     </div>
@@ -203,24 +235,29 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
                 </DndContext>
               </div>
 
-              {messages.length === 0 && (
+              {messages.length === 0 ||
+                messages.every((msg) => !msg.trim()) ? (
                 <div className="text-center text-gray-500 py-8">
                   <p>No messages added yet.</p>
                   <p className="text-sm mt-2">Add your first message using the input above.</p>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
       <Textarea
-        value={messages[0] || ''}
+        value={messages[0] ?? ""}
         className={cn(
           meta.touched && meta.error && "bg-red-500/20 border-red-500 focus-visible:border-red-500"
         )}
         placeholder={placeholder}
         onChange={handleFirstMessageChange}
+        // minRows={3}
+        id={name}
+        autoComplete="off"
+        aria-label={label}
       />
       <div className="flex justify-between items-center text-xs px-1 text-white">
         <span
@@ -232,7 +269,6 @@ const MessageListManager: React.FC<MessageListManagerProps> = ({
         >
           {meta.error || "placeholder"}
         </span>
-
         {tokens === true && (
           <span
             className={cn(
@@ -274,15 +310,23 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedMessage, setEditedMessage] = useState(message);
 
+  useEffect(() => {
+    setEditedMessage(message);
+  }, [message]);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 50 : undefined,
+    background: isDragging ? '#23272f' : undefined,
   };
 
   const handleSave = () => {
-    onUpdate(editedMessage);
-    setIsEditing(false);
+    if (editedMessage.trim()) {
+      onUpdate(editedMessage);
+      setIsEditing(false);
+    }
   };
 
   const handleCancel = () => {
@@ -290,18 +334,24 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
     setIsEditing(false);
   };
 
-  useEffect(() => {
-    setEditedMessage(message);
-  }, [message]);
+  // When press Enter (not shift+Enter) while editing, save
+  const handleTextareaKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSave();
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      handleCancel();
+    }
+  };
 
   return (
     <div
       ref={setNodeRef}
       style={style}
+      data-testid={`sortable-message-item-${index}`}
     >
-      <div
-        className="flex items-center justify-between gap-3 border border-primary rounded-2xl px-4 py-2 cursor-pointer"
-      >
+      <div className="flex items-center justify-between gap-3 border border-primary rounded-2xl px-4 py-2 cursor-pointer bg-background">
         {isEditing ? (
           <div className="flex-1">
             <Textarea
@@ -309,10 +359,18 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
               onChange={(e) => setEditedMessage(e.target.value)}
               className="min-h-[60px]"
               autoFocus
+              // minRows={2}
+              // maxRows={5}
+              aria-label={`Edit message ${index + 1}`}
+              onKeyDown={handleTextareaKeyDown}
             />
             <div className="flex gap-2 mt-2">
-              <Button size="sm" onClick={handleSave}>Save</Button>
-              <Button size="sm" variant="outline" onClick={handleCancel}>Cancel</Button>
+              <Button size="sm" onClick={handleSave} disabled={!editedMessage.trim()}>
+                Save
+              </Button>
+              <Button size="sm" variant="outline" onClick={handleCancel}>
+                Cancel
+              </Button>
             </div>
           </div>
         ) : (
@@ -321,6 +379,12 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
               <div
                 className="text-white line-clamp-3 flex-1 cursor-text"
                 onClick={() => setIsEditing(true)}
+                tabIndex={0}
+                role="button"
+                aria-label={`Edit message ${index + 1}`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') setIsEditing(true);
+                }}
               >
                 <span className='font-bold'>{index + 1}.</span> {message}
               </div>
@@ -330,7 +394,8 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
                 onClick={onDelete}
                 variant={"ghost"}
                 size={"icon"}
-                aria-label="Delete message"
+                aria-label={`Delete message ${index + 1}`}
+                tabIndex={0}
               >
                 <Trash2 className="w-5 h-5 text-white" />
               </Button>
@@ -341,6 +406,8 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
                 variant={"ghost"}
                 size={"icon"}
                 className="cursor-grab active:cursor-grabbing"
+                aria-label={`Drag row ${index + 1}`}
+                tabIndex={0}
               >
                 <GripVertical className='text-white' />
               </Button>
@@ -349,7 +416,7 @@ const SortableMessage: React.FC<SortableMessageProps> = ({
         )}
       </div>
       {!isEditing && (
-        <p className="text-white text-end text-sm mt-1 mr-1">
+        <p className="text-white text-end text-sm mt-1 mr-1" aria-label={`Token count for message ${index + 1}`}>
           {message.length} tokens
         </p>
       )}

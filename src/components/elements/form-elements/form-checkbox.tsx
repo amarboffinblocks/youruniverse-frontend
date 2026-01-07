@@ -20,27 +20,43 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   label,
   disabled,
   className = "",
+  defaultValue = false,
   ...props
 }) => {
-  const [field, , helpers] = useField(name);
+  const [field, , helpers] = useField<boolean>(name);
   const { value } = field;
-  const { setValue } = helpers;
+  const { setValue, setTouched } = helpers;
 
+  // On mount: if value is undefined and defaultValue is set, set value
   React.useEffect(() => {
-    if (value === undefined && props.defaultValue !== undefined) {
-      setValue(props.defaultValue);
+    // Only set Value if "value" is undefined or null (Formik init issue)
+    if ((value === undefined || value === null) && defaultValue !== undefined) {
+      // Make sure defaultValue is boolean for checkboxes
+      setValue(typeof defaultValue === "boolean" ? defaultValue : false, false); // false = don't validate
     }
-  }, [props.defaultValue, setValue, value]);
+  }, [defaultValue, setValue, value]);
 
+  // Handle checkbox change without triggering form-wide validation
+  const handleCheckedChange = React.useCallback((checked: boolean | "indeterminate") => {
+    console.log(checked)
+    // Update value without triggering validation (shouldValidate: false)
+    // Only mark this field as touched, not the entire form
+    setValue(Boolean(checked), false);
+    setTouched(true, false); // false = don't validate
+  }, [setValue, setTouched]);
+
+  // Avoid passing both checked and defaultChecked
+  // Set checked to always boolean (handles undefined)
   return (
     <div className={`flex items-end pt-1 gap-2 ${className}`}>
       <Checkbox
         id={name}
         checked={!!value}
         disabled={disabled}
-        onCheckedChange={(checked) => setValue(checked)}
-        className="bg-primary/30 backdrop-blur-sm  border-primary/80  font-bold cursor-pointer 
+        onCheckedChange={handleCheckedChange}
+        className="bg-primary/30 backdrop-blur-sm border-primary/80 font-bold cursor-pointer 
                    data-[state=checked]:text-white text-primary rounded-lg size-8"
+        {...props}
       />
       {label && (
         <Label

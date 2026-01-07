@@ -46,6 +46,7 @@ export const queryKeys = {
     list: (filters?: Record<string, unknown>) => [...queryKeys.characters.lists(), filters] as const,
     details: () => [...queryKeys.characters.all, "detail"] as const,
     detail: (id: string) => [...queryKeys.characters.details(), id] as const,
+    create: () => [...queryKeys.characters.all, "create"] as const,
   },
 
   /**
@@ -68,6 +69,20 @@ export const queryKeys = {
     list: (filters?: Record<string, unknown>) => [...queryKeys.lorebooks.lists(), filters] as const,
     details: () => [...queryKeys.lorebooks.all, "detail"] as const,
     detail: (id: string) => [...queryKeys.lorebooks.details(), id] as const,
+    create: () => [...queryKeys.lorebooks.all, "create"] as const,
+  },
+
+  /**
+   * Tags related query keys
+   */
+  tags: {
+    all: ["tags"] as const,
+    lists: () => [...queryKeys.tags.all, "list"] as const,
+    list: (filters?: Record<string, unknown>) => [...queryKeys.tags.lists(), filters] as const,
+    details: () => [...queryKeys.tags.all, "detail"] as const,
+    detail: (id: string) => [...queryKeys.tags.details(), id] as const,
+    popular: (category?: string) => [...queryKeys.tags.all, "popular", category] as const,
+    create: () => [...queryKeys.tags.all, "create"] as const,
   },
 } as const;
 

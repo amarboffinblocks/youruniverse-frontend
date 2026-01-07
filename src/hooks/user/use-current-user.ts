@@ -9,7 +9,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCurrentUser } from "@/lib/api/user";
 import { queryKeys } from "@/lib/api/shared/query-keys";
 import { getAccessToken } from "@/lib/utils/token-storage";
-import { useRefreshToken } from "../auth/use-refresh-token";
 import type { GetCurrentUserResponse } from "@/lib/api/user";
 import type { ApiError } from "@/lib/api/shared/types";
 
@@ -22,7 +21,7 @@ interface UseCurrentUserOptions {
 
 /**
  * Custom hook for fetching current user profile
- * Automatically handles token refresh on 401 errors
+ * Token refresh is now handled automatically by the API client interceptor
  */
 export const useCurrentUser = (options: UseCurrentUserOptions = {}) => {
   const {
@@ -33,12 +32,6 @@ export const useCurrentUser = (options: UseCurrentUserOptions = {}) => {
   } = options;
 
   const queryClient = useQueryClient();
-  const { refreshAsync } = useRefreshToken({
-    onTokenExpired: () => {
-      queryClient.removeQueries({ queryKey: queryKeys.auth.all });
-    },
-  });
-
   const accessToken = getAccessToken();
 
   const query = useQuery({
@@ -48,37 +41,23 @@ export const useCurrentUser = (options: UseCurrentUserOptions = {}) => {
         throw new Error("No access token available");
       }
 
-      try {
-        const response = await getCurrentUser(accessToken);
-        return response.data;
-      } catch (error: any) {
-        // If 401, try to refresh token and retry
-        if (error.statusCode === 401 && retry) {
-          try {
-            await refreshAsync();
-            const newToken = getAccessToken();
-            if (newToken) {
-              const retryResponse = await getCurrentUser(newToken);
-              return retryResponse.data;
-            }
-          } catch (refreshError) {
-            // Refresh failed, clear cache
-            queryClient.removeQueries({ queryKey: queryKeys.auth.all });
-            throw refreshError;
-          }
-        }
-        throw error;
-      }
+      // API client interceptor will automatically handle token refresh on 401
+      const response = await getCurrentUser(accessToken);
+      return response.data;
     },
     enabled: enabled && !!accessToken,
     staleTime: 1000 * 60 * 5, // 5 minutes
     gcTime: 1000 * 60 * 10, // 10 minutes
     retry: (failureCount, error) => {
       const apiError = error as unknown as ApiError;
+      
+      // Don't retry on auth errors - interceptor handles refresh
       if (apiError?.statusCode === 401 || apiError?.statusCode === 403) {
         return false;
       }
-      return failureCount < 2;
+      
+      // Retry other errors up to 2 times if retry is enabled
+      return retry && failureCount < 2;
     },
     retryDelay: 1000,
   });

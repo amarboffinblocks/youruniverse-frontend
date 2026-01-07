@@ -1,32 +1,79 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, HeartPlus, Link2, MoreVertical, Save, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils/date-utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
+import { useToggleFavourite, useToggleSaved } from "@/hooks";
+import type { Character } from "@/lib/api/characters";
 
 interface CharacterCardProps {
-    item?: number
+    character: Character;
+    isSelected?: boolean;
+    onSelect?: (characterId: string, isSelected: boolean) => void;
 }
 
-const CharacterCard: React.FC<CharacterCardProps> = ({ ...props
+
+const CharacterCard: React.FC<CharacterCardProps> = ({
+    character,
+    isSelected = false,
+    onSelect
 }) => {
+    // Memoize computed values
+    const formattedCreatedDate = useMemo(() => formatDate(character.createdAt), [character.createdAt]);
+    const formattedUpdatedDate = useMemo(() => formatDate(character.updatedAt), [character.updatedAt]);
+    const tokens = useMemo(() => character?.tokens ?? 0, [character?.tokens]);
+    const avatarUrl = useMemo(() => character.avatar?.url || "https://github.com/shadcn.png", [character.avatar?.url]);
+    const avatarFallback = useMemo(() => character.name.charAt(0).toUpperCase() || "CN", [character.name]);
+    const hasTags = useMemo(() => Boolean(character?.tags?.length), [character?.tags]);
+    const isFavourite = useMemo(() => character.isFavourite || false, [character.isFavourite]);
+    const isSaved = useMemo(() => character.isSaved || false, [character.isSaved]);
+
+    // Toggle favourite hook
+    const { toggleFavourite, isLoading: isTogglingFavourite } = useToggleFavourite({
+        showToasts: true,
+    });
+
+    // Toggle saved hook
+    const { toggleSaved, isLoading: isTogglingSaved } = useToggleSaved({
+        showToasts: true,
+    });
+
+    // Handle favourite toggle
+    const handleToggleFavourite = useMemo(() => {
+        return () => {
+            toggleFavourite(character.id);
+        };
+    }, [character.id, toggleFavourite]);
+
+    // Handle saved toggle
+    const handleToggleSaved = useMemo(() => {
+        return () => {
+            toggleSaved(character.id);
+        };
+    }, [character.id, toggleSaved]);
+
     return (
         <Card
-            {...props}
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative")}
+            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter transition-transform  backdrop-blur-lg hover:border-2  hover:border-primary  hover:scale-105 duration-500 relative gap-y-0")}
         >
-            <CardHeader className="p-0 m-0 relative">
+            <CardHeader className="p-0 m-0  relative ">
                 <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">
                     <div className="flex flex-col items-center gap-1 justify-center">
                         <Checkbox
-                            id="terms"
+                            id={`character-${character.id}`}
+                            checked={isSelected}
+                            onCheckedChange={(checked) => {
+                                onSelect?.(character.id, checked === true);
+                            }}
                             className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                         />
 
@@ -67,15 +114,45 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ ...props
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Upload className="w-4 h-4 mr-2 text-white" /> Export
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <HeartPlus className="w-4 h-4 mr-2 text-white" /> Favourite
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleFavourite}
+                                    disabled={isTogglingFavourite}
+                                >
+                                    {isFavourite ? (
+                                        <>
+                                            <Heart className="w-4 h-4 mr-2 text-white fill-red-500 stroke-red-500" />
+                                            Remove from Favourites
+                                        </>
+                                    ) : (
+                                        <>
+                                            <HeartPlus className="w-4 h-4 mr-2 text-white" />
+                                            Add to Favourites
+                                        </>
+                                    )}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Save className="w-4 h-4 mr-2 text-white" /> Save
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleSaved}
+                                    disabled={isTogglingSaved}
+                                >
+                                    {isSaved ? (
+                                        <>
+                                            <BookmarkCheck className="w-4 h-4 mr-2 text-white fill-green-500 stroke-green-500" />
+                                            Remove from Saved
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2 text-white" />
+                                            Save Character
+                                        </>
+                                    )}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
-                                </DropdownMenuItem>
+                                <Link href={`/characters/${character.id}/edit`}>
+                                    <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                        <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
+                                    </DropdownMenuItem>
+                                </Link>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Chat className=" mr-2 w-4  h-4 text-white " /> Chat With Me
                                 </DropdownMenuItem>
@@ -84,14 +161,14 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ ...props
                     </div>
 
                 </div>
-                <Avatar className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500  transition brightness-60">
+                <Avatar className="cursor-pointer rounded-none w-full  h-44 hover:scale-105 duration-500  transition brightness-60 ">
                     <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
+                        src={avatarUrl}
+                        alt={character.name}
                         className="object-cover"
                     />
-                    <AvatarFallback className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500  transition brightness-75">
-                        CN
+                    <AvatarFallback className="cursor-pointer rounded-none w-full h-full hover:scale-105 duration-500  transition brightness-75">
+                        {avatarFallback}
                     </AvatarFallback>
                 </Avatar>
 
@@ -99,44 +176,43 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ ...props
             </CardHeader>
 
             {/* Content */}
-            <CardContent className="space-y-2 px-4 ">
+            <CardContent className="space-y-2 py-2  px-4 flex-1 h-full ">
                 <div className="flex justify-between items-center">
-                    <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
-                    <span className="text-xs text-gray-400">Tokens: 1000</span>
+                    <CardTitle className="text-white/80 text-xl font-semibold">{character.name}</CardTitle>
+                    <span className="text-xs text-gray-400">Tokens:- {tokens}</span>
                 </div>
                 <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">
                     <Rating value={3.5} size={14} readOnly={true} />
                     <span className="text-xs">(25k)</span>
                 </div>
-                <div className="flex gap-2 flex-wrap ">
-                    {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (
-                        <Badge
-                            key={idx}
-                        >
-                            {tag}
-                        </Badge>
-                    ))}
-                </div>
+                {hasTags && (
+                    <div className="flex gap-2 flex-wrap ">
+                        {character.tags?.map((tag, idx) => (
+                            <Badge key={`${character.id}-tag-${idx}`}>
+                                {tag}
+                            </Badge>
+                        ))}
+                    </div>
+                )}
                 <CardDescription className="text-gray-400 text-sm line-clamp-3">
-                    Lyriana is a tall, ethereal sorceress with long silver hair that glimmers like moonlight. Her piercing violet eyes seem to hold the mysteries of forgotten worlds, and she carries herself with regal grace. Draped in flowing robes embroidered with celestial patterns, she wields a staff crowned by a radiant crystal that hums softly with arcane energy.
+                    {character.description}
                 </CardDescription>
                 <div className="w-full  flex items-center justify-between text-xs text-gray-300">
-
-                    <span className="">(Private) </span>
+                    <span className="">({character.visibility}) </span>
                     <span className="">-- Author Name </span>
                 </div>
             </CardContent>
 
-            <CardFooter className="flex mt-2 justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
+            <CardFooter className="flex justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
                 <div>
-                    Created:- 20-08-2023
+                    Created:- {formattedCreatedDate}
                 </div>
                 <div>
-                    Updated:- 20-08-2023
+                    Updated:- {formattedUpdatedDate}
                 </div>
             </CardFooter>
         </Card>
     );
 };
 
-export default CharacterCard;
+export default React.memo(CharacterCard);

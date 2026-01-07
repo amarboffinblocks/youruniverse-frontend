@@ -73,7 +73,7 @@ export const characterSchema: FormData[] = [
         label: 'Add To Favourites',
         cols: 4,
         row: 4,
-        // defaultValue: false,
+        defaultValue: false,
     },
     {
         name: "lorebook",
@@ -85,10 +85,10 @@ export const characterSchema: FormData[] = [
         row: 4,
         rules: {
             options: [
-                { label: "Luna AI", value: "luna-ai" },
-                { label: "Astro Bot", value: "astro-bot" },
-                { label: "Neo Guide", value: "neo-guide" },
-                { label: "Zara Mentor", value: "zara-mentor" },
+                { label: "Luna AI", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e91" },
+                { label: "Astro Bot", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e92" },
+                { label: "Neo Guide", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e93" },
+                { label: "Zara Mentor", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e94" },
             ],
         },
         rows: "3",
@@ -103,10 +103,10 @@ export const characterSchema: FormData[] = [
         row: 4,
         rules: {
             options: [
-                { label: "Luna AI", value: "luna-ai" },
-                { label: "Astro Bot", value: "astro-bot" },
-                { label: "Neo Guide", value: "neo-guide" },
-                { label: "Zara Mentor", value: "zara-mentor" },
+                { label: "Luna AI", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e95" },
+                { label: "Astro Bot", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e96" },
+                { label: "Neo Guide", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e97" },
+                { label: "Zara Mentor", value: "8f3c2a7e-4c91-4e6a-9c77-1d8f6b4a2e98" },
             ],
         },
         // defaultValue: "astro-bot",
@@ -188,14 +188,13 @@ export const characterSchema: FormData[] = [
     },
     {
         name: "exampleDialogue",
-        type: "textarea",
+        type: "example-dialogues",
         label: "Example Dialogue",
         required: true,
         placeholder: "Example Dialogues helps the model to speak and act as your character, scenario, world or universe would. PLEASE NOTE, each Example Dialogue will start with <START>, then on the next line the dialogue. Multiple Example Dialogues can be added.",
         cols: 12,
         row: 4,
         rows: "3",
-
         tokens: true,
     },
     {

@@ -11,6 +11,7 @@ import { ArrowLeft, Loader2, CheckCircle2, XCircle } from 'lucide-react'
 import { otpSchema } from '@/schemas/otp-schema'
 import { toFormikValidationSchema } from 'zod-formik-adapter'
 import { useResendOtp, useVerifyOtp } from '@/hooks'
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '../ui/input-otp'
 
 type VerifyOtpRequest = {
     userId: string
@@ -138,7 +139,7 @@ const VerifyOtp: React.FC<VerifyOtpProps> = ({ userId }) => {
 
                     {/* Error State */}
                     {isError && !isLoading && (
-                        <div className="flex flex-col items-center gap-4 py-4">
+                        <div className="flex flex-col items-center gap-4 ">
                             <div className="rounded-full bg-destructive/20 p-4">
                                 <XCircle className="h-8 w-8 text-destructive" />
                             </div>
@@ -162,23 +163,35 @@ const VerifyOtp: React.FC<VerifyOtpProps> = ({ userId }) => {
                             {({ errors, touched, values }) => (
                                 <Form className="space-y-4">
                                     {/* OTP Code Field */}
-                                    <div className="space-y-2">
-                                        <Label htmlFor="code">Verification Code</Label>
-                                        <Field
-                                            as={Input}
-                                            id="code"
-                                            name="code"
-                                            type="number"
-                                            placeholder="Enter OTP code"
-                                            value={values.code || ""}
-                                            autoComplete="one-time-code"
-                                            maxLength={10}
-                                            className={
-                                                touched.code && errors.code
-                                                    ? "border-destructive focus-visible:border-destructive bg-destructive/20"
-                                                    : ""
-                                            }
-                                        />
+                                    <div className="flex flex-col items-center gap-2 mt-4 ">
+                                        {/* <Label htmlFor="code" className=' text-center '>Verification Code</Label> */}
+                                        <Field name="code">
+                                            {({ field, form }: any) => (
+                                                <InputOTP
+                                                    maxLength={6}
+                                                    value={field.value || ""}
+                                                    onChange={(val: string) => form.setFieldValue(field.name, val)}
+                                                >
+                                                    {[0, 1, 2].map(index => (
+                                                        <InputOTPGroup key={index}>
+                                                            <InputOTPSlot
+                                                                index={index}
+                                                                className={touched.code && errors.code ? "border-destructive focus-visible:border-destructive bg-destructive/20" : ""}
+                                                            />
+                                                        </InputOTPGroup>
+                                                    ))}
+                                                    <InputOTPSeparator />
+                                                    {[3, 4, 5].map(index => (
+                                                        <InputOTPGroup key={index}>
+                                                            <InputOTPSlot
+                                                                index={index}
+                                                                className={touched.code && errors.code ? "border-destructive focus-visible:border-destructive bg-destructive/20" : ""}
+                                                            />
+                                                        </InputOTPGroup>
+                                                    ))}
+                                                </InputOTP>
+                                            )}
+                                        </Field>
                                         <ErrorMessage
                                             name="code"
                                             component="div"
@@ -241,7 +254,7 @@ const VerifyOtp: React.FC<VerifyOtpProps> = ({ userId }) => {
                     )}
 
                     {/* Help Links */}
-                    <div className="pt-4 border-t border-primary/30 space-y-2">
+                    <div className=" space-y-2">
                         <p className="text-xs text-muted-foreground">
                             Having trouble?{" "}
                             <Link

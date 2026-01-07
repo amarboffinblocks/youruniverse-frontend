@@ -1,5 +1,5 @@
 
-import VerifyOtp from "@/components/forms/verify-top";
+import VerifyOtp from "@/components/forms/verify-otp";
 import React from "react";
 
 

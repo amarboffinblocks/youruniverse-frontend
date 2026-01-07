@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { logoutUser } from "@/lib/api/auth";
 import { queryKeys } from "@/lib/api/shared/query-keys";
 import { getAccessToken, getRefreshToken, clearTokens } from "@/lib/utils/token-storage";
+import { tokenRefreshManager } from "@/lib/utils/token-refresh-manager";
 import type { LogoutRequest, LogoutResponse } from "@/lib/api/auth";
 import type { ApiError } from "@/lib/api/shared/types";
 
@@ -54,6 +55,9 @@ export const useLogout = (options: UseLogoutOptions = {}) => {
       // Clear tokens
       clearTokens();
 
+      // Reset token refresh manager
+      tokenRefreshManager.reset();
+
       // Clear all auth-related queries
       queryClient.removeQueries({ queryKey: queryKeys.auth.all });
 
@@ -78,6 +82,10 @@ export const useLogout = (options: UseLogoutOptions = {}) => {
     onError: (error: ApiError) => {
       // Even if API call fails, clear local tokens and cache
       clearTokens();
+
+      // Reset token refresh manager
+      tokenRefreshManager.reset();
+
       queryClient.removeQueries({ queryKey: queryKeys.auth.all });
 
       const errorMessage =

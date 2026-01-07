@@ -5,3 +5,6 @@
 
 export * from "./auth";
 export * from "./user";
+export * from "./character";
+export * from "./lorebook";
+export * from "./tag";

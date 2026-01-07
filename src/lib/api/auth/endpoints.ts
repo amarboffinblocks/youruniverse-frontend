@@ -124,10 +124,20 @@ export const checkUsernameAvailability = async (
 
 /**
  * Refresh access token
+ * 
+ * Note: This endpoint does NOT require authentication (no Authorization header).
+ * 
+ * Token Rotation:
+ * - The old refresh token becomes invalid immediately after refresh
+ * - Always use the new refresh token returned in the response for subsequent refreshes
+ * - Access token expires in 15 minutes
+ * - Refresh token expires in 7 days
+ * - If refresh token is expired, user must login again
  */
 export const refreshToken = async (
   data: RefreshTokenRequest
 ): Promise<ApiResponse<RefreshTokenResponse>> => {
+  // Refresh endpoint doesn't require auth - interceptor will skip adding Authorization header
   const response = await apiClient.post<ApiResponse<RefreshTokenResponse>>(
     "/api/v1/auth/refresh",
     data

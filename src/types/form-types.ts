@@ -13,6 +13,7 @@ export type FieldType =
     | "email"
     | "entries"
     | "multiple-file"
+    | "example-dialogues"
     
 
 export interface FormToggleOptions {
