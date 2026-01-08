@@ -34,6 +34,7 @@ const FormExampleDialogues: React.FC<FormExampleDialoguesProps> = ({
     className = "",
     required = false,
     defaultValue = [],
+    ...props
 }) => {
     const [field, meta, helpers] = useField<string[]>(name);
     const { value } = field;

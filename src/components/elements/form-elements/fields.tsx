@@ -35,7 +35,7 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
         case "multiple-file":
             return <FormMultiFile {...props} />
         case "entries":
-            return (<EntriesField />
+            return (<EntriesField {...props} />
 
             );
         case "checkbox":
@@ -46,12 +46,23 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
                     {...props}
                 />
             );
-        case "example-dialogues":
+        case "example-dialogues": {
+            // Normalize defaultValue to string[] for FormExampleDialogues
+            const { defaultValue, ...restProps } = props;
+            const normalizedDefaultValue: string[] | undefined =
+                Array.isArray(defaultValue)
+                    ? defaultValue
+                    : typeof defaultValue === 'string'
+                        ? [defaultValue]
+                        : undefined;
+
             return (
                 <FormExampleDialogues
-                    {...props}
+                    {...restProps}
+                    defaultValue={normalizedDefaultValue}
                 />
             );
+        }
 
         default:
             return null;

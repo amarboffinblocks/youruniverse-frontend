@@ -20,12 +20,18 @@ declare module "axios" {
 /**
  * Get the base API URL from environment variables
  * Falls back to a default if not set
+ * Supports ngrok URLs for development
  */
 const getBaseURL = (): string => {
+  // Check for Next.js environment variable (NEXT_PUBLIC_* variables are exposed to browser)
   if (typeof window !== "undefined") {
-    return "http://localhost:8000";
+    // Browser environment - use NEXT_PUBLIC_API_URL or fallback
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    return apiUrl;
   }
-  return "http://localhost:8000";
+
+  // Server-side environment
+  return process.env.NEXT_PUBLIC_API_URL || process.env.API_URL || "http://localhost:8000";
 };
 
 /**
@@ -38,6 +44,7 @@ const createApiClient = (): AxiosInstance => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true, // Important for CORS with credentials
   });
 
   /**

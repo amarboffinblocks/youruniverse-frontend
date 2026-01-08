@@ -7,11 +7,17 @@ import { ApiResponse } from "../shared/types";
 import type {
   CreateLorebookRequest,
   CreateLorebookResponse,
+  UpdateLorebookRequest,
+  UpdateLorebookResponse,
+  GetLorebookResponse,
+  ListLorebooksResponse,
+  Lorebook,
 } from "./types";
 import { getAccessToken } from "@/lib/utils/token-storage";
 
 /**
  * Create a new lorebook
+ * Supports both multipart/form-data (for file uploads) and application/json
  */
 export const createLorebook = async (
   data: CreateLorebookRequest
@@ -21,17 +27,482 @@ export const createLorebook = async (
     throw new Error("No access token available");
   }
 
-  const response = await apiClient.post<ApiResponse<CreateLorebookResponse>>(
-    "/api/v1/lorebooks",
-    data,
+  // Check if we have file uploads (avatar as File object)
+  const hasFiles = data.avatar instanceof File;
+
+  if (hasFiles) {
+    // Use FormData for multipart/form-data
+    const formData = new FormData();
+
+    // Add all form fields
+    formData.append("name", data.name);
+
+    if (data.description) {
+      formData.append("description", data.description);
+    }
+
+    if (data.rating) {
+      formData.append("rating", data.rating);
+    }
+
+    if (data.visibility) {
+      formData.append("visibility", data.visibility);
+    }
+
+    if (data.tags && data.tags.length > 0) {
+      formData.append("tags", data.tags.join(","));
+    }
+
+    if (data.favourite !== undefined) {
+      formData.append("favourite", String(data.favourite));
+    }
+
+    if (data.entries && data.entries.length > 0) {
+      formData.append("entries", JSON.stringify(data.entries));
+    }
+
+    // Handle file uploads
+    if (data.avatar instanceof File) {
+      formData.append("avatar", data.avatar);
+    } else if (typeof data.avatar === "string") {
+      formData.append("avatar", data.avatar);
+    }
+
+    const response = await apiClient.post<ApiResponse<CreateLorebookResponse>>(
+      "/api/v1/lorebooks",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // Don't set Content-Type - browser will set it with boundary for multipart/form-data
+        },
+      }
+    );
+
+    return response.data;
+  } else {
+    // Use JSON for backward compatibility (when no files are uploaded)
+    const jsonData: any = {
+      name: data.name,
+      description: data.description,
+      rating: data.rating,
+      visibility: data.visibility,
+      tags: data.tags,
+      favourite: data.favourite,
+      entries: data.entries,
+    };
+
+    // Only include avatar if it's a string (URL)
+    if (typeof data.avatar === "string") {
+      jsonData.avatar = data.avatar;
+    }
+
+    const response = await apiClient.post<ApiResponse<CreateLorebookResponse>>(
+      "/api/v1/lorebooks",
+      jsonData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  }
+};
+
+/**
+ * Get a lorebook by ID
+ * @param lorebookId - Lorebook UUID
+ * @param options - Optional configuration
+ */
+export const getLorebook = async (
+  lorebookId: string,
+  options?: { requireAuth?: boolean }
+): Promise<ApiResponse<GetLorebookResponse>> => {
+  const accessToken = getAccessToken();
+
+  if (options?.requireAuth && !accessToken) {
+    throw new Error("Authentication required");
+  }
+
+  const headers: Record<string, string> = {};
+
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  // Validation: Lorebook ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(lorebookId)) {
+    throw new Error("Invalid lorebook ID format");
+  }
+
+  const response = await apiClient.get<ApiResponse<GetLorebookResponse>>(
+    `/api/v1/lorebooks/${lorebookId}`,
     {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
+      headers,
     }
   );
 
   return response.data;
+};
+
+/**
+ * Get a lorebook by slug
+ * @param slug - Lorebook slug
+ * @param options - Optional configuration
+ */
+export const getLorebookBySlug = async (
+  slug: string,
+  options?: { requireAuth?: boolean }
+): Promise<ApiResponse<GetLorebookResponse>> => {
+  const accessToken = getAccessToken();
+
+  if (options?.requireAuth && !accessToken) {
+    throw new Error("Authentication required");
+  }
+
+  const headers: Record<string, string> = {};
+
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  const response = await apiClient.get<ApiResponse<GetLorebookResponse>>(
+    `/api/v1/lorebooks/slug/${slug}`,
+    {
+      headers,
+    }
+  );
+
+  return response.data;
+};
+
+/**
+ * List lorebooks with optional filters
+ * Supports filtering, sorting, and pagination
+ */
+export const listLorebooks = async (
+  filters?: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    rating?: "SFW" | "NSFW";
+    visibility?: "public" | "private";
+    isFavourite?: boolean;
+    isSaved?: boolean;
+    tags?: string[];
+    sortBy?: "createdAt" | "updatedAt" | "name";
+    sortOrder?: "asc" | "desc";
+  }
+): Promise<ApiResponse<ListLorebooksResponse>> => {
+  const accessToken = getAccessToken();
+
+  const headers: Record<string, string> = {};
+
+  // Add authorization header if token is available (optional for personalized results)
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  // Build query parameters
+  const params = new URLSearchParams();
+
+  if (filters?.page !== undefined) {
+    params.append("page", String(filters.page));
+  }
+  if (filters?.limit !== undefined) {
+    params.append("limit", String(filters.limit));
+  }
+  if (filters?.search) {
+    params.append("search", filters.search);
+  }
+  if (filters?.rating) {
+    params.append("rating", filters.rating);
+  }
+  if (filters?.visibility) {
+    params.append("visibility", filters.visibility);
+  }
+  if (filters?.isFavourite !== undefined) {
+    params.append("isFavourite", String(filters.isFavourite));
+  }
+  if (filters?.isSaved !== undefined) {
+    params.append("isSaved", String(filters.isSaved));
+  }
+  if (filters?.tags && filters.tags.length > 0) {
+    params.append("tags", filters.tags.join(","));
+  }
+  if (filters?.sortBy) {
+    params.append("sortBy", filters.sortBy);
+  }
+  if (filters?.sortOrder) {
+    params.append("sortOrder", filters.sortOrder);
+  }
+
+  const queryString = params.toString();
+  const url = `/api/v1/lorebooks${queryString ? `?${queryString}` : ""}`;
+
+  const response = await apiClient.get<ApiResponse<ListLorebooksResponse>>(
+    url,
+    {
+      headers,
+    }
+  );
+
+  return response.data;
+};
+
+/**
+ * Update a lorebook by ID
+ * Supports both multipart/form-data (with files) and JSON (without files)
+ * @param lorebookId - Lorebook UUID
+ * @param data - Lorebook update data
+ */
+export const updateLorebook = async (
+  lorebookId: string,
+  data: UpdateLorebookRequest
+): Promise<ApiResponse<UpdateLorebookResponse>> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Lorebook ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(lorebookId)) {
+    throw new Error("Invalid lorebook ID format");
+  }
+
+  const hasFiles = data.avatar instanceof File;
+
+  if (hasFiles) {
+    // Use FormData for multipart/form-data
+    const formData = new FormData();
+
+    // Add all form fields
+    if (data.name) {
+      formData.append("name", data.name);
+    }
+
+    if (data.description !== undefined) {
+      formData.append("description", data.description || "");
+    }
+
+    if (data.rating) {
+      formData.append("rating", data.rating);
+    }
+
+    if (data.visibility) {
+      formData.append("visibility", data.visibility);
+    }
+
+    if (data.tags && data.tags.length > 0) {
+      formData.append("tags", data.tags.join(","));
+    }
+
+    if (data.favourite !== undefined) {
+      formData.append("favourite", String(data.favourite));
+    }
+
+    if (data.entries && data.entries.length > 0) {
+      formData.append("entries", JSON.stringify(data.entries));
+    }
+
+    // Handle file uploads
+    if (data.avatar instanceof File) {
+      formData.append("avatar", data.avatar);
+    } else if (typeof data.avatar === "string") {
+      formData.append("avatar", data.avatar);
+    }
+
+    const response = await apiClient.put<ApiResponse<UpdateLorebookResponse>>(
+      `/api/v1/lorebooks/${lorebookId}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // Don't set Content-Type - browser will set it with boundary for multipart/form-data
+        },
+      }
+    );
+
+    return response.data;
+  } else {
+    // Use JSON for backward compatibility (when no files are uploaded)
+    const jsonData: any = {};
+
+    if (data.name) {
+      jsonData.name = data.name;
+    }
+    if (data.description !== undefined) {
+      jsonData.description = data.description;
+    }
+    if (data.rating) {
+      jsonData.rating = data.rating;
+    }
+    if (data.visibility) {
+      jsonData.visibility = data.visibility;
+    }
+    if (data.tags) {
+      jsonData.tags = data.tags;
+    }
+    if (data.favourite !== undefined) {
+      jsonData.favourite = data.favourite;
+    }
+    if (data.entries) {
+      jsonData.entries = data.entries;
+    }
+
+    // Only include avatar if it's a string (URL)
+    if (typeof data.avatar === "string") {
+      jsonData.avatar = data.avatar;
+    }
+
+    const response = await apiClient.put<ApiResponse<UpdateLorebookResponse>>(
+      `/api/v1/lorebooks/${lorebookId}`,
+      jsonData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  }
+};
+
+/**
+ * Delete a lorebook by ID
+ * @param lorebookId - Lorebook UUID
+ */
+export const deleteLorebook = async (lorebookId: string): Promise<void> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Lorebook ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(lorebookId)) {
+    throw new Error("Invalid lorebook ID format");
+  }
+
+  try {
+    await apiClient.delete(`/api/v1/lorebooks/${lorebookId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Toggle favourite status of a lorebook
+ * @param lorebookId - Lorebook UUID
+ * @returns Promise with updated lorebook data
+ */
+export const toggleLorebookFavourite = async (
+  lorebookId: string
+): Promise<ApiResponse<{ lorebook: Lorebook; isFavourite: boolean }>> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Lorebook ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(lorebookId)) {
+    throw new Error("Invalid lorebook ID format");
+  }
+
+  try {
+    const response = await apiClient.patch<ApiResponse<{ lorebook: Lorebook; isFavourite: boolean }>>(
+      `/api/v1/lorebooks/${lorebookId}/favourite`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Toggle saved status of a lorebook
+ * @param lorebookId - Lorebook UUID
+ * @returns Promise with updated lorebook data
+ */
+export const toggleLorebookSaved = async (
+  lorebookId: string
+): Promise<ApiResponse<{ lorebook: Lorebook; isSaved: boolean }>> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Lorebook ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(lorebookId)) {
+    throw new Error("Invalid lorebook ID format");
+  }
+
+  try {
+    const response = await apiClient.patch<ApiResponse<{ lorebook: Lorebook; isSaved: boolean }>>(
+      `/api/v1/lorebooks/${lorebookId}/saved`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
 };
 

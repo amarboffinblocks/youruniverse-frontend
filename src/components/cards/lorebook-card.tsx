@@ -1,112 +1,208 @@
-"use client"
-import React, { useState } from 'react'
-import { Card, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
+"use client";
+import React, { useMemo } from "react";
+import Link from "next/link";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { EllipsisVertical, FolderPlus, Heart, HeartPlus, Link2, MessageCircleMore, Save, Share2, SquarePen, Upload } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import Rating from '../elements/rating';
-import { Checkbox } from '../ui/checkbox';
+import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils/date-utils";
+import Rating from "../elements/rating";
+import { Checkbox } from "../ui/checkbox";
+import { useToggleLorebookFavourite, useToggleLorebookSaved } from "@/hooks";
+import type { Lorebook } from "@/lib/api/lorebooks";
 
-const LorebookCard: React.FC = ({ ...props }) => {
-    const [liked, setLiked] = useState<boolean>(false)
-    return (
-        <Card {...props} className="w-full rounded-[3rem] relative duration-500 gap-4 cursor-pointer border shadow-sm hover:shadow-md p-4">
-            <div className="text-xs absolute  right-4 bg-accent px-2 py-1.5 rounded-full  items-center flex gap-x-2">
-                <Checkbox
-                    id="terms"
-                    className="bg-gray-900 border-none data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-5"
-                />
-
-
-                <div className="flex items-center gap-1">
-                    < Heart onClick={() => setLiked(prev => !prev)} size={26} fill={!liked ? "#101828" : "red"} stroke="0" />
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className='cursor-pointer'>
-                            <EllipsisVertical className=" hover:text-accent-foreground" size={15} />
-
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="start">
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <Link2 className="w-4 h-4 mr-2" /> Link
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <FolderPlus className="w-4 h-4 mr-2" /> Add to Realm
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <Share2 className="w-4 h-4 mr-2" /> Share
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <Upload className="w-4 h-4 mr-2" /> Export
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <HeartPlus className="w-4 h-4 mr-2 text-white" /> Favourite
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <Save className="w-4 h-4 mr-2 text-white" /> Save
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <SquarePen className="w-4 h-4 mr-2" /> Edit
-                            </DropdownMenuItem>
-                            {/* <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                <MessageCircleMore className="w-4 h-4 mr-2" /> Chat With Me
-                            </DropdownMenuItem> */}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-
-            </div>
-            <div className='flex gap-x-2 items-center'>
-                <Avatar className="size-24 aspect-square rounded-full border">
-                    <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
-                        className="object-cover"
-                    />
-                    <AvatarFallback className="rounded-md">
-                        TN
-                    </AvatarFallback>
-                </Avatar>
-                <div>
-                    <h2 className="font-semibold text-lg  text-white">
-
-                        Tony Stark
-                    </h2>
-                    <div className=" flex items-center gap-2 text-gray-400 ">
-                        <Rating value={3.5} size={18} readOnly={true} />
-                        {'( 25k )'}
-                    </div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                        {["AI", "Chatbot", "NLP", "ML", "Data",].map((tag: string) =>
-                            < Badge key={tag} >
-                                {tag}
-                            </Badge>
-                        )
-                        }
-                    </div>
-                </div>
-            </div>
-            <CardContent className='space-y-2'>
-                <CardDescription className=' line-clamp-3'>
-                    Lyriana is a tall, ethereal sorceress with long silver hair that glimmers like moonlight. Her piercing violet eyes seem to hold the mysteries of forgotten worlds, and she carries herself with regal grace. Draped in flowing robes embroidered with celestial patterns, she wields a staff crowned by a radiant crystal that hums softly with arcane energy.
-                </CardDescription>
-                <Button className="cursor-pointer float-end  "  > <MessageCircleMore />Chat with Tony Stark </Button>
-
-            </CardContent>
-            <CardFooter className='text-xs text-muted flex justify-between border-t pt-4 border-primary'>
-                <span>
-                    Created on 12-09-2025
-                </span>
-                <span>
-                    Updated on 16-09-2025
-
-                </span>
-            </CardFooter>
-
-        </Card>
-    )
+interface LorebookCardProps {
+    lorebook: Lorebook;
+    isSelected?: boolean;
+    onSelect?: (lorebookId: string, isSelected: boolean) => void;
 }
 
-export default LorebookCard 
+const LorebookCard: React.FC<LorebookCardProps> = ({
+    lorebook,
+    isSelected = false,
+    onSelect
+}) => {
+    // Memoize computed values
+    const formattedCreatedDate = useMemo(() => formatDate(lorebook.createdAt), [lorebook.createdAt]);
+    const formattedUpdatedDate = useMemo(() => formatDate(lorebook.updatedAt), [lorebook.updatedAt]);
+    const entriesCount = useMemo(() => lorebook?.entries?.length ?? 0, [lorebook?.entries]);
+    const avatarUrl = useMemo(() => lorebook.avatar?.url || "https://github.com/shadcn.png", [lorebook.avatar?.url]);
+    const avatarFallback = useMemo(() => lorebook.name.charAt(0).toUpperCase() || "LB", [lorebook.name]);
+    const hasTags = useMemo(() => Boolean(lorebook?.tags?.length), [lorebook?.tags]);
+    const isFavourite = useMemo(() => lorebook.isFavourite || false, [lorebook.isFavourite]);
+    const isSaved = useMemo(() => lorebook.isSaved || false, [lorebook.isSaved]);
+
+    // Toggle favourite hook
+    const { toggleFavourite, isLoading: isTogglingFavourite } = useToggleLorebookFavourite({
+        showToasts: true,
+    });
+
+    // Toggle saved hook
+    const { toggleSaved, isLoading: isTogglingSaved } = useToggleLorebookSaved({
+        showToasts: true,
+    });
+
+    // Handle favourite toggle
+    const handleToggleFavourite = useMemo(() => {
+        return () => {
+            toggleFavourite(lorebook.id);
+        };
+    }, [lorebook.id, toggleFavourite]);
+
+    // Handle saved toggle
+    const handleToggleSaved = useMemo(() => {
+        return () => {
+            toggleSaved(lorebook.id);
+        };
+    }, [lorebook.id, toggleSaved]);
+
+    return (
+        <Card
+            className={cn(" rounded-4xl max-w-xs  border overflow-hidden bg-primary/20 backdrop-filter transition-transform  backdrop-blur-lg hover:border-2  hover:border-primary  hover:scale-105 duration-500 relative gap-y-0")}
+        >
+            <CardHeader className="p-0 m-0  relative ">
+                <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">
+                    <div className="flex flex-col items-center gap-1 justify-center">
+                        <Checkbox
+                            id={`lorebook-${lorebook.id}`}
+                            checked={isSelected}
+                            onCheckedChange={(checked) => {
+                                onSelect?.(lorebook.id, checked === true);
+                            }}
+                            className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="bg-gray-900 size-6"
+                                >
+                                    <MoreVertical className="size-3" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent
+                                align="end"
+                            >
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger className="w-full  space-x-4"><Link2 className="w-4 h-4 mr-2 text-white" /> Link</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Character</DropdownMenuItem>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Persona</DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Realm
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <Share2 className="w-4 h-4 mr-2 text-white" /> Share
+                                </DropdownMenuItem>
+                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                    <Upload className="w-4 h-4 mr-2 text-white" /> Export
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleFavourite}
+                                    disabled={isTogglingFavourite}
+                                >
+                                    {isFavourite ? (
+                                        <>
+                                            <Heart className="w-4 h-4 mr-2 text-white fill-red-500 stroke-red-500" />
+                                            Remove from Favourites
+                                        </>
+                                    ) : (
+                                        <>
+                                            <HeartPlus className="w-4 h-4 mr-2 text-white" />
+                                            Add to Favourites
+                                        </>
+                                    )}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleSaved}
+                                    disabled={isTogglingSaved}
+                                >
+                                    {isSaved ? (
+                                        <>
+                                            <BookmarkCheck className="w-4 h-4 mr-2 text-white fill-green-500 stroke-green-500" />
+                                            Remove from Saved
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2 text-white" />
+                                            Save Lorebook
+                                        </>
+                                    )}
+                                </DropdownMenuItem>
+                                <Link href={`/lorebooks/${lorebook.id}/edit`}>
+                                    <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                        <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
+                                    </DropdownMenuItem>
+                                </Link>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
+
+                </div>
+                <Avatar className="cursor-pointer rounded-none w-full  h-44 hover:scale-105 duration-500  transition brightness-60 ">
+                    <AvatarImage
+                        src={avatarUrl}
+                        alt={lorebook.name}
+                        className="object-cover"
+                    />
+                    <AvatarFallback className="cursor-pointer rounded-none w-full h-full hover:scale-105 duration-500  transition brightness-75">
+                        {avatarFallback}
+                    </AvatarFallback>
+                </Avatar>
+            </CardHeader>
+
+            {/* Content */}
+            <CardContent className="space-y-2 py-2  px-4 flex-1 h-full ">
+                <div className="flex justify-between items-center">
+                    <CardTitle className="text-white/80 text-xl font-semibold">{lorebook.name}</CardTitle>
+                    <span className="text-xs text-gray-400">Tokens:- {entriesCount}</span>
+                </div>
+                <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">
+                    <Rating value={lorebook.rating === "NSFW" ? 5 : 3.5} size={14} readOnly={true} />
+                    <span className="text-xs">({lorebook.rating})</span>
+                </div>
+                {hasTags && (
+                    <div className="flex gap-2 flex-wrap ">
+                        {lorebook.tags?.map((tag, idx) => (
+                            <Badge key={`${lorebook.id}-tag-${idx}`}>
+                                {tag}
+                            </Badge>
+                        ))}
+                    </div>
+                )}
+                <CardDescription className="text-gray-400 text-sm line-clamp-3">
+                    {lorebook.description || "No description available"}
+                </CardDescription>
+                <div className="w-full  flex items-center justify-between text-xs text-gray-300">
+                    <span className="">({lorebook.visibility}) </span>
+                    <span className="">-- Author Name </span>
+                </div>
+            </CardContent>
+
+            <CardFooter className="flex justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
+                <div>
+                    Created:- {formattedCreatedDate}
+                </div>
+                <div>
+                    Updated:- {formattedUpdatedDate}
+                </div>
+            </CardFooter>
+        </Card>
+    );
+};
+
+export default React.memo(LorebookCard);

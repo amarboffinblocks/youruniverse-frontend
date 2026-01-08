@@ -19,47 +19,95 @@ export type LorebookVisibility = "public" | "private";
  * Lorebook Entry
  */
 export interface LorebookEntry {
-  keyword: string;
+  id: string;
+  lorebookId: string;
+  keywords: string[];
   context: string;
-  priority?: number;
-  isEnabled?: boolean;
+  isEnabled: boolean;
+  priority: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 /**
- * Avatar Object
+ * Create Lorebook Entry Input
  */
-export interface Avatar {
-  url: string;
+export interface CreateLorebookEntryInput {
+  keywords: string[];
+  context: string;
+  isEnabled?: boolean;
+  priority?: number;
+}
+
+/**
+ * Update Lorebook Entry Input
+ */
+export interface UpdateLorebookEntryInput {
+  keywords?: string[];
+  context?: string;
+  isEnabled?: boolean;
+  priority?: number;
 }
 
 /**
  * Create Lorebook Request
+ * Supports both File objects (for multipart/form-data) and strings (for JSON)
  */
 export interface CreateLorebookRequest {
   name: string;
   description?: string;
-  visibility: LorebookVisibility;
   rating: LorebookRating;
-  avatar?: Avatar;
+  visibility: LorebookVisibility;
   tags?: string[];
-  entries?: LorebookEntry[];
+  favourite?: boolean;
+  avatar?: File | string;
+  entries?: CreateLorebookEntryInput[];
+}
+
+/**
+ * Update Lorebook Request
+ * Supports both File objects (for multipart/form-data) and strings (for JSON)
+ * All fields are optional for updates
+ */
+export interface UpdateLorebookRequest {
+  name?: string;
+  description?: string;
+  rating?: LorebookRating;
+  visibility?: LorebookVisibility;
+  tags?: string[];
+  favourite?: boolean;
+  avatar?: File | string;
+  entries?: CreateLorebookEntryInput[];
+}
+
+/**
+ * Lorebook Image Asset
+ */
+export interface LorebookImage {
+  url: string;
+  width?: number;
+  height?: number;
 }
 
 /**
  * Lorebook Response Data
+ * Matches the API response structure
  */
 export interface Lorebook {
   id: string;
+  userId: string;
   name: string;
-  description?: string;
-  visibility: LorebookVisibility;
+  slug: string;
+  description?: string | null;
   rating: LorebookRating;
-  avatar?: Avatar | null;
-  tags?: string[];
+  visibility: LorebookVisibility;
+  isFavourite: boolean;
+  isSaved: boolean;
+  avatar?: LorebookImage | null;
+  tags: string[];
   entries?: LorebookEntry[];
   createdAt: string;
   updatedAt: string;
-  userId: string;
 }
 
 /**
@@ -70,3 +118,35 @@ export interface CreateLorebookResponse {
   message?: string;
 }
 
+/**
+ * Update Lorebook Response
+ */
+export interface UpdateLorebookResponse {
+  lorebook: Lorebook;
+  message?: string;
+}
+
+/**
+ * Get Lorebook Response
+ */
+export interface GetLorebookResponse {
+  lorebook: Lorebook;
+}
+
+/**
+ * Pagination Info
+ */
+export interface PaginationInfo {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+}
+
+/**
+ * List Lorebooks Response
+ */
+export interface ListLorebooksResponse {
+  lorebooks: Lorebook[];
+  pagination: PaginationInfo;
+}

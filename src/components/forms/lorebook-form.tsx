@@ -14,7 +14,7 @@ import {
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 import { Button } from "../ui/button";
 import { useCreateLorebook } from "@/hooks";
-import type { CreateLorebookRequest, LorebookEntry } from "@/lib/api/lorebooks";
+import type { CreateLorebookRequest, CreateLorebookEntryInput } from "@/lib/api/lorebooks";
 
 interface Props {
     lorebookId?: string;
@@ -39,76 +39,62 @@ const LorebookForm: React.FC<Props> = () => {
      * Maps form values to API request format
      */
     const handleSubmit = async (values: Record<string, any>) => {
-        // Process entries - handle multiple formats
-        let entries: LorebookEntry[] | undefined = undefined;
+        // Process entries - format: { keywords: string[], context: string }[]
+        let entries: CreateLorebookEntryInput[] | undefined = undefined;
 
-        // Handle entries in different formats
         if (values.entries && Array.isArray(values.entries)) {
-            // If entries is already an array of objects
-            entries = values.entries
-                .filter((entry: any) => entry && (entry.keyword || entry.context))
-                .map((entry: any, index: number) => ({
-                    keyword: entry.keyword || "",
-                    context: entry.context || "",
-                    priority: entry.priority || index + 1,
-                    isEnabled: entry.isEnabled !== undefined ? entry.isEnabled : true,
-                }))
-                .filter((entry: LorebookEntry) => entry.keyword && entry.context);
-        } else if (values.keyword || values.context) {
-            // Handle single entry or comma-separated keywords
-            if (Array.isArray(values.keyword) && Array.isArray(values.context)) {
-                // Multiple entries as arrays
-                entries = values.keyword
-                    .map((keyword: string, index: number) => ({
-                        keyword: keyword || "",
-                        context: values.context[index] || "",
-                        priority: index + 1,
-                        isEnabled: true,
-                    }))
-                    .filter((entry: LorebookEntry) => entry.keyword && entry.context);
-            } else if (typeof values.keyword === 'string' && values.context) {
-                // Single entry - check if keyword contains commas (multiple keywords)
-                const keywords = values.keyword.split(',').map((k: string) => k.trim()).filter(Boolean);
-                const context = typeof values.context === 'string' ? values.context : String(values.context);
+            // Entries field format: { keywords: string[], context: string }[]
+            // Backend expects same format: { keywords: string[], context: string }[]
+            const convertedEntries: CreateLorebookEntryInput[] = [];
+            let priority = 1;
 
-                if (keywords.length > 1) {
-                    // Multiple keywords with same context
-                    entries = keywords.map((keyword: string, index: number) => ({
-                        keyword: keyword,
-                        context: context,
-                        priority: index + 1,
-                        isEnabled: true,
-                    }));
-                } else if (keywords.length === 1) {
-                    // Single keyword with context
-                    entries = [{
-                        keyword: keywords[0],
-                        context: context,
-                        priority: 1,
-                        isEnabled: true,
-                    }];
+            values.entries.forEach((entry: any) => {
+                if (entry && entry.keywords && Array.isArray(entry.keywords) && entry.context) {
+                    // Filter out empty keywords and ensure at least one keyword
+                    const validKeywords = entry.keywords
+                        .map((k: string) => k.trim())
+                        .filter((k: string) => k.length > 0);
+
+                    if (validKeywords.length > 0) {
+                        convertedEntries.push({
+                            keywords: validKeywords,
+                            context: entry.context.trim(),
+                            priority: priority++,
+                            isEnabled: entry.isEnabled !== undefined ? entry.isEnabled : true,
+                        });
+                    }
+                } else if (entry && entry.keyword && entry.context) {
+                    // Legacy format: { keyword: string, context: string } - convert to array
+                    const keyword = entry.keyword.trim();
+                    if (keyword.length > 0) {
+                        convertedEntries.push({
+                            keywords: [keyword],
+                            context: entry.context.trim(),
+                            priority: priority++,
+                            isEnabled: entry.isEnabled !== undefined ? entry.isEnabled : true,
+                        });
+                    }
                 }
-            }
+            });
+
+            entries = convertedEntries.length > 0 ? convertedEntries : undefined;
         }
 
         // Process avatar - handle file upload or URL
-        let avatar: { url: string } | undefined = undefined;
+        let avatar: File | string | undefined = undefined;
         if (values.avatar) {
             if (typeof values.avatar === 'string') {
                 // Direct URL string
-                avatar = { url: values.avatar };
+                avatar = values.avatar;
             } else if (values.avatar instanceof File) {
-                // File object - in a real implementation, you'd upload this first
-                // For now, we'll create a temporary URL or skip it
-                // TODO: Implement file upload for avatar
-                console.warn("File upload for avatar not yet implemented");
+                // File object
+                avatar = values.avatar;
             } else if (values.avatar?.url) {
-                // Already in the correct format
-                avatar = { url: values.avatar.url };
+                // Already in the correct format - extract URL string
+                avatar = values.avatar.url;
             } else if (values.avatar?.file) {
                 // File object wrapped in an object
-                // TODO: Implement file upload
-                console.warn("File upload for avatar not yet implemented");
+                avatar = values.avatar.file;
             }
         }
 

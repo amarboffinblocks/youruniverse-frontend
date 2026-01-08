@@ -63,7 +63,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
 
     return (
         <Card
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter transition-transform  backdrop-blur-lg hover:border-2  hover:border-primary  hover:scale-105 duration-500 relative gap-y-0")}
+            className={cn(" rounded-4xl max-w-xs border overflow-hidden bg-primary/20 backdrop-filter transition-transform  backdrop-blur-lg hover:border-2  hover:border-primary  hover:scale-105 duration-500 relative gap-y-0")}
         >
             <CardHeader className="p-0 m-0  relative ">
                 <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">

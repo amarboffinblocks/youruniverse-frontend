@@ -8,7 +8,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
     {
         name: "lorebookName",
@@ -23,7 +23,7 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
     {
         name: "visiable",
@@ -52,7 +52,7 @@ export const lorebookSchema: FormData[] = [
         row: 4,
         defaultValue: "SFW",
     },
-     {
+    {
         name: "favourite",
         type: "checkbox",
         required: true,
@@ -61,11 +61,11 @@ export const lorebookSchema: FormData[] = [
         row: 4,
         // defaultValue: false,
     },
-   {
+    {
         name: "linkToCharacters",
         type: "select",
         required: true,
-        label:"Link to Character",
+        label: "Link to Character",
         placeholder: "Link to Character",
         cols: 12,
         row: 4,
@@ -78,13 +78,13 @@ export const lorebookSchema: FormData[] = [
             ],
         },
         rows: "3",
-        
+
     },
     {
         name: "connectToPersona",
         type: "select",
         required: true,
-        label:"Link to Persona",
+        label: "Link to Persona",
         placeholder: "Link to Persona",
         cols: 12,
         row: 4,
@@ -97,7 +97,7 @@ export const lorebookSchema: FormData[] = [
             ],
         },
         rows: "3",
-        
+
     },
     {
         name: "tags",
@@ -111,14 +111,14 @@ export const lorebookSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
-     {
-        name: "keyword",
+    {
+        name: "entries",
         type: "entries",
-        label: "Keyword or Term ",
+        label: "Lorebook Entries",
         required: true,
-        placeholder: "Write the Keywords",
+        placeholder: "Add keywords and context for your lorebook",
         cols: 12,
         row: 4,
         rows: "3",
@@ -133,7 +133,7 @@ export const lorebookSchema: FormData[] = [
     //     cols: 12,
     //     row: 4,
     //     rows: "3",
-        
+
     //     tokens: true,
     // },
 ]
