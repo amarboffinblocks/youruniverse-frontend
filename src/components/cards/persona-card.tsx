@@ -1,36 +1,115 @@
 "use client";
-
+import React, { useMemo, useState } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, HeartPlus, Link2, MoreVertical, Save, Share2, SquarePen, Upload } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload, Trash } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import React from "react";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/utils/date-utils";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useTogglePersonaFavourite, useTogglePersonaSaved, useDeletePersona } from "@/hooks";
+import type { Persona } from "@/lib/api/personas";
 
 interface PersonaCardProps {
-    item?: number
+    persona: Persona;
+    isSelected?: boolean;
+    onSelect?: (personaId: string, isSelected: boolean) => void;
 }
 
 const PersonaCard: React.FC<PersonaCardProps> = ({
-    ...props
+    persona,
+    isSelected = false,
+    onSelect
 }) => {
+    // Memoize computed values
+    const formattedCreatedDate = useMemo(() => formatDate(persona.createdAt), [persona.createdAt]);
+    const formattedUpdatedDate = useMemo(() => formatDate(persona.updatedAt), [persona.updatedAt]);
+    const avatarUrl = useMemo(() => persona.avatar?.url || "https://github.com/shadcn.png", [persona.avatar?.url]);
+    const avatarFallback = useMemo(() => persona.name.charAt(0).toUpperCase() || "P", [persona.name]);
+    const hasTags = useMemo(() => Boolean(persona?.tags?.length), [persona?.tags]);
+    const isFavourite = useMemo(() => persona.isFavourite || false, [persona.isFavourite]);
+    const isSaved = useMemo(() => persona.isSaved || false, [persona.isSaved]);
+
+    // Delete dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+    // Toggle favourite hook
+    const { toggleFavourite, isLoading: isTogglingFavourite } = useTogglePersonaFavourite({
+        showToasts: true,
+    });
+
+    // Toggle saved hook
+    const { toggleSaved, isLoading: isTogglingSaved } = useTogglePersonaSaved({
+        showToasts: true,
+    });
+
+    // Delete persona hook
+    const { deletePersona, isLoading: isDeleting } = useDeletePersona({
+        showToasts: true,
+        onSuccess: () => {
+            setDeleteDialogOpen(false);
+        },
+    });
+
+    // Handle favourite toggle
+    const handleToggleFavourite = useMemo(() => {
+        return () => {
+            toggleFavourite(persona.id);
+        };
+    }, [persona.id, toggleFavourite]);
+
+    // Handle saved toggle
+    const handleToggleSaved = useMemo(() => {
+        return () => {
+            toggleSaved(persona.id);
+        };
+    }, [persona.id, toggleSaved]);
+
+    // Handle delete click
+    const handleDeleteClick = useMemo(() => {
+        return () => {
+            setDeleteDialogOpen(true);
+        };
+    }, []);
+
+    // Handle confirm delete
+    const handleConfirmDelete = useMemo(() => {
+        return () => {
+            deletePersona(persona.id);
+        };
+    }, [persona.id, deletePersona]);
+
     return (
         <Card
-            {...props}
-            className={cn(" rounded-4xl  border overflow-hidden bg-primary/20 backdrop-filter backdrop-blur-lg  hover:border-primary hover:bg-primary/40 hover:shadow-2xl duration-300 relative")}
+            className={cn(" rounded-4xl max-w-xs  border overflow-hidden bg-primary/20 backdrop-filter transition-transform  backdrop-blur-lg hover:border-2  hover:border-primary  hover:scale-105 duration-500 relative gap-y-0")}
         >
-            <CardHeader className="p-0 m-0 relative">
-                <div className="w-full absolute top-3 z-10 flex items-center  justify-between px-4  text-white ">
-                    <div className="flex items-center gap-2">
+            <CardHeader className="p-0 m-0  relative ">
+                <div className="w-full absolute top-3 z-10 flex items-start  justify-between px-4  text-white ">
+                    <div className="flex flex-col items-center gap-1 justify-center">
                         <Checkbox
-                            id="terms"
+                            id={`persona-${persona.id}`}
+                            checked={isSelected}
+                            onCheckedChange={(checked) => {
+                                onSelect?.(persona.id, checked === true);
+                            }}
                             className="bg-gray-900 border-primary/80 data-[state=checked]:bg-gray-900 cursor-pointer data-[state=checked]:text-white text-white rounded-full size-6"
                         />
                     </div>
+
                     <div className="flex items-center gap-1">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -44,13 +123,19 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
                                 align="end"
-                            // className=" bg-gray-900 text-white border border-gray-800"
                             >
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer ">
-                                    <Link2 className="w-4 h-4 mr-2 text-white" /> Link
-                                </DropdownMenuItem>
+                                <DropdownMenuSub>
+                                    <DropdownMenuSubTrigger className="w-full  space-x-4"><Link2 className="w-4 h-4 mr-2 text-white" /> Link</DropdownMenuSubTrigger>
+                                    <DropdownMenuPortal>
+                                        <DropdownMenuSubContent>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Character</DropdownMenuItem>
+                                            <DropdownMenuItem><Link2 className="w-4 h-4 mr-2 text-white" />Link to Lorebook</DropdownMenuItem>
+                                        </DropdownMenuSubContent>
+                                    </DropdownMenuPortal>
+                                </DropdownMenuSub>
+
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to realm
+                                    <FolderPlus className="w-4 h-4 mr-2 text-white" /> Add to Realm
                                 </DropdownMenuItem>
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Share2 className="w-4 h-4 mr-2 text-white" /> Share
@@ -58,72 +143,129 @@ const PersonaCard: React.FC<PersonaCardProps> = ({
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Upload className="w-4 h-4 mr-2 text-white" /> Export
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <HeartPlus className="w-4 h-4 mr-2 text-white" /> Favourite
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleFavourite}
+                                    disabled={isTogglingFavourite}
+                                >
+                                    {isFavourite ? (
+                                        <>
+                                            <Heart className="w-4 h-4 mr-2 text-white fill-red-500 stroke-red-500" />
+                                            Remove from Favourites
+                                        </>
+                                    ) : (
+                                        <>
+                                            <HeartPlus className="w-4 h-4 mr-2 text-white" />
+                                            Add to Favourites
+                                        </>
+                                    )}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Save className="w-4 h-4 mr-2 text-white" /> Save
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleToggleSaved}
+                                    disabled={isTogglingSaved}
+                                >
+                                    {isSaved ? (
+                                        <>
+                                            <BookmarkCheck className="w-4 h-4 mr-2 text-white fill-green-500 stroke-green-500" />
+                                            Remove from Saved
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Save className="w-4 h-4 mr-2 text-white" />
+                                            Save Persona
+                                        </>
+                                    )}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
+                                <Link href={`/personas/${persona.id}/edit`}>
+                                    <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                        <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
+                                    </DropdownMenuItem>
+                                </Link>
+                                <DropdownMenuItem
+                                    variant="destructive"
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleDeleteClick}
+                                >
+                                    <Trash className="w-4 h-4 mr-2 text-white" /> Delete
                                 </DropdownMenuItem>
-                                {/* <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
-                                    <Chat className=" mr-2 w-4  h-4 text-white " /> Chat With Me
-                                </DropdownMenuItem> */}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
+
                 </div>
-                <Avatar className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500  transition brightness-60">
+
+                {/* Delete Confirmation Dialog */}
+                <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                    <AlertDialogContent className="bg-primary/30 backdrop-blur-sm border-primary ">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-white">Delete Persona?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Are you sure you want to delete "{persona.name}"? This action cannot be undone.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={handleConfirmDelete}
+                                disabled={isDeleting}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                                {isDeleting ? "Deleting..." : "Delete"}
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+                <Avatar className="cursor-pointer rounded-none w-full  h-44 hover:scale-105 duration-500  transition brightness-60 ">
                     <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="@shadcn"
+                        src={avatarUrl}
+                        alt={persona.name}
                         className="object-cover"
                     />
-                    <AvatarFallback className="cursor-pointer rounded-none w-full h-48 hover:scale-105 duration-500  transition brightness-75">
-                        CN
+                    <AvatarFallback className="cursor-pointer rounded-none w-full h-full hover:scale-105 duration-500  transition brightness-75">
+                        {avatarFallback}
                     </AvatarFallback>
                 </Avatar>
             </CardHeader>
 
             {/* Content */}
-            <CardContent className="space-y-2 px-4 ">
+            <CardContent className="space-y-2 py-2  px-4 flex-1 h-full ">
                 <div className="flex justify-between items-center">
-                    <CardTitle className="text-white/80 text-xl font-semibold">Tony Stark</CardTitle>
-                    <span className="text-xs text-gray-400">Tokens: 1000</span>
+                    <CardTitle className="text-white/80 text-xl font-semibold">{persona.name}</CardTitle>
+                    <span className="text-xs text-gray-400">Characters: {persona.characters?.length || 0}</span>
                 </div>
                 <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">
-                    <Rating value={3.5} size={14} readOnly={true} />
-                    <span className="text-xs">(25k)</span>
+                    <Rating value={persona.rating === "NSFW" ? 5 : 3.5} size={14} readOnly={true} />
+                    <span className="text-xs">({persona.rating})</span>
                 </div>
-                <div className="flex gap-2 flex-wrap ">
-                    {["AI", "Chatbot", "NLP", "ML", "Data"].map((tag, idx) => (
-                        <Badge
-                            key={idx}
-                        >
-                            {tag}
-                        </Badge>
-                    ))}
-                </div>
+                {hasTags && (
+                    <div className="flex gap-2 flex-wrap ">
+                        {persona.tags?.map((tag, idx) => (
+                            <Badge key={`${persona.id}-tag-${idx}`}>
+                                {tag}
+                            </Badge>
+                        ))}
+                    </div>
+                )}
                 <CardDescription className="text-gray-400 text-sm line-clamp-3">
-                    Lyriana is a tall, ethereal sorceress with long silver hair that glimmers like moonlight. Her piercing violet eyes seem to hold the mysteries of forgotten worlds, and she carries herself with regal grace. Draped in flowing robes embroidered with celestial patterns, she wields a staff crowned by a radiant crystal that hums softly with arcane energy.
+                    {persona.description || "No description available"}
                 </CardDescription>
                 <div className="w-full  flex items-center justify-between text-xs text-gray-300">
-                    <span className="">(Private) </span>
+                    <span className="">({persona.visibility}) </span>
                     <span className="">-- Author Name </span>
                 </div>
             </CardContent>
 
-            <CardFooter className="flex mt-3 justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
+            <CardFooter className="flex justify-between px-4 py-2  border-t border-primary/70 text-[10px] text-gray-500">
                 <div>
-                    Created:- 20-08-2023
+                    Created:- {formattedCreatedDate}
                 </div>
                 <div>
-                    Updated:- 20-08-2023
+                    Updated:- {formattedUpdatedDate}
                 </div>
             </CardFooter>
         </Card>
     );
 };
 
-export default PersonaCard;
+export default React.memo(PersonaCard);
