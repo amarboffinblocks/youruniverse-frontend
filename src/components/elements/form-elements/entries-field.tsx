@@ -41,11 +41,22 @@ const EntriesField: React.FC<EntriesFieldProps> = ({ name = 'entries' }) => {
         return inputs;
     });
 
-    // Sync with Formik value changes (external updates)
+    // Sync with Formik value changes (external updates, including reset)
     useEffect(() => {
+        // Handle reset case: when value is empty array or undefined, reset to single empty entry
+        if (!value || (Array.isArray(value) && value.length === 0)) {
+            const emptyEntry = [{ keywords: [], context: '' }];
+            setEntries(emptyEntry);
+            setKeywordInputs({ 0: '' });
+            return;
+        }
+
+        // Handle normal value updates
         if (Array.isArray(value)) {
             const valueStr = JSON.stringify(value);
             const entriesStr = JSON.stringify(entries);
+
+            // Check if value actually changed (deep comparison)
             if (valueStr !== entriesStr) {
                 const newEntries = value.length > 0 ? value : [{ keywords: [], context: '' }];
                 setEntries(newEntries);
@@ -144,7 +155,7 @@ const EntriesField: React.FC<EntriesFieldProps> = ({ name = 'entries' }) => {
         };
         setEntries(updatedEntries);
     };
-   
+
     return (
         <div className='space-y-6'>
             {entries.map((entry, index) => {

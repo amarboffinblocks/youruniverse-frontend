@@ -1,6 +1,5 @@
 "use client"
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { useRef, useEffect, useMemo } from "react";
 import DynamicForm from "../elements/form-elements/dynamic-form";
 import { lorebookSchema } from "@/schemas";
 import {
@@ -13,20 +12,30 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Menu, Copy, Link as LinkIcon, Trash2, Upload, Download, Folder, RotateCcw } from "lucide-react";
 import { Button } from "../ui/button";
-import { useCreateLorebook } from "@/hooks";
-import type { CreateLorebookRequest, CreateLorebookEntryInput } from "@/lib/api/lorebooks";
+import { useCreateLorebook, useUpdateLorebook, useGetLorebook } from "@/hooks";
+import type { CreateLorebookRequest, UpdateLorebookRequest, CreateLorebookEntryInput, LorebookEntry } from "@/lib/api/lorebooks";
 
 interface Props {
     lorebookId?: string;
 }
 
-const LorebookForm: React.FC<Props> = () => {
-    const router = useRouter();
+const LorebookForm: React.FC<Props> = ({ lorebookId }) => {
+    const isEditMode = !!lorebookId;
+    const formRef = useRef<{ resetForm: () => void } | null>(null);
+
+    // Fetch lorebook data if editing
+    const { lorebook, isLoading: isLoadingLorebook } = useGetLorebook(lorebookId || "", {
+        enabled: isEditMode,
+        requireAuth: true,
+        showErrorToast: true,
+    });
+
+    // Create lorebook mutation
     const {
         createLorebook,
-        isLoading,
-        isSuccess,
-        error,
+        isLoading: isCreating,
+        isSuccess: isCreateSuccess,
+        reset: resetCreateMutation,
     } = useCreateLorebook({
         onSuccess: (data) => {
 
@@ -34,11 +43,103 @@ const LorebookForm: React.FC<Props> = () => {
         showToasts: true,
     });
 
+    // Update lorebook mutation
+    const {
+        updateLorebook,
+        isLoading: isUpdating,
+        isSuccess: isUpdateSuccess,
+    } = useUpdateLorebook({
+        lorebookId: lorebookId || "",
+        onSuccess: (data) => {
+            // Navigate to lorebook detail page after successful update
+        },
+        showToasts: true,
+    });
+
+    const isLoading = isCreating || isUpdating || isLoadingLorebook;
+    const isSuccess = isCreateSuccess || isUpdateSuccess;
+
+    // Reset form after successful creation (only in create mode)
+    useEffect(() => {
+        if (isCreateSuccess && !isEditMode && formRef.current) {
+            // Reset form to default values
+            formRef.current.resetForm();
+            // Reset mutation state after a short delay
+            setTimeout(() => {
+                resetCreateMutation();
+            }, 100);
+        }
+    }, [isCreateSuccess, isEditMode, resetCreateMutation]);
+
+    /**
+     * Create modified schema for edit mode (make avatar optional)
+     */
+    const formSchema = useMemo(() => {
+        if (!isEditMode) return lorebookSchema;
+
+        // In edit mode, make avatar optional
+        return lorebookSchema.map((field) => {
+            if (field.name === "avatar") {
+                return { ...field, required: false };
+            }
+            return field;
+        });
+    }, [isEditMode]);
+
+    /**
+     * Map lorebook data to form initial values
+     */
+    const initialValues = useMemo(() => {
+        if (!lorebook) return undefined;
+
+        // Normalize tags to ensure they're always string[] and lowercase (to match MultiSelect option values)
+        const normalizeTags = (tags: unknown): string[] => {
+            if (Array.isArray(tags)) {
+                return tags
+                    .filter((tag): tag is string => typeof tag === 'string' && tag.trim().length > 0)
+                    .map(tag => tag.toLowerCase().trim()); // Convert to lowercase to match MultiSelect option values
+            }
+            if (typeof tags === 'string') {
+                if (tags.includes(',')) {
+                    return tags.split(',').map(tag => tag.trim().toLowerCase()).filter(tag => tag.length > 0);
+                }
+                return tags.trim() ? [tags.trim().toLowerCase()] : [];
+            }
+            return [];
+        };
+
+        return {
+            avatar: lorebook.avatar?.url || "",
+            lorebookName: lorebook.name || "",
+            visiable: lorebook.visibility || "private",
+            rating: lorebook.rating || "SFW",
+            description: lorebook.description || "",
+            tags: normalizeTags(lorebook.tags) || [],
+            entries: Array.isArray(lorebook.entries) && lorebook.entries.length > 0
+                ? lorebook.entries.map((entry: LorebookEntry) => ({
+                    keywords: entry.keywords || [],
+                    context: entry.context || "",
+                    isEnabled: entry.isEnabled !== undefined ? entry.isEnabled : true,
+                    priority: entry.priority || 0,
+                }))
+                : [],
+            favourite: lorebook.isFavourite || false,
+        };
+    }, [lorebook]);
+
     /**
      * Handle form submission
      * Maps form values to API request format
      */
     const handleSubmit = async (values: Record<string, any>) => {
+        // For create mode, validate required file fields
+        if (!isEditMode) {
+            if (!values.avatar || !(values.avatar instanceof File)) {
+                console.error("Avatar file is required");
+                return;
+            }
+        }
+
         // Process entries - format: { keywords: string[], context: string }[]
         let entries: CreateLorebookEntryInput[] | undefined = undefined;
 
@@ -55,7 +156,8 @@ const LorebookForm: React.FC<Props> = () => {
                         .map((k: string) => k.trim())
                         .filter((k: string) => k.length > 0);
 
-                    if (validKeywords.length > 0) {
+                    // Only include entries that have at least one keyword AND context
+                    if (validKeywords.length > 0 && entry.context.trim().length > 0) {
                         convertedEntries.push({
                             keywords: validKeywords,
                             context: entry.context.trim(),
@@ -66,7 +168,7 @@ const LorebookForm: React.FC<Props> = () => {
                 } else if (entry && entry.keyword && entry.context) {
                     // Legacy format: { keyword: string, context: string } - convert to array
                     const keyword = entry.keyword.trim();
-                    if (keyword.length > 0) {
+                    if (keyword.length > 0 && entry.context.trim().length > 0) {
                         convertedEntries.push({
                             keywords: [keyword],
                             context: entry.context.trim(),
@@ -77,7 +179,16 @@ const LorebookForm: React.FC<Props> = () => {
                 }
             });
 
-            entries = convertedEntries.length > 0 ? convertedEntries : undefined;
+            // In edit mode, always set entries (even if empty) to allow clearing entries
+            // In create mode, only set if there are valid entries
+            if (isEditMode) {
+                entries = convertedEntries; // Can be empty array
+            } else {
+                entries = convertedEntries.length > 0 ? convertedEntries : undefined;
+            }
+        } else if (isEditMode) {
+            // If entries field is missing in edit mode, send empty array to clear entries
+            entries = [];
         }
 
         // Process avatar - handle file upload or URL
@@ -99,28 +210,61 @@ const LorebookForm: React.FC<Props> = () => {
         }
 
         // Map form values to API request format
-        const lorebookData: CreateLorebookRequest = {
+        const baseData = {
             name: values.lorebookName || "",
             description: values.description || undefined,
             visibility: (values.visiable as "public" | "private") || "private",
             rating: (values.rating as "SFW" | "NSFW") || "SFW",
-            avatar: avatar,
             tags: Array.isArray(values.tags) ? values.tags : values.tags ? [values.tags] : undefined,
-            entries: entries && entries.length > 0 ? entries : undefined,
+            favourite: Boolean(values.favourite),
         };
 
-        // Trigger lorebook creation
-        createLorebook(lorebookData);
+        if (isEditMode) {
+            // Update mode - always include entries (even if empty) to allow clearing entries
+            const updateData: UpdateLorebookRequest = {
+                ...baseData,
+                entries: entries || [], // Always send entries array (empty array means clear all entries)
+            };
+
+            // Handle avatar - only include if it's a new File, otherwise keep existing
+            if (avatar instanceof File) {
+                updateData.avatar = avatar;
+            } else if (typeof avatar === "string" && avatar !== lorebook?.avatar?.url) {
+                updateData.avatar = avatar;
+            }
+
+            // Trigger lorebook update
+            updateLorebook(updateData);
+        } else {
+            // Create mode - include required files and entries
+            const createData: CreateLorebookRequest = {
+                ...baseData,
+                avatar: avatar instanceof File ? avatar : undefined,
+                entries: entries && entries.length > 0 ? entries : undefined,
+            };
+
+            // Trigger lorebook creation
+            createLorebook(createData);
+        }
     };
 
     return (
         <div className="py-10">
             <DynamicForm
-                schema={lorebookSchema}
+                key={lorebook?.id || "new"}
+                schema={formSchema}
                 onSubmit={handleSubmit}
-                submitButtonText={isLoading ? "Creating Lorebook..." : isSuccess ? "Lorebook Created!" : "Create Lorebook"}
+                initialValues={initialValues}
+                formRef={formRef}
+                submitButtonText={
+                    isLoading
+                        ? (isEditMode ? "Updating Lorebook..." : "Creating Lorebook...")
+                        : isSuccess
+                            ? (isEditMode ? "Lorebook Updated!" : "Lorebook Created!")
+                            : (isEditMode ? "Update Lorebook" : "Create Lorebook")
+                }
                 isSubmitting={isLoading}
-                submitButtonDisabled={isLoading || isSuccess}
+                submitButtonDisabled={isLoading || isSuccess || isLoadingLorebook}
             >
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>

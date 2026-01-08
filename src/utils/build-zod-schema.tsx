@@ -194,6 +194,14 @@ export function buildZodSchema(fields: FormData[]) {
                 }
                 break;
             }
+            case "entries": {
+                // Entries field: array of { keywords: string[], context: string }
+                schema = z.array(z.object({
+                    keywords: z.array(z.string()),
+                    context: z.string(),
+                })).optional().default([]);
+                break;
+            }
             default: {
                 schema = z.any().optional();
                 break;
@@ -230,6 +238,7 @@ export function buildInitialValues(fields: FormData[]) {
             case "multi-select":
             case "multi-entries":
             case "example-dialogues":
+            case "entries":
                 initialValues[field.name] = field.defaultValue !== undefined && Array.isArray(field.defaultValue)
                     ? field.defaultValue
                     : [];

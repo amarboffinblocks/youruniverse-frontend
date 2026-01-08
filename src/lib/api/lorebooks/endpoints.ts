@@ -310,7 +310,8 @@ export const updateLorebook = async (
       formData.append("favourite", String(data.favourite));
     }
 
-    if (data.entries && data.entries.length > 0) {
+    // Always send entries if provided (even if empty array) to allow clearing entries
+    if (data.entries !== undefined) {
       formData.append("entries", JSON.stringify(data.entries));
     }
 
@@ -355,7 +356,8 @@ export const updateLorebook = async (
     if (data.favourite !== undefined) {
       jsonData.favourite = data.favourite;
     }
-    if (data.entries) {
+    // Always send entries if provided (even if empty array) to allow clearing entries
+    if (data.entries !== undefined) {
       jsonData.entries = data.entries;
     }
 
