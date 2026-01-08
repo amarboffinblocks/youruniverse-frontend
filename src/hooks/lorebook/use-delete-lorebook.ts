@@ -1,12 +1,13 @@
 /**
  * useDeleteLorebook Hook
- * Custom hook for deleting a lorebook with TanStack Query
+ * Custom hook for deleting lorebooks with TanStack Query
+ * Supports both single and batch deletion
  */
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { deleteLorebook } from "@/lib/api/lorebooks";
+import { deleteLorebook, deleteLorebooksBatch } from "@/lib/api/lorebooks";
 import { queryKeys } from "@/lib/api/shared/query-keys";
 import type { ApiError } from "@/lib/api/shared/types";
 
@@ -14,7 +15,7 @@ interface UseDeleteLorebookOptions {
   /**
    * Callback fired on successful lorebook deletion
    */
-  onSuccess?: () => void;
+  onSuccess?: (data?: { success: number; failed: number; errors: Array<{ id: string; error: string }> }) => void;
 
   /**
    * Callback fired on deletion error
@@ -36,7 +37,8 @@ export const useDeleteLorebook = (options?: UseDeleteLorebookOptions) => {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  // Single deletion mutation
+  const singleMutation = useMutation({
     mutationFn: async (lorebookId: string) => {
       await deleteLorebook(lorebookId);
     },
@@ -84,13 +86,67 @@ export const useDeleteLorebook = (options?: UseDeleteLorebookOptions) => {
     },
   });
 
+  // Batch deletion mutation
+  const batchMutation = useMutation<
+    { success: number; failed: number; errors: Array<{ id: string; error: string }> },
+    ApiError,
+    string[]
+  >({
+    mutationFn: async (lorebookIds: string[]) => {
+      const results = await deleteLorebooksBatch(lorebookIds);
+      return results;
+    },
+    onSuccess: (data) => {
+      // Invalidate lorebook list queries to refresh the list
+      queryClient.invalidateQueries({ queryKey: queryKeys.lorebooks.lists() });
+
+      // Remove deleted lorebooks from cache
+      // Note: We don't know which specific lorebooks were deleted, so we invalidate all detail queries
+      queryClient.invalidateQueries({ queryKey: queryKeys.lorebooks.details() });
+
+      if (showToasts) {
+        if (data.failed === 0) {
+          toast.success("Lorebooks deleted successfully", {
+            description: `${data.success} lorebook(s) have been permanently deleted.`,
+          });
+        } else {
+          toast.warning("Some lorebooks could not be deleted", {
+            description: `${data.success} deleted successfully, ${data.failed} failed.`,
+          });
+        }
+      }
+
+      onSuccessCallback?.(data);
+    },
+    onError: (error) => {
+      if (showToasts) {
+        toast.error("Failed to delete lorebooks", {
+          description: error.message || error.error || "An error occurred while deleting the lorebooks.",
+        });
+      }
+
+      onErrorCallback?.(error);
+    },
+  });
+
   return {
-    deleteLorebook: mutation.mutate,
-    deleteLorebookAsync: mutation.mutateAsync,
-    isLoading: mutation.isPending,
-    isSuccess: mutation.isSuccess,
-    isError: mutation.isError,
-    error: mutation.error as ApiError | null,
-    reset: mutation.reset,
+    // Single deletion (for one lorebook)
+    deleteLorebook: singleMutation.mutate,
+    deleteLorebookAsync: singleMutation.mutateAsync,
+
+    // Batch deletion (for multiple lorebooks)
+    deleteLorebooksBatch: batchMutation.mutate,
+    deleteLorebooksBatchAsync: batchMutation.mutateAsync,
+
+    // Loading state (true if either mutation is pending)
+    isLoading: singleMutation.isPending || batchMutation.isPending,
+    isSuccess: singleMutation.isSuccess || batchMutation.isSuccess,
+    isError: singleMutation.isError || batchMutation.isError,
+    error: (singleMutation.error || batchMutation.error) as ApiError | null,
+    data: batchMutation.data,
+    reset: () => {
+      singleMutation.reset();
+      batchMutation.reset();
+    },
   };
 };

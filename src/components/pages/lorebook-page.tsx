@@ -12,6 +12,16 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +38,7 @@ import ErrorEmptyState from "../elements/error-empty-state";
 import SearchField from "../elements/search-field";
 import { ToggleSwitch } from "../elements/toggle-switch";
 import Rating from "../elements/rating";
-import { useListLorebooks, type LorebookListFilters } from "@/hooks";
+import { useListLorebooks, useDeleteLorebook, type LorebookListFilters } from "@/hooks";
 import GlobalLoader from "../elements/global-loader";
 import type { Lorebook } from "@/lib/api/lorebooks";
 import MultiSelectFilter from "../elements/multi-select-filter";
@@ -82,6 +92,8 @@ const LorebookPage = () => {
     const [isFilterChanging, setIsFilterChanging] = useState(false);
     const [selectedLorebooks, setSelectedLorebooks] = useState<Set<string>>(new Set());
     const [includeTags, setIncludeTags] = useState<string[]>([]);
+    const [excludeTags, setExcludeTags] = useState<string[]>([]);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     // Handle debounced search change
     const handleDebouncedSearch = useCallback((value: string) => {
@@ -120,6 +132,12 @@ const LorebookPage = () => {
         setPage(1);
     }, []);
 
+    const handleExcludeTagsChange = useCallback((tags: string[]) => {
+        setIsFilterChanging(true);
+        setExcludeTags(tags);
+        setPage(1);
+    }, []);
+
     const handlePageChange = useCallback((p: number) => {
         setPage(p);
         if (typeof window !== "undefined") {
@@ -144,7 +162,7 @@ const LorebookPage = () => {
         if (activeTab === "all") {
             const allFilters: LorebookListFilters = {
                 page,
-                limit: 20,
+                limit: 10,
                 sortBy,
                 sortOrder,
                 rating: ratingFilter
@@ -154,6 +172,9 @@ const LorebookPage = () => {
             }
             if (includeTags.length > 0) {
                 allFilters.tags = includeTags;
+            }
+            if (excludeTags.length > 0) {
+                allFilters.excludeTags = excludeTags;
             }
             return allFilters;
         }
@@ -177,6 +198,10 @@ const LorebookPage = () => {
             baseFilters.tags = includeTags;
         }
 
+        if (excludeTags.length > 0) {
+            baseFilters.excludeTags = excludeTags;
+        }
+
         switch (activeTab) {
             case "public":
                 baseFilters.visibility = "public";
@@ -194,7 +219,7 @@ const LorebookPage = () => {
                 break;
         }
         return baseFilters;
-    }, [page, activeTab, debouncedSearchQuery, ratingFilter, sortBy, sortOrder, includeTags]);
+    }, [page, activeTab, debouncedSearchQuery, ratingFilter, sortBy, sortOrder, includeTags, excludeTags]);
 
     const {
         lorebooks,
@@ -208,6 +233,34 @@ const LorebookPage = () => {
         filters,
         showErrorToast: true,
     });
+
+    const {
+        deleteLorebooksBatch,
+        isLoading: isDeleting,
+    } = useDeleteLorebook({
+        onSuccess: () => {
+            setSelectedLorebooks(new Set()); // Clear selection after deletion
+            setDeleteDialogOpen(false);
+            refetch(); // Refresh the list
+        },
+    });
+
+    // Handle delete selected lorebooks
+    const handleDeleteClick = useCallback(() => {
+        if (selectedLorebooks.size === 0) {
+            return;
+        }
+        setDeleteDialogOpen(true);
+    }, [selectedLorebooks.size]);
+
+    // Confirm and execute delete
+    const handleConfirmDelete = useCallback(() => {
+        if (selectedLorebooks.size === 0) {
+            return;
+        }
+
+        deleteLorebooksBatch(Array.from(selectedLorebooks));
+    }, [selectedLorebooks, deleteLorebooksBatch]);
 
     useEffect(() => {
         if (!isLoading && lorebooks) {
@@ -317,7 +370,12 @@ const LorebookPage = () => {
                                         <DropdownMenuSubTrigger>Delete Lorebook</DropdownMenuSubTrigger>
                                         <DropdownMenuPortal>
                                             <DropdownMenuSubContent>
-                                                <DropdownMenuItem>Delete Selected Lorebook(s)</DropdownMenuItem>
+                                                <DropdownMenuItem
+                                                    onClick={handleDeleteClick}
+                                                    disabled={selectedLorebooks.size === 0 || isDeleting}
+                                                >
+                                                    Delete Selected Lorebook(s) {selectedLorebooks.size > 0 && `(${selectedLorebooks.size})`}
+                                                </DropdownMenuItem>
                                             </DropdownMenuSubContent>
                                         </DropdownMenuPortal>
                                     </DropdownMenuSub>
@@ -340,6 +398,9 @@ const LorebookPage = () => {
                             <div className="w-1/2">
                                 <MultiSelectFilter
                                     placeholder="Tags to exclude from search"
+                                    value={excludeTags}
+                                    onChange={handleExcludeTagsChange}
+                                    defaultCategory={ratingFilter || "SFW"}
                                 />
                             </div>
                         </div>
@@ -425,6 +486,36 @@ const LorebookPage = () => {
                     />
                 </div>
             )}
+
+            {/* Delete Confirmation Dialog */}
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <AlertDialogContent className="bg-primary/30 backdrop-blur-sm border-primary">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-white">Delete Lorebook(s)?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            {selectedLorebooks.size === 1 ? (
+                                <>
+                                    Are you sure you want to delete this lorebook? This action cannot be undone and all associated entries will be permanently deleted.
+                                </>
+                            ) : (
+                                <>
+                                    Are you sure you want to delete {selectedLorebooks.size} lorebook(s)? This action cannot be undone and all associated entries will be permanently deleted.
+                                </>
+                            )}
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={handleConfirmDelete}
+                            disabled={isDeleting}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        >
+                            {isDeleting ? "Deleting..." : "Delete"}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </Container>
     );
 };

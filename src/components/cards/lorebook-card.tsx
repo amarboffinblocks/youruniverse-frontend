@@ -1,9 +1,9 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload, Trash } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,17 @@ import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/utils/date-utils";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
-import { useToggleLorebookFavourite, useToggleLorebookSaved } from "@/hooks";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useToggleLorebookFavourite, useToggleLorebookSaved, useDeleteLorebook } from "@/hooks";
 import type { Lorebook } from "@/lib/api/lorebooks";
 
 interface LorebookCardProps {
@@ -35,6 +45,9 @@ const LorebookCard: React.FC<LorebookCardProps> = ({
     const isFavourite = useMemo(() => lorebook.isFavourite || false, [lorebook.isFavourite]);
     const isSaved = useMemo(() => lorebook.isSaved || false, [lorebook.isSaved]);
 
+    // Delete dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
     // Toggle favourite hook
     const { toggleFavourite, isLoading: isTogglingFavourite } = useToggleLorebookFavourite({
         showToasts: true,
@@ -43,6 +56,14 @@ const LorebookCard: React.FC<LorebookCardProps> = ({
     // Toggle saved hook
     const { toggleSaved, isLoading: isTogglingSaved } = useToggleLorebookSaved({
         showToasts: true,
+    });
+
+    // Delete lorebook hook
+    const { deleteLorebook, isLoading: isDeleting } = useDeleteLorebook({
+        showToasts: true,
+        onSuccess: () => {
+            setDeleteDialogOpen(false);
+        },
     });
 
     // Handle favourite toggle
@@ -58,6 +79,20 @@ const LorebookCard: React.FC<LorebookCardProps> = ({
             toggleSaved(lorebook.id);
         };
     }, [lorebook.id, toggleSaved]);
+
+    // Handle delete click
+    const handleDeleteClick = useMemo(() => {
+        return () => {
+            setDeleteDialogOpen(true);
+        };
+    }, []);
+
+    // Handle confirm delete
+    const handleConfirmDelete = useMemo(() => {
+        return () => {
+            deleteLorebook(lorebook.id);
+        };
+    }, [lorebook.id, deleteLorebook]);
 
     return (
         <Card
@@ -148,11 +183,40 @@ const LorebookCard: React.FC<LorebookCardProps> = ({
                                         <SquarePen className="w-4 h-4 mr-2 text-white" /> Edit
                                     </DropdownMenuItem>
                                 </Link>
+                                <DropdownMenuItem
+                                    variant="destructive"
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleDeleteClick}
+                                >
+                                    <Trash className="w-4 h-4 mr-2 text-white" /> Delete
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
 
                 </div>
+
+                {/* Delete Confirmation Dialog */}
+                <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                    <AlertDialogContent className="bg-primary/30 backdrop-blur-sm border-primary ">
+                        <AlertDialogHeader>
+                            <AlertDialogTitle className="text-white">Delete Lorebook?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                Are you sure you want to delete "{lorebook.name}"? This action cannot be undone and all associated entries will be permanently deleted.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                                onClick={handleConfirmDelete}
+                                disabled={isDeleting}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                            >
+                                {isDeleting ? "Deleting..." : "Delete"}
+                            </AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
                 <Avatar className="cursor-pointer rounded-none w-full  h-44 hover:scale-105 duration-500  transition brightness-60 ">
                     <AvatarImage
                         src={avatarUrl}

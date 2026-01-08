@@ -58,6 +58,11 @@ export interface LorebookListFilters {
   tags?: string[];
 
   /**
+   * Filter by tags to exclude (lorebooks must not have any of these tags)
+   */
+  excludeTags?: string[];
+
+  /**
    * Sort field (default: "createdAt")
    */
   sortBy?: "createdAt" | "updatedAt" | "name";

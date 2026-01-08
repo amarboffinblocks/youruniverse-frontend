@@ -194,6 +194,7 @@ export const listLorebooks = async (
     isFavourite?: boolean;
     isSaved?: boolean;
     tags?: string[];
+    excludeTags?: string[];
     sortBy?: "createdAt" | "updatedAt" | "name";
     sortOrder?: "asc" | "desc";
   }
@@ -233,6 +234,9 @@ export const listLorebooks = async (
   }
   if (filters?.tags && filters.tags.length > 0) {
     params.append("tags", filters.tags.join(","));
+  }
+  if (filters?.excludeTags && filters.excludeTags.length > 0) {
+    params.append("excludeTags", filters.excludeTags.join(","));
   }
   if (filters?.sortBy) {
     params.append("sortBy", filters.sortBy);
@@ -404,6 +408,77 @@ export const deleteLorebook = async (lorebookId: string): Promise<void> => {
       if (errorData.error?.code && errorData.error?.message) {
         throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
       }
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Batch delete multiple lorebooks by IDs
+ * Uses the backend batch-delete endpoint for optimal performance
+ * Single API call instead of multiple sequential calls
+ * 
+ * @param lorebookIds - Array of lorebook UUIDs to delete (1-100 lorebooks)
+ * @returns Promise with results
+ * @throws Error if validation fails or API call fails
+ */
+export const deleteLorebooksBatch = async (
+  lorebookIds: string[]
+): Promise<{ success: number; failed: number; errors: Array<{ id: string; error: string }> }> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Minimum 1 lorebook ID required
+  if (!lorebookIds || lorebookIds.length === 0) {
+    throw new Error("Lorebook IDs array is required and cannot be empty");
+  }
+
+  // Validation: Maximum 100 lorebook IDs
+  if (lorebookIds.length > 100) {
+    throw new Error("Maximum 100 lorebook IDs allowed per batch delete request");
+  }
+
+  // Validation: All IDs must be valid UUIDs
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const invalidIds = lorebookIds.filter((id) => !uuidRegex.test(id));
+  if (invalidIds.length > 0) {
+    throw new Error(`Invalid lorebook ID format. Invalid IDs: ${invalidIds.slice(0, 5).join(", ")}${invalidIds.length > 5 ? "..." : ""}`);
+  }
+
+  try {
+    // Call the backend batch-delete endpoint
+    const response = await apiClient.post<ApiResponse<{ success: number; failed: number; errors: Array<{ id: string; error: string }>; message: string }>>(
+      "/api/v1/lorebooks/batch-delete",
+      {
+        lorebookIds,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return {
+      success: response.data.data.success,
+      failed: response.data.data.failed,
+      errors: response.data.data.errors,
+    };
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      // Handle structured error response with code and message
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      // Handle simple error response
       if (errorData.error || errorData.message) {
         throw new Error(errorData.error || errorData.message);
       }

@@ -531,7 +531,7 @@ const CharacterPage = () => {
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-primary/30 backdrop-blur-sm border-primary">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Character(s)?</AlertDialogTitle>
             <AlertDialogDescription>
