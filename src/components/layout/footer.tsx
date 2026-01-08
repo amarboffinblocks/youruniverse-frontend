@@ -20,7 +20,7 @@ const Footer = () => {
 
   return (
     <div className="flex flex-col relative ">
-      <div className="flex py-5 justify-center items-center gap-2 text-white    backdrop-blur-sm ">
+      <div className="flex py-5 justify-center items-center gap-2 text-white  ">
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <button className="hover:underline">Contact</button>

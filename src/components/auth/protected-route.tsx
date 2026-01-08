@@ -48,7 +48,7 @@ export const ProtectedRoute = ({
       // If user fetch fails after refresh attempts, redirect to login
       setIsAuthorized(false);
       setIsChecking(false);
-      router.push(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
+      router.replace(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
     },
   });
 
@@ -64,7 +64,7 @@ export const ProtectedRoute = ({
     if (!accessToken) {
       setIsAuthorized(false);
       setIsChecking(false);
-      router.push(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
+      router.replace(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
       return;
     }
 
@@ -84,7 +84,7 @@ export const ProtectedRoute = ({
     if (isUserError) {
       setIsAuthorized(false);
       setIsChecking(false);
-      router.push(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
+      router.replace(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
     }
   }, [
     accessToken,
@@ -102,7 +102,7 @@ export const ProtectedRoute = ({
     const handleTokenExpired = () => {
       setIsAuthorized(false);
       setIsChecking(false);
-      router.push(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
+      router.replace(`${redirectTo}?redirect=${encodeURIComponent(pathname)}`);
     };
 
     if (typeof window !== "undefined") {

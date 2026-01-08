@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/tabs";
 import { PaginationComponent } from "@/components/elements/pagination-element";
 import LorebookCard from "@/components/cards/lorebook-card";
-import LorebookCardSkeleton from "../elements/lorebook-card-skeleton";
+import LorebookCardSkeleton from "../cards-skeletons/lorebook-card-skeleton";
 import ErrorEmptyState from "../elements/error-empty-state";
 import SearchField from "../elements/search-field";
 import { ToggleSwitch } from "../elements/toggle-switch";

@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/tabs";
 import { PaginationComponent } from "@/components/elements/pagination-element";
 import CharacterCard from "@/components/cards/character-card";
-import CharacterCardSkeleton from "../elements/character-card-skeleton";
+import CharacterCardSkeleton from "../cards-skeletons/character-card-skeleton";
 import ErrorEmptyState from "../elements/error-empty-state";
 import SearchField from "../elements/search-field";
 import { ToggleSwitch } from "../elements/toggle-switch";
