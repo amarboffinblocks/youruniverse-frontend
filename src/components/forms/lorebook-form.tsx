@@ -108,6 +108,22 @@ const LorebookForm: React.FC<Props> = ({ lorebookId }) => {
             return [];
         };
 
+        // Handle characters - extract IDs from the characters array
+        const getCharacterIds = (): string[] => {
+            if (Array.isArray(lorebook.characters) && lorebook.characters.length > 0) {
+                return lorebook.characters.map((char: any) => char.id).filter((id: string) => id);
+            }
+            return [];
+        };
+
+        // Handle personas - extract IDs from the personas array
+        const getPersonaIds = (): string[] => {
+            if (Array.isArray(lorebook.personas) && lorebook.personas.length > 0) {
+                return lorebook.personas.map((persona: any) => persona.id).filter((id: string) => id);
+            }
+            return [];
+        };
+
         return {
             avatar: lorebook.avatar?.url || "",
             lorebookName: lorebook.name || "",
@@ -123,6 +139,8 @@ const LorebookForm: React.FC<Props> = ({ lorebookId }) => {
                     priority: entry.priority || 0,
                 }))
                 : [],
+            Characters: getCharacterIds(),
+            persona: getPersonaIds(),
             favourite: lorebook.isFavourite || false,
         };
     }, [lorebook]);
@@ -217,6 +235,17 @@ const LorebookForm: React.FC<Props> = ({ lorebookId }) => {
             rating: (values.rating as "SFW" | "NSFW") || "SFW",
             tags: Array.isArray(values.tags) ? values.tags : values.tags ? [values.tags] : undefined,
             favourite: Boolean(values.favourite),
+            // Handle Characters and persona - ensure they're arrays
+            characterIds: Array.isArray(values.Characters)
+                ? values.Characters.filter((id: any) => id && typeof id === 'string' && id.trim().length > 0)
+                : (values.Characters && typeof values.Characters === 'string' && values.Characters.trim())
+                    ? [values.Characters.trim()]
+                    : undefined,
+            personaIds: Array.isArray(values.persona)
+                ? values.persona.filter((id: any) => id && typeof id === 'string' && id.trim().length > 0)
+                : (values.persona && typeof values.persona === 'string' && values.persona.trim())
+                    ? [values.persona.trim()]
+                    : undefined,
         };
 
         if (isEditMode) {

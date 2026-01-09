@@ -108,13 +108,21 @@ const PersonaForm: React.FC<Props> = ({ personaId = undefined }) => {
       return [];
     };
 
+    // Handle lorebook - ensure it's a single value (string), not an array
+    const getLorebookValue = (): string => {
+      if (persona.lorebook?.id) {
+        return persona.lorebook.id;
+      }
+      return "";
+    };
+
     return {
       avatar: persona.avatar?.url || "",
       name: persona.name || "",
       visiable: persona.visibility || "private",
       rating: persona.rating || "SFW",
       tags: normalizeTags(persona.tags) || [],
-      lorebook: persona.lorebook?.id || "",
+      lorebook: getLorebookValue(),
       details: persona.description || "",
       favourite: persona.isFavourite || false,
     };
@@ -126,6 +134,9 @@ const PersonaForm: React.FC<Props> = ({ personaId = undefined }) => {
    * Validates required fields and prepares data for multipart/form-data upload
    */
   const handleSubmit = async (values: Record<string, any>) => {
+
+
+
     // For create mode, validate required file fields
     if (!isEditMode) {
       if (!values.avatar || !(values.avatar instanceof File)) {
@@ -165,7 +176,10 @@ const PersonaForm: React.FC<Props> = ({ personaId = undefined }) => {
           ? [values.tags]
           : undefined,
       favourite: Boolean(values.favourite),
-      lorebookId: values.lorebook || undefined,
+      // Handle lorebook - if it's an array (from multi-select), take first value; otherwise use as string
+      lorebookId: Array.isArray(values.lorebook)
+        ? (values.lorebook.length > 0 ? values.lorebook[0] : undefined)
+        : (values.lorebook && values.lorebook.trim() ? values.lorebook.trim() : undefined),
     };
 
     if (isEditMode) {
@@ -182,10 +196,15 @@ const PersonaForm: React.FC<Props> = ({ personaId = undefined }) => {
       }
 
       // Handle lorebookId - allow null to unlink
-      if (values.lorebook === "" || values.lorebook === null || values.lorebook === undefined) {
+      // Handle both array (multi-select) and string (single-select) formats
+      const lorebookValue = Array.isArray(values.lorebook)
+        ? (values.lorebook.length > 0 ? values.lorebook[0] : "")
+        : (values.lorebook || "");
+
+      if (lorebookValue === "" || lorebookValue === null || lorebookValue === undefined) {
         updateData.lorebookId = null;
-      } else if (values.lorebook !== persona?.lorebook?.id) {
-        updateData.lorebookId = values.lorebook;
+      } else if (lorebookValue !== persona?.lorebook?.id) {
+        updateData.lorebookId = lorebookValue;
       }
 
       // Trigger persona update
@@ -200,6 +219,10 @@ const PersonaForm: React.FC<Props> = ({ personaId = undefined }) => {
       // Trigger persona creation
       createPersona(createData);
     }
+
+
+
+
   };
 
   return (

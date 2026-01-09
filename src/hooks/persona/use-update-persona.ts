@@ -70,8 +70,22 @@ export const useUpdatePersona = (options: UseUpdatePersonaOptions) => {
     retryDelay: (attemptIndex) => {
       return Math.min(1000 * 2 ** attemptIndex, 4000);
     },
-    onSuccess: (response) => {
+    /**
+     * On mutation start
+     * Capture old persona data for comparison
+     */
+    onMutate: async (variables) => {
+      // Get the old persona data from cache
+      const oldPersona = queryClient.getQueryData<{ persona: any }>(
+        queryKeys.personas.detail(personaId)
+      );
+      
+      // Return context with old data for use in onSuccess/onError
+      return { oldPersona };
+    },
+    onSuccess: (response, variables, context) => {
       const { data } = response;
+      const oldPersona = context?.oldPersona;
 
       queryClient.invalidateQueries({ queryKey: queryKeys.personas.all });
 
@@ -81,6 +95,16 @@ export const useUpdatePersona = (options: UseUpdatePersonaOptions) => {
           { persona: data.persona }
         );
       }
+
+      // Invalidate character queries if characterIds were updated
+      // Note: Personas don't have characterIds in the update request,
+      // but characters link to personas. When a persona is updated,
+      // we should invalidate all character queries to ensure they reflect
+      // any changes that might affect the persona relationship.
+      // However, since personas don't directly manage characterIds,
+      // we'll invalidate character queries when persona data changes
+      // to ensure character pages show updated persona information.
+      queryClient.invalidateQueries({ queryKey: queryKeys.characters.all });
 
       if (showToasts) {
         toast.success("Persona Updated", {

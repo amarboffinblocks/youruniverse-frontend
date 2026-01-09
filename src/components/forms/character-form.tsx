@@ -172,8 +172,14 @@ const CharacterForm: React.FC<Props> = ({ characterId = undefined }) => {
                 : undefined,
             authorNotes: values.authorNotes || undefined,
             characterNotes: values.characterNotes || undefined,
-            personaId: values.persona || undefined,
-            lorebookId: values.lorebook || undefined,
+            // Handle persona - if it's an array (from multi-select), take first value; otherwise use as string
+            personaId: Array.isArray(values.persona)
+                ? (values.persona.length > 0 ? values.persona[0] : undefined)
+                : (values.persona && values.persona.trim ? values.persona.trim() : (values.persona || undefined)),
+            // Handle lorebook - if it's an array (from multi-select), take first value; otherwise use as string
+            lorebookId: Array.isArray(values.lorebook)
+                ? (values.lorebook.length > 0 ? values.lorebook[0] : undefined)
+                : (values.lorebook && values.lorebook.trim ? values.lorebook.trim() : (values.lorebook || undefined)),
             favourite: Boolean(values.favourite),
         };
 
@@ -195,6 +201,30 @@ const CharacterForm: React.FC<Props> = ({ characterId = undefined }) => {
                 updateData.backgroundImage = values.backgroundImage;
             } else if (typeof values.backgroundImage === "string" && values.backgroundImage !== character?.backgroundImg?.url) {
                 updateData.backgroundImage = values.backgroundImage;
+            }
+
+            // Handle personaId - allow null to unlink
+            // Handle both array (multi-select) and string (single-select) formats
+            const personaValue = Array.isArray(values.persona)
+                ? (values.persona.length > 0 ? values.persona[0] : "")
+                : (values.persona || "");
+
+            if (personaValue === "" || personaValue === null || personaValue === undefined) {
+                updateData.personaId = null;
+            } else if (personaValue !== character?.persona?.id) {
+                updateData.personaId = personaValue;
+            }
+
+            // Handle lorebookId - allow null to unlink
+            // Handle both array (multi-select) and string (single-select) formats
+            const lorebookValue = Array.isArray(values.lorebook)
+                ? (values.lorebook.length > 0 ? values.lorebook[0] : "")
+                : (values.lorebook || "");
+
+            if (lorebookValue === "" || lorebookValue === null || lorebookValue === undefined) {
+                updateData.lorebookId = null;
+            } else if (lorebookValue !== character?.lorebook?.id) {
+                updateData.lorebookId = lorebookValue;
             }
 
             // Trigger character update

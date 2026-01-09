@@ -62,6 +62,8 @@ export interface CreateLorebookRequest {
   favourite?: boolean;
   avatar?: File | string;
   entries?: CreateLorebookEntryInput[];
+  characterIds?: string[];
+  personaIds?: string[];
 }
 
 /**
@@ -78,6 +80,8 @@ export interface UpdateLorebookRequest {
   favourite?: boolean;
   avatar?: File | string;
   entries?: CreateLorebookEntryInput[];
+  characterIds?: string[];
+  personaIds?: string[];
 }
 
 /**
@@ -106,6 +110,8 @@ export interface Lorebook {
   avatar?: LorebookImage | null;
   tags: string[];
   entries?: LorebookEntry[];
+  characters?: Array<{ id: string; name: string }>;
+  personas?: Array<{ id: string; name: string }>;
   createdAt: string;
   updatedAt: string;
 }

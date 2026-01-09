@@ -222,16 +222,17 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
                 selectedCategory={selectedCategory}
                 maxCount={maxCount}
                 singleLine={singleLine}
+                
                 className={cn(meta.touched && meta.error && "border-red-500 bg-red-500/20")}
                 disabled={isLoadingTags || isCreatingTag}
                 resetOnDefaultValueChange={true}
                 emptyIndicator={
                     isLoadingTags ? (
-                        <p className="text-muted-foreground">Loading tags...</p>
+                        <span className="text-muted-foreground">Loading tags...</span>
                     ) : (
-                        <p className="text-muted-foreground text-sm">
+                        <span className="text-muted-foreground text-sm">
                             {addFunctionality ? "No tags found. Type to create a new tag." : "No tags found."}
-                        </p>
+                        </span>
                     )
                 }
             />

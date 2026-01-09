@@ -896,9 +896,9 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
                                 )}>
 
                                 <CommandEmpty className="flex flex-col items-center space-y-2 justify-center py-2 text-center">
-                                    <p className="text-muted-foreground border-b w-full pb-2 border-primary">
+                                    <div className="text-muted-foreground border-b w-full pb-2 border-primary">
                                         {emptyIndicator || "No result found"}
-                                    </p>
+                                    </div>
 
                                     {searchValue?.trim() && addFunctionality && onAddNewOption && (
 

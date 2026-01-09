@@ -8,8 +8,8 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        label:"Avatar"
-        
+        label: "Avatar"
+
     },
     {
         name: "name",
@@ -24,9 +24,9 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
-       {
+    {
         name: "visiable",
         type: "toggle",
         required: true,
@@ -62,8 +62,8 @@ export const personaSchema: FormData[] = [
         row: 4,
         // defaultValue: false,
     },
-    
- {
+
+    {
         name: "tags",
         type: "multi-select",
         label: "Persona Tags",
@@ -75,26 +75,22 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
     },
-     {
+    {
         name: "lorebook",
-        type: "select",
-        required: true,
-        label:"Select Lorebook",
+        type: "form-link-to",
+        required: false,
+        label: "Select Lorebook",
         placeholder: "Connect to Lorebook",
         cols: 12,
         row: 4,
         rules: {
-            options: [
-                { label: "Luna AI", value: "luna-ai" },
-                { label: "Astro Bot", value: "astro-bot" },
-                { label: "Neo Guide", value: "neo-guide" },
-                { label: "Zara Mentor", value: "zara-mentor" },
-            ],
+            model: "lorebook",
+            multiSelect: false,
         },
         rows: "3",
-        
+
     },
     {
         name: "details",
@@ -106,10 +102,10 @@ export const personaSchema: FormData[] = [
         cols: 12,
         row: 4,
         rows: "3",
-        
+
         tokens: true,
     },
 
-   
+
 
 ]

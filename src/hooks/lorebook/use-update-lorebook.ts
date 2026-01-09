@@ -88,11 +88,26 @@ export const useUpdateLorebook = (options: UseUpdateLorebookOptions) => {
     },
 
     /**
+     * On mutation start
+     * Capture old lorebook data for comparison
+     */
+    onMutate: async (variables) => {
+      // Get the old lorebook data from cache
+      const oldLorebook = queryClient.getQueryData<{ lorebook: any }>(
+        queryKeys.lorebooks.detail(lorebookId)
+      );
+
+      // Return context with old data for use in onSuccess/onError
+      return { oldLorebook };
+    },
+
+    /**
      * On mutation success
      * Handles success state, cache invalidation, and callbacks
      */
-    onSuccess: (response) => {
+    onSuccess: (response, variables, context) => {
       const { data } = response;
+      const oldLorebook = context?.oldLorebook;
 
       // Invalidate lorebook list queries to refetch with updated lorebook
       queryClient.invalidateQueries({ queryKey: queryKeys.lorebooks.all });
@@ -103,6 +118,25 @@ export const useUpdateLorebook = (options: UseUpdateLorebookOptions) => {
           queryKeys.lorebooks.detail(data.lorebook.id),
           { lorebook: data.lorebook }
         );
+      }
+
+      // Invalidate character queries if characterIds were updated
+      if (variables.characterIds !== undefined) {
+        const oldCharacterIds = oldLorebook?.lorebook?.characters?.map((c: any) => c.id) || [];
+        const newCharacterIds = variables.characterIds || [];
+
+        // Get all unique character IDs (old + new)
+        const allCharacterIds = [...new Set([...oldCharacterIds, ...newCharacterIds])];
+
+        // Invalidate each character's detail query
+        allCharacterIds.forEach((characterId: string) => {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.characters.detail(characterId),
+          });
+        });
+
+        // Invalidate all character list queries
+        queryClient.invalidateQueries({ queryKey: queryKeys.characters.all });
       }
 
       // Show success toast

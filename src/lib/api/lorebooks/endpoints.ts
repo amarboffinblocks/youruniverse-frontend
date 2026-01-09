@@ -61,6 +61,16 @@ export const createLorebook = async (
       formData.append("entries", JSON.stringify(data.entries));
     }
 
+    // Handle characterIds
+    if (data.characterIds && data.characterIds.length > 0) {
+      formData.append("characterIds", JSON.stringify(data.characterIds));
+    }
+
+    // Handle personaIds
+    if (data.personaIds && data.personaIds.length > 0) {
+      formData.append("personaIds", JSON.stringify(data.personaIds));
+    }
+
     // Handle file uploads
     if (data.avatar instanceof File) {
       formData.append("avatar", data.avatar);
@@ -90,6 +100,8 @@ export const createLorebook = async (
       tags: data.tags,
       favourite: data.favourite,
       entries: data.entries,
+      characterIds: data.characterIds,
+      personaIds: data.personaIds,
     };
 
     // Only include avatar if it's a string (URL)
@@ -315,6 +327,16 @@ export const updateLorebook = async (
       formData.append("entries", JSON.stringify(data.entries));
     }
 
+    // Handle characterIds
+    if (data.characterIds !== undefined) {
+      formData.append("characterIds", JSON.stringify(data.characterIds));
+    }
+
+    // Handle personaIds
+    if (data.personaIds !== undefined) {
+      formData.append("personaIds", JSON.stringify(data.personaIds));
+    }
+
     // Handle file uploads
     if (data.avatar instanceof File) {
       formData.append("avatar", data.avatar);
@@ -359,6 +381,16 @@ export const updateLorebook = async (
     // Always send entries if provided (even if empty array) to allow clearing entries
     if (data.entries !== undefined) {
       jsonData.entries = data.entries;
+    }
+
+    // Handle characterIds
+    if (data.characterIds !== undefined) {
+      jsonData.characterIds = data.characterIds;
+    }
+
+    // Handle personaIds
+    if (data.personaIds !== undefined) {
+      jsonData.personaIds = data.personaIds;
     }
 
     // Only include avatar if it's a string (URL)

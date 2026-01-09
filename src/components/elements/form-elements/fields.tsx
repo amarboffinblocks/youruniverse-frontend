@@ -12,6 +12,7 @@ import FormCheckbox from "./form-checkbox";
 import EntriesField from "./entries-field";
 import FormMultiFile from "./form-multi-file";
 import FormExampleDialogues from "./form-example-dialogues";
+import FormLinkTo from "./form-link-to";
 
 interface FormFieldsProps extends FormData {
     cols?: FormData["cols"];
@@ -46,6 +47,8 @@ const FieldRenderer: React.FC<FormFieldsProps> = ({ ...props }) => {
                     {...props}
                 />
             );
+        case "form-link-to":
+            return <FormLinkTo {...props} />
         case "example-dialogues": {
             // Normalize defaultValue to string[] for FormExampleDialogues
             const { defaultValue, ...restProps } = props;

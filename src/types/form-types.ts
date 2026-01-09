@@ -14,6 +14,7 @@ export type FieldType =
     | "entries"
     | "multiple-file"
     | "example-dialogues"
+    |"form-link-to"
 
 
 export interface FormToggleOptions {
@@ -28,6 +29,8 @@ export interface FieldRules {
     options?: FormToggleOptions[];
     model?: string;
     field?: string;
+    multiSelect?: boolean;
+    maxCount?: number;
 }
 
 export interface FormData {

@@ -70,6 +70,20 @@ export const useUpdateCharacter = (options: UseUpdateCharacterOptions) => {
     },
 
     /**
+     * On mutation start
+     * Capture old character data for comparison
+     */
+    onMutate: async (variables) => {
+      // Get the old character data from cache
+      const oldCharacter = queryClient.getQueryData<{ character: any }>(
+        queryKeys.characters.detail(characterId)
+      );
+
+      // Return context with old data for use in onSuccess/onError
+      return { oldCharacter };
+    },
+
+    /**
      * Retry configuration
      * Retries failed requests up to 3 times with exponential backoff
      */
@@ -91,8 +105,9 @@ export const useUpdateCharacter = (options: UseUpdateCharacterOptions) => {
      * On mutation success
      * Handles success state, cache invalidation, and callbacks
      */
-    onSuccess: (response) => {
+    onSuccess: (response, variables, context) => {
       const { data } = response;
+      const oldCharacter = context?.oldCharacter;
 
       // Invalidate character list queries to refetch with updated character
       queryClient.invalidateQueries({ queryKey: queryKeys.characters.all });
@@ -103,6 +118,52 @@ export const useUpdateCharacter = (options: UseUpdateCharacterOptions) => {
           queryKeys.characters.detail(data.character.id),
           { character: data.character }
         );
+      }
+
+      // Invalidate persona queries if personaId was updated
+      if (variables.personaId !== undefined) {
+        const oldPersonaId = oldCharacter?.character?.personaId || oldCharacter?.character?.persona?.id;
+        const newPersonaId = variables.personaId;
+
+        // Always invalidate the new persona query (if provided)
+        if (newPersonaId) {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.personas.detail(newPersonaId),
+          });
+        }
+
+        // If personaId changed, also invalidate the old persona
+        if (oldPersonaId && oldPersonaId !== newPersonaId) {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.personas.detail(oldPersonaId),
+          });
+        }
+
+        // Always invalidate all persona list queries when personaId changes
+        queryClient.invalidateQueries({ queryKey: queryKeys.personas.all });
+      }
+
+      // Invalidate lorebook queries if lorebookId was updated
+      if (variables.lorebookId !== undefined) {
+        const oldLorebookId = oldCharacter?.character?.lorebookId || oldCharacter?.character?.lorebook?.id;
+        const newLorebookId = variables.lorebookId;
+
+        // Always invalidate the new lorebook query (if provided)
+        if (newLorebookId) {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.lorebooks.detail(newLorebookId),
+          });
+        }
+
+        // If lorebookId changed, also invalidate the old lorebook
+        if (oldLorebookId && oldLorebookId !== newLorebookId) {
+          queryClient.invalidateQueries({
+            queryKey: queryKeys.lorebooks.detail(oldLorebookId),
+          });
+        }
+
+        // Always invalidate all lorebook list queries when lorebookId changes
+        queryClient.invalidateQueries({ queryKey: queryKeys.lorebooks.all });
       }
 
       // Show success toast
