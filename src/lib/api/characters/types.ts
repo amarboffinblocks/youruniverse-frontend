@@ -195,3 +195,21 @@ export interface BatchDeleteCharactersResponse {
   errors: Array<{ id: string; error: string }>;
 }
 
+/**
+ * Import Character Response
+ */
+export interface ImportCharacterResponse {
+  character: Character;
+  message?: string;
+}
+
+/**
+ * Bulk Import Characters Response
+ */
+export interface BulkImportCharactersResponse {
+  imported: number;
+  failed: number;
+  characters: Character[];
+  errors: Array<{ name: string; error: string }>;
+  message?: string;
+}

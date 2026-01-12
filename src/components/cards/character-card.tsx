@@ -22,7 +22,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useToggleFavourite, useToggleSaved, useDeleteCharacter, useDuplicateCharacter } from "@/hooks";
+import { useToggleFavourite, useToggleSaved, useDeleteCharacter, useDuplicateCharacter, useExportCharacter } from "@/hooks";
 import type { Character } from "@/lib/api/characters";
 
 interface CharacterCardProps {
@@ -73,6 +73,11 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         showToasts: true,
     });
 
+    // Export character hook
+    const { exportCharacter, isLoading: isExporting } = useExportCharacter({
+        showToasts: true,
+    });
+
     // Handle favourite toggle
     const handleToggleFavourite = useMemo(() => {
         return () => {
@@ -107,6 +112,13 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             deleteCharactersBatch([character.id]);
         };
     }, [character.id, deleteCharactersBatch]);
+
+    // Handle export click
+    const handleExportClick = useMemo(() => {
+        return () => {
+            exportCharacter(character.id, "json");
+        };
+    }, [character.id, exportCharacter]);
 
     return (
         <Card
@@ -158,7 +170,11 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Share2 className="w-4 h-4 mr-2 text-white" /> Share
                                 </DropdownMenuItem>
-                                <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleExportClick}
+                                    disabled={isExporting}
+                                >
                                     <Upload className="w-4 h-4 mr-2 text-white" /> Export
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
@@ -240,7 +256,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             {/* Content */}
             <CardContent className="space-y-2 py-2  px-4 flex-1 h-full ">
                 <div className="flex justify-between items-center">
-                    <CardTitle className="text-white/80 text-xl font-semibold">{character.name}</CardTitle>
+                    <CardTitle className="text-white/80 text-xl font-semibold capitalize">{character.name}</CardTitle>
                     <span className="text-xs text-gray-400">Tokens:- {tokens}</span>
                 </div>
                 <div className=" -mt-1 flex items-center gap-2 text-gray-400 ">

@@ -12,6 +12,8 @@ import type {
   GetCharacterResponse,
   ListCharactersResponse,
   BatchDuplicateCharactersResponse,
+  ImportCharacterResponse,
+  BulkImportCharactersResponse,
   Character,
 } from "./types";
 import { getAccessToken } from "@/lib/utils/token-storage";
@@ -771,6 +773,202 @@ export const toggleCharacterSaved = async (
       if (errorData.error?.code && errorData.error?.message) {
         throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
       }
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Export a character as JSON file
+ * Downloads the character data as a JSON file
+ * @param characterId - Character UUID
+ * @param format - Export format: "json" | "png" (default: "json")
+ */
+export const exportCharacter = async (
+  characterId: string,
+  format: "json" | "png" = "json"
+): Promise<void> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: Character ID must be a valid UUID
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(characterId)) {
+    throw new Error("Invalid character ID format");
+  }
+
+  try {
+    // For JSON export, we'll fetch the character and create a downloadable file
+    if (format === "json") {
+      // First, get the character data
+      const characterResponse = await getCharacter(characterId, { requireAuth: true });
+      const character = characterResponse.data.character;
+
+      // Create a clean export object (remove internal fields)
+      const exportData = {
+        name: character.name,
+        description: character.description,
+        scenario: character.scenario,
+        summary: character.summary,
+        rating: character.rating,
+        visibility: character.visibility,
+        tags: character.tags,
+        firstMessage: character.firstMessage,
+        alternateMessages: character.alternateMessages,
+        exampleDialogues: character.exampleDialogues,
+        authorNotes: character.authorNotes,
+        characterNotes: character.characterNotes,
+        avatar: character.avatar?.url,
+        backgroundImg: character.backgroundImg?.url,
+        // Include metadata
+        exportedAt: new Date().toISOString(),
+        version: "1.0",
+      };
+
+      // Create a blob and download
+      const jsonString = JSON.stringify(exportData, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${character.name.replace(/[^a-z0-9]/gi, "_").toLowerCase()}_${characterId.slice(0, 8)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } else {
+      // For PNG export, we would need backend support
+      // For now, throw an error or implement a fallback
+      throw new Error("PNG export is not yet supported. Please use JSON format.");
+    }
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      // Handle structured error response with code and message
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      // Handle simple error response
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Import a character from JSON or PNG file
+ * @param file - File object (JSON or PNG)
+ * @returns Promise with imported character data
+ */
+export const importCharacter = async (
+  file: File
+): Promise<ApiResponse<ImportCharacterResponse>> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: File must be provided
+  if (!file) {
+    throw new Error("File is required for import");
+  }
+
+  // Validation: File type must be JSON or PNG
+  const allowedTypes = ['application/json', 'image/png', 'image/jpeg', 'image/jpg'];
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error("Invalid file type. Allowed types: JSON, PNG, JPEG, JPG");
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiClient.post<ApiResponse<ImportCharacterResponse>>(
+      "/api/v1/characters/import",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // Don't set Content-Type - browser will set it with boundary for multipart/form-data
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      // Handle structured error response with code and message
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      // Handle simple error response
+      if (errorData.error || errorData.message) {
+        throw new Error(errorData.error || errorData.message);
+      }
+    }
+    throw error;
+  }
+};
+
+/**
+ * Bulk import characters from JSON file (array of characters) or ZIP file
+ * @param file - File object (JSON array or ZIP)
+ * @returns Promise with bulk import results
+ */
+export const bulkImportCharacters = async (
+  file: File
+): Promise<ApiResponse<BulkImportCharactersResponse>> => {
+  const accessToken = getAccessToken();
+  if (!accessToken) {
+    throw new Error("No access token available");
+  }
+
+  // Validation: File must be provided
+  if (!file) {
+    throw new Error("File is required for bulk import");
+  }
+
+  // Validation: File type must be JSON (ZIP support can be added later)
+  const allowedTypes = ['application/json'];
+  if (!allowedTypes.includes(file.type)) {
+    throw new Error("Invalid file type. Allowed types: JSON (array of characters)");
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiClient.post<ApiResponse<BulkImportCharactersResponse>>(
+      "/api/v1/characters/import/bulk",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          // Don't set Content-Type - browser will set it with boundary for multipart/form-data
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error: any) {
+    // Handle API error responses
+    if (error.response?.data) {
+      const errorData = error.response.data;
+      // Handle structured error response with code and message
+      if (errorData.error?.code && errorData.error?.message) {
+        throw new Error(`${errorData.error.code}: ${errorData.error.message}`);
+      }
+      // Handle simple error response
       if (errorData.error || errorData.message) {
         throw new Error(errorData.error || errorData.message);
       }

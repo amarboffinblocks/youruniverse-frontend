@@ -38,10 +38,11 @@ import ErrorEmptyState from "../elements/error-empty-state";
 import SearchField from "../elements/search-field";
 import { ToggleSwitch } from "../elements/toggle-switch";
 import Rating from "../elements/rating";
-import { useListCharacters, useDuplicateCharacter, useDeleteCharacter, type CharacterListFilters } from "@/hooks";
+import { useListCharacters, useDuplicateCharacter, useDeleteCharacter, useImportCharacter, useBulkImportCharacters, type CharacterListFilters } from "@/hooks";
 import GlobalLoader from "../elements/global-loader";
 import type { Character } from "@/lib/api/characters";
 import MultiSelectFilter from "../elements/multi-select-filter";
+import ImportCharacterDialog from "../elements/import-character-dialog";
 
 // Utility for tab mapping (avoids duplicate strings)
 const TABS = [
@@ -91,6 +92,8 @@ const CharacterPage = () => {
   const [deleteMode, setDeleteMode] = useState<"only" | "with-current-chat" | "with-all-chats" | null>(null);
   const [includeTags, setIncludeTags] = useState<string[]>([]);
   const [excludeTags, setExcludeTags] = useState<string[]>([]);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
+  const [bulkImportDialogOpen, setBulkImportDialogOpen] = useState(false);
 
   // Handle debounced search change
   const handleDebouncedSearch = useCallback((value: string) => {
@@ -238,6 +241,26 @@ const CharacterPage = () => {
   } = useDuplicateCharacter({
     onSuccess: () => {
       setSelectedCharacters(new Set()); // Clear selection after duplication
+      refetch(); // Refresh the list
+    },
+  });
+
+  const {
+    importCharacter,
+    isLoading: isImporting,
+  } = useImportCharacter({
+    onSuccess: () => {
+      setImportDialogOpen(false);
+      refetch(); // Refresh the list
+    },
+  });
+
+  const {
+    bulkImportCharacters,
+    isLoading: isBulkImporting,
+  } = useBulkImportCharacters({
+    onSuccess: () => {
+      setBulkImportDialogOpen(false);
       refetch(); // Refresh the list
     },
   });
@@ -391,8 +414,12 @@ const CharacterPage = () => {
                         <Link href="/characters/create" >
                           <DropdownMenuItem >Create Character</DropdownMenuItem>
                         </Link>
-                        <DropdownMenuItem>Import Character</DropdownMenuItem>
-                        <DropdownMenuItem>Bulk Import Characters</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => setImportDialogOpen(true)}>
+                          Import Character
+                        </DropdownMenuItem>
+                        <DropdownMenuItem disabled onClick={() => setBulkImportDialogOpen(true)}>
+                          Bulk Import Characters
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -408,13 +435,15 @@ const CharacterPage = () => {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleDeleteClick("with-current-chat")}
-                          disabled={selectedCharacters.size === 0 || isDeleting}
+                          // disabled={selectedCharacters.size === 0 || isDeleting}
+                          disabled
                         >
                           Delete selected Character(s) and current chat
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleDeleteClick("with-all-chats")}
-                          disabled={selectedCharacters.size === 0 || isDeleting}
+                          // disabled={selectedCharacters.size === 0 || isDeleting}
+                          disabled
                         >
                           Delete selected Character(s), saved chat and current chat
                         </DropdownMenuItem>
@@ -568,6 +597,24 @@ const CharacterPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Import Character Dialog */}
+      <ImportCharacterDialog
+        open={importDialogOpen}
+        onOpenChange={setImportDialogOpen}
+        onImport={importCharacter}
+        isLoading={isImporting}
+        isBulk={false}
+      />
+
+      {/* Bulk Import Characters Dialog */}
+      <ImportCharacterDialog
+        open={bulkImportDialogOpen}
+        onOpenChange={setBulkImportDialogOpen}
+        onImport={bulkImportCharacters}
+        isLoading={isBulkImporting}
+        isBulk={true}
+      />
     </Container>
   );
 };
