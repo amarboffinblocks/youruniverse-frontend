@@ -26,10 +26,11 @@ export const useDuplicateCharacter = (options?: UseDuplicateCharacterOptions) =>
       return response.data;
     },
     onSuccess: (data) => {
-      // Invalidate character list queries to refresh the list
-      queryClient.invalidateQueries({ queryKey: queryKeys.characters.list() });
+      // Invalidate all character list queries to refresh the list
+      // This ensures all filtered views update immediately with the new duplicated character
+      queryClient.invalidateQueries({ queryKey: queryKeys.characters.all });
 
-      // Invalidate specific character queries
+      // Invalidate specific character queries for the duplicated characters
       data.characters.forEach((character) => {
         queryClient.invalidateQueries({
           queryKey: queryKeys.characters.detail(character.id)

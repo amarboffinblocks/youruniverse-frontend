@@ -26,11 +26,12 @@ export const useDeleteCharacter = (options?: UseDeleteCharacterOptions) => {
       return results;
     },
     onSuccess: (data) => {
-      // Invalidate character list queries to refresh the list
-      queryClient.invalidateQueries({ queryKey: queryKeys.characters.list() });
+      // Invalidate all character list queries to refresh the list
+      // This ensures all filtered views update immediately
+      queryClient.invalidateQueries({ queryKey: queryKeys.characters.all });
 
       // Remove deleted characters from cache
-      // Note: We don't know which specific characters were deleted, so we invalidate all detail queries
+      // Invalidate all detail queries to ensure deleted characters are removed
       queryClient.invalidateQueries({ queryKey: queryKeys.characters.details() });
 
       if (showToasts) {

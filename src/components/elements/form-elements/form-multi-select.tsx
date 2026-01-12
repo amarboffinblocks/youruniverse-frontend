@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useCallback, useState, useEffect } from "react";
-import { useField } from "formik";
+import { useField, useFormikContext } from "formik";
 import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/ui/multi-select";
 import { cn } from "@/lib/utils";
@@ -52,6 +52,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
     const [field, meta, helpers] = useField<string[]>(name);
     const { value } = field;
     const { setValue, setTouched } = helpers;
+    const { setFieldValue, validateField } = useFormikContext();
     const [selectedCategory, setSelectedCategory] = useState<"SFW" | "NSFW">(category);
 
     // Update selectedCategory when category prop changes
@@ -156,9 +157,12 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
                 .filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
                 .map(item => item.toLowerCase().trim()) // Convert to lowercase to match option values
             : [];
-        setValue(normalized);
-        setTouched(true);
-    }, [setValue, setTouched]);
+
+        // Use setFieldValue with shouldValidate=true to trigger validation immediately
+        // This ensures the error clears as soon as the first tag is selected
+        setFieldValue(name, normalized, true);
+        setTouched(true, false); // Don't trigger validation on setTouched (already done above)
+    }, [setFieldValue, setTouched, name]);
 
     // Handle tag creation
     const handleCreateTag = useCallback(
@@ -176,6 +180,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
                 const currentValue = normalizeValue(value);
                 if (!currentValue.includes(createdTagName)) {
                     const newValue = [...currentValue, createdTagName];
+                    // Use handleValueChange which now includes validation
                     handleValueChange(newValue);
                 }
 
@@ -222,7 +227,7 @@ const FormMultiSelect: React.FC<FormMultiSelectProps> = ({
                 selectedCategory={selectedCategory}
                 maxCount={maxCount}
                 singleLine={singleLine}
-                
+
                 className={cn(meta.touched && meta.error && "border-red-500 bg-red-500/20")}
                 disabled={isLoadingTags || isCreatingTag}
                 resetOnDefaultValueChange={true}

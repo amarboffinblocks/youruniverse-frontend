@@ -1,9 +1,9 @@
 "use client";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload } from "lucide-react";
+import { FolderPlus, HeartPlus, Heart, Link2, MoreVertical, Save, BookmarkCheck, Share2, SquarePen, Upload, Trash, CopyPlus } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +12,17 @@ import { formatDate } from "@/lib/utils/date-utils";
 import Chat from "../icons/chat";
 import Rating from "../elements/rating";
 import { Checkbox } from "../ui/checkbox";
-import { useToggleFavourite, useToggleSaved } from "@/hooks";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { useToggleFavourite, useToggleSaved, useDeleteCharacter, useDuplicateCharacter } from "@/hooks";
 import type { Character } from "@/lib/api/characters";
 
 interface CharacterCardProps {
@@ -47,6 +57,22 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
         showToasts: true,
     });
 
+    // Delete dialog state
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+    // Delete character hook
+    const { deleteCharactersBatch, isLoading: isDeleting } = useDeleteCharacter({
+        showToasts: true,
+        onSuccess: () => {
+            setDeleteDialogOpen(false);
+        },
+    });
+
+    // Duplicate character hook
+    const { duplicateCharactersBatch, isLoading: isDuplicating } = useDuplicateCharacter({
+        showToasts: true,
+    });
+
     // Handle favourite toggle
     const handleToggleFavourite = useMemo(() => {
         return () => {
@@ -60,6 +86,27 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             toggleSaved(character.id);
         };
     }, [character.id, toggleSaved]);
+
+    // Handle duplicate click
+    const handleDuplicateClick = useMemo(() => {
+        return () => {
+            duplicateCharactersBatch([character.id]);
+        };
+    }, [character.id, duplicateCharactersBatch]);
+
+    // Handle delete click
+    const handleDeleteClick = useMemo(() => {
+        return () => {
+            setDeleteDialogOpen(true);
+        };
+    }, []);
+
+    // Handle confirm delete
+    const handleConfirmDelete = useMemo(() => {
+        return () => {
+            deleteCharactersBatch([character.id]);
+        };
+    }, [character.id, deleteCharactersBatch]);
 
     return (
         <Card
@@ -156,6 +203,21 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                                 <DropdownMenuItem className="hover:bg-gray-800 transition cursor-pointer">
                                     <Chat className=" mr-2 w-4  h-4 text-white " /> Chat With Me
                                 </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="hover:bg-gray-800 transition cursor-pointer"
+                                    onClick={handleDuplicateClick}
+                                    disabled={isDuplicating}
+                                >
+                                    <CopyPlus className=" mr-2 w-4  h-4 text-white " /> Duplicate Character
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    variant="destructive"
+                                    className="cursor-pointer"
+                                    onClick={handleDeleteClick}
+                                    disabled={isDeleting}
+                                >
+                                    <Trash className=" mr-2 w-4  h-4 text-white " /> Delete
+                                </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>
@@ -211,6 +273,28 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
                     Updated:- {formattedUpdatedDate}
                 </div>
             </CardFooter>
+
+            {/* Delete Confirmation Dialog */}
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <AlertDialogContent className="bg-primary/50 backdrop-blur-md border border-primary">
+                    <AlertDialogHeader>
+                        <AlertDialogTitle className="text-white">Delete Character</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Are you sure you want to delete "{character.name}"? This action cannot be undone and will permanently remove the character.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={handleConfirmDelete}
+                            disabled={isDeleting}
+                            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                        >
+                            {isDeleting ? "Deleting..." : "Delete"}
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </Card>
     );
 };

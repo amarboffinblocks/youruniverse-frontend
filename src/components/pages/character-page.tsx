@@ -388,7 +388,7 @@ const CharacterPage = () => {
                     <DropdownMenuSubTrigger>Create / Import</DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
-                        <Link href="/characters/create" legacyBehavior>
+                        <Link href="/characters/create" >
                           <DropdownMenuItem >Create Character</DropdownMenuItem>
                         </Link>
                         <DropdownMenuItem>Import Character</DropdownMenuItem>
