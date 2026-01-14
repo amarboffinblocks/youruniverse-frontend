@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Lock, Shield, Server, Infinity } from "lucide-react";
+import YourUniverse from "../icons/your-universe";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { StarsBackground } from "@/components/elements/stars-background";
@@ -29,7 +30,7 @@ export default function LandingHero() {
         <section
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pt-32 pb-16 md:pt-40 group"
+            className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-4 pt-16 pb-16 md:pt-32 group"
         >
             {/* Mouse Glow Effect */}
             <div
@@ -51,12 +52,24 @@ export default function LandingHero() {
 
             <div className="z-10 flex w-full max-w-5xl flex-col items-center text-center">
 
-                {/* Badge */}
+                {/* Logo and Badge */}
+                
+                {/* <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className=" flex flex-col items-center"
+                >
+                    <div className="relative h-fit w-[20rem]  transition-transform duration-300 group-hover:scale-110 text-white">
+                        <YourUniverse />
+                    </div>
+                </motion.div> */}
+
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="mb-8"
+                    className="mb-8 flex flex-col items-center gap-2"
                 >
                     <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-950/20 px-4 py-1.5 text-sm font-medium text-blue-300 backdrop-blur-sm shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:bg-blue-950/30 transition-colors">
                         <Lock className="h-3.5 w-3.5" />
@@ -84,9 +97,8 @@ export default function LandingHero() {
                     transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
                     className="mb-10 max-w-2xl text-lg text-gray-400 md:text-xl leading-relaxed"
                 >
-                    Experience temporary escape, daily-life assistance, and AI
-                    companionship you can trust. Safe, private, and designed for your
-                    imagination.
+                    YourUinverse.AI is an AI Chatbot that servers as a gateway to a Universe of your own. A
+                    temporary escape, an aid to accomplish tasks, and a companion to carry with you.
                 </motion.p>
 
                 {/* CTA Buttons */}
@@ -126,7 +138,7 @@ export default function LandingHero() {
                     </div>
                     <div className="flex items-center gap-2 transition-colors hover:text-cyan-400">
                         <Server className="h-5 w-5 text-cyan-500" />
-                        <span>Self-Hostable</span>
+                        <span>Self or Cloud-Hostable</span>
                     </div>
                     <div className="flex items-center gap-2 transition-colors hover:text-purple-400">
                         <Infinity className="h-5 w-5 text-purple-500" />

@@ -33,11 +33,11 @@ const SignUpForm = () => {
                 </div>
                 <div className='space-y-2'>
                     <Label htmlFor='password'>Password</Label>
-                    <PasswordField placeholder='Enter your password' />
+                    <PasswordField placeholder='Enter your password'/>
                 </div>
                 <div className='space-y-2'>
                     <Label htmlFor='confirm-password'>Confirm Password</Label>
-                    <PasswordField placeholder=' Please confirm your password here.' />
+                    <PasswordField placeholder=' Please confirm your password here.'/>
                 </div>
                 <div className='py-4  border border-primary rounded-2xl text-center'>
                     <h2 className='text-white'>Subscription Plans</h2>

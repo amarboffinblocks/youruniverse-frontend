@@ -44,7 +44,7 @@ export default function LandingHeader({ simple = false }: LandingHeaderProps) {
 
     return (
         <header className="absolute top-0 left-0 right-0 z-50 px-4 py-6 md:px-8 bg-transparent backdrop-blur-none">
-            <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} />
+            {/* <EnquiryModal isOpen={isEnquiryOpen} onClose={() => setIsEnquiryOpen(false)} /> */}
 
             <div className="mx-auto max-w-7xl flex items-center justify-between">
                 {/* Logo */}
@@ -75,21 +75,19 @@ export default function LandingHeader({ simple = false }: LandingHeaderProps) {
 
                 {/* Right Actions */}
                 <div className="hidden lg:flex items-center gap-6">
+                   
                     {!simple && (
                         <Link
                             href="/sign-in"
                             className="text-sm font-medium text-gray-300 transition-colors hover:text-white"
                         >
-                            Login
+                            <Button
+                                // onClick={() => setIsEnquiryOpen(true)}
+                                className="relative overflow-hidden rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-6 py-2 font-medium text-white shadow-[0_0_15px_rgba(85,46,251,0.4)] transition-all hover:shadow-[0_0_25px_rgba(85,46,251,0.6)] hover:scale-105"
+                            >
+                                Enter Your Universe
+                            </Button>
                         </Link>
-                    )}
-                    {!simple && (
-                        <Button
-                            onClick={() => setIsEnquiryOpen(true)}
-                            className="relative overflow-hidden rounded-full bg-linear-to-r from-blue-600 to-purple-600 px-6 py-2 font-medium text-white shadow-[0_0_15px_rgba(85,46,251,0.4)] transition-all hover:shadow-[0_0_25px_rgba(85,46,251,0.6)] hover:scale-105"
-                        >
-                            Enter Your Universe
-                        </Button>
                     )}
                 </div>
 

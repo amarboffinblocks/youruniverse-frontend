@@ -6,14 +6,7 @@ import { Bot, Briefcase, Landmark, MessageSquareHeart } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const experiences = [
-    {
-        title: "Fantasy Adventures",
-        description: "Embark on epic quests with characters from worlds beyond imagination",
-        icon: Bot,
-        gradient: "from-pink-500 to-rose-500",
-        bgGradient: "from-pink-500/20 to-rose-500/20",
-        iconColor: "text-white",
-    },
+
     {
         title: "Daily Assistants",
         description: "Get help with tasks, planning, and productivity from specialized AI helpers",
@@ -23,19 +16,27 @@ const experiences = [
         iconColor: "text-white",
     },
     {
+        title: "Friendship & Companionship",
+        description: "Speak to a wide variety of Characters and take the first steps in opening up in a safe and private enviroment",
+        icon: MessageSquareHeart,
+        gradient: "from-violet-500 to-purple-500",
+        bgGradient: "from-violet-500/20 to-purple-500/20",
+        iconColor: "text-white",
+    },
+    {
         title: "Historical Journeys",
-        description: "Explore history through conversations with figures from different eras",
+        description: "Embark on epic quests with unique characters in a variety of universes.",
         icon: Landmark,
         gradient: "from-emerald-500 to-green-500",
         bgGradient: "from-emerald-500/20 to-green-500/20",
         iconColor: "text-white",
     },
     {
-        title: "Companionship",
-        description: "Build meaningful connections with AI companions designed for conversation",
-        icon: MessageSquareHeart,
-        gradient: "from-violet-500 to-purple-500",
-        bgGradient: "from-violet-500/20 to-purple-500/20",
+        title: "Fantasy & Sci-Fi Adventures",
+        description: "Embark on epic quests with characters from worlds beyond imagination",
+        icon: Bot,
+        gradient: "from-pink-500 to-rose-500",
+        bgGradient: "from-pink-500/20 to-rose-500/20",
         iconColor: "text-white",
     },
 ];
@@ -63,7 +64,7 @@ export default function AiExperience() {
                         transition={{ duration: 0.5, delay: 0.1 }}
                         className="text-lg text-gray-400 max-w-2xl mx-auto"
                     >
-                        From daily assistants to fantasy adventures, create the AI interactions that matter to you
+                        Choose from a wide range of premade and user created experiences to having a custom experience created for you.
                     </motion.p>
                 </div>
 

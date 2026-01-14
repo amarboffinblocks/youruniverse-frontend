@@ -15,14 +15,14 @@ const features = [
     },
     {
         title: "Custom Creation",
-        description: "Design your own characters, scenarios, and worlds from scratch with powerful tools",
+        description: "Design your own characters, scenarios, and worlds from scratch.",
         icon: Wand2,
         gradient: "from-blue-500 to-cyan-500",
         bgGradient: "from-blue-500/20 to-cyan-500/20",
     },
     {
-        title: "Enhanced Lorebooks",
-        description: "Add depth and consistency with detailed backstories and world-building documents",
+        title: "Lorebooks",
+        description: " Add depth and consistency with detailed keywords and terms to add depth and further enhance the conversation.",
         icon: BookTemplate,
         gradient: "from-emerald-500 to-green-500",
         bgGradient: "from-emerald-500/20 to-green-500/20",

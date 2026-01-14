@@ -52,17 +52,18 @@ const features = [
     {
         icon: User,
         title: "Custom Characters",
-        description: "Unique personalities crafted by talented creators"
+        description: "Unique personalites, scenarios, worlds or universe crafted by talented Creators"
     },
-    {
-        icon: BookOpen,
-        title: "Lorebooks & Worlds",
-        description: "Rich backstories and immersive world-building"
-    },
+ 
     {
         icon: Palette,
         title: "Avatars & Backgrounds",
-        description: "Visual elements to enhance your experience"
+        description: "ustom and unique Avatars and Backgrounds created by Artist for Your Universe"
+    },
+       {
+        icon: BookOpen,
+        title: "Lorebooks",
+        description: "Add context and depth to conversations and universe’s with Lorebooks"
     }
 ];
 
@@ -90,7 +91,11 @@ export default function CharacterMarket() {
                                 The Character Market
                             </h2>
                             <p className="text-lg text-gray-400 leading-relaxed max-w-lg">
-                                Discover unique AI characters, lorebooks, personas, and backgrounds created by our community. Build your perfect universe with custom assets.
+                                The Character Market is a place to connect
+                                with Creators to have unique Characters,
+                                Personas, Lorebooks, Avatars and
+                                Backgrounds created. Build Your perfect
+                                Universe with custom assets.
                             </p>
                         </div>
 

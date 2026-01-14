@@ -27,15 +27,20 @@ export default function AboutSection() {
                         </div>
 
                         <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-tight">
-                            Crafting the Future of <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-purple-400">Digital Companionship</span>
+                            Technology with <br /> <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-purple-400">Empathy at its Core</span>
                         </h2>
 
                         <p className="text-lg text-gray-400 leading-relaxed">
-                            At YourUniverse.AI, we believe that artificial intelligence should be personal, private, and profoundly creative. We are building a platform where you are not just a user, but a creator of your own digital worlds.
+                            YourUniverse.AI believes that Artificial Intelligence should be
+                            personal, private, and something that can make life better. We
+                            are building a platform where you are in control, Your own
+                            Universe.
                         </p>
 
                         <p className="text-lg text-gray-400 leading-relaxed">
-                            Whether you want a supportive friend, a creative writing partner, or an immersive roleplay experience, our tools empower you to shape AI interactions that strictly follow your rules, on your own hardware.
+                            Whether you want a supportive friend, help with daily tasks, a
+                            creative writing partner, or an immersive roleplay experience,
+                            YourUniverse.AI gives is there to support you.
                         </p>
 
                         <div className="pt-4">

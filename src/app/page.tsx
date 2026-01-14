@@ -30,14 +30,14 @@ export default function Home() {
 
   return (
     <div className={`flex-1 flex flex-col relative min-h-screen bg-[#0a0a0a] text-white overflow-y-auto overflow-x-hidden scroll-smooth ${!isVerified ? 'h-screen overflow-hidden' : ''}`}>
-      {!isVerified && (
+      {/* {!isVerified && (
         <AgeVerificationModal
           onVerified={() => {
             setIsVerified(true);
             localStorage.setItem("isVerified", "true");
           }}
         />
-      )}
+      )} */}
 
       <LandingHeader />
       <main className="flex-1 w-full flex flex-col items-center">
